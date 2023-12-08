@@ -1,9 +1,11 @@
-package rusiru.project;
+package rusiru.project.controllers;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import rusiru.project.App;
+import rusiru.project.AppState;
 
 public class PrimaryController {
     @FXML Button submitBtn;
