@@ -19,6 +19,7 @@ import rusiru.project.controllers.SecondaryController;
 public class Node extends StackPane {
     private int num;
     private int inDegree;
+    private boolean hasSelfLoop;
     private int outDegree;
     double sceneX, sceneY, layoutX, layoutY;
     private double xOffset, yOffset;
@@ -74,7 +75,8 @@ public class Node extends StackPane {
            
             Line line = createLine(AppState.previousStackPane, currentStackPane, this, AppState.previousNode);
             root.getChildren().add(line);
-            if(this.equals(AppState.previousNode)){
+
+            if(this.equals(AppState.previousNode) && !(this.hasSelfLoop)){
             QuadCurve arc = createArc(AppState.previousStackPane, currentStackPane, this, AppState.previousNode);
             root.getChildren().add(arc);}
             AppState.alreadyClicked = false;
@@ -88,6 +90,11 @@ public class Node extends StackPane {
         }
     }
     private QuadCurve createArc(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
+          startNode.setoutDegree(startNode.getoutDegree()+1);
+        endNode.setinDegree(endNode.getinDegree()+1);
+        Edge edge = new Edge(startNode, endNode, 0);
+        SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
+            SecondaryController.adjacencyList.get(edge.getDestinationNode().getNodeNum()).add(edge.getSource().getNodeNum());
          double x = startStackPane.getLayoutX() + startStackPane.getTranslateX() + startStackPane.getWidth() / 2.0;
         double y = startStackPane.getLayoutY() + startStackPane.getTranslateY() + startStackPane.getHeight() / 2.0;
         
