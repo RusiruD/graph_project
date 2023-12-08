@@ -70,4 +70,124 @@ public class SecondaryController {
         AppState.alreadyClicked = false;}
         else{}
     }
+
+    @FXML
+    public static boolean isReflexive(){
+       int reflexiveEdgeCounter=0;
+        for(Edge x:edges){
+            if(x.getSource().getNodeNum()==x.getDestinationNode().getNodeNum()){
+                reflexiveEdgeCounter++;}}
+                if(reflexiveEdgeCounter==AppState.numNodes){
+                    return true;
+                }
+          
+         
+       
+        return false;
+    }
+
+
+    @FXML
+    public static boolean isSymmetric(){
+        int symmetricEdgeCounter = 0;
+        for(Edge edge:edges){
+            for(Edge edge1:edges){
+
+                if ((edge.getDestinationNode().getNodeNum())==(edge1.getSource().getNodeNum())){
+                    symmetricEdgeCounter++;
+                }
+            }}
+            if (symmetricEdgeCounter == edges.size()) {
+                return true;
+              } 
+              
+                return false;
+              }
+
+  
+    
+              public static boolean isTransitive() {
+                int possibleTransitiveEdgeCounter = 0;
+                int transitiveEdgeCounter = 0;
+                // checks if there is an edge with a destination that is the same as the source of another
+                // edge-edge1
+                for (Edge edge : edges) {
+                  // increments the counter if the destination of the first edge is the same as the source of
+                  // the second edge
+                  // and if the destination of the second edge is not the same as the source of the second edge
+                  for (Edge edge1 : edges) {
+            
+                    if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())
+                        && !(edge1.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum()))) {
+                      possibleTransitiveEdgeCounter++;
+                      // checks if there is an edge-edge3 that comes from the same source the first edge did
+                      // and goes to the same destination the second edge did
+                      for (Edge edge3 : edges) {
+                        if (edge.getSource().getNodeNum()==(edge3.getSource().getNodeNum())
+                            && edge1.getDestinationNode().getNodeNum()==(edge3.getDestinationNode().getNodeNum())) {
+                          transitiveEdgeCounter++;
+                        }
+                      }
+                    }
+                  }
+                }
+                // if the counter is equal to the number of edges, then the graph is transitive
+                if (possibleTransitiveEdgeCounter == transitiveEdgeCounter) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+            
+              /**
+               * Checks whether the graph is anti-symmetric.
+               *
+               * @return true if the graph is anti-symmetric, false otherwise.
+               */
+              public static boolean isAntiSymmetric() {
+                int antisymmetricEdgeCounter = 0;
+                int possibleAntiSymmetricEdgeCounter = 0;
+                // checks if there is an edge with a destination that is the same as the source of another
+                // edge-edge1
+                for (Edge edge : edges) {
+            
+                  for (Edge edge1 : edges) {
+                    // increments the counter if the destination of the first edge is the same as the source of
+                    // the second edge
+                    if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())
+                        && edge.getSource().getNodeNum()==(edge1.getDestinationNode().getNodeNum())) {
+                      possibleAntiSymmetricEdgeCounter++;
+                      // increments different counter if the edges equal each other
+                      if (edge.equals(edge1)) {
+                        antisymmetricEdgeCounter++;
+                      }
+                    }
+                  }
+                }
+                // if the counter is equal to the number of edges, then the graph is anti-symmetric
+                if (possibleAntiSymmetricEdgeCounter == antisymmetricEdgeCounter) {
+                  return true;
+                } else {
+            
+                  return false;
+                }
+              }
+   
+       
+
+
+    @FXML 
+    public static boolean isEquivalence(int[][] adjacencyMatrix){
+        if(isReflexive() && isSymmetric() && isTransitive()){
+            return true;
+        }
+        return false;}
+
+    @FXML
+    public static boolean isPartialOrder(int[][] adjacencyMatrix){
+        if(isReflexive() && isAntiSymmetric() && isTransitive()){
+            return true;
+        }
+        return false;
+    }
 }
