@@ -1,3 +1,6 @@
-rusiru\project\PrimaryController.class
-rusiru\project\SecondaryController.class
+rusiru\project\controllers\PrimaryController.class
+rusiru\project\Edge.class
+rusiru\project\AppState.class
 rusiru\project\App.class
+rusiru\project\Node.class
+rusiru\project\controllers\SecondaryController.class

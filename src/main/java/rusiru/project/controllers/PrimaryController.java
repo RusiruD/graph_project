@@ -9,7 +9,7 @@ import rusiru.project.AppState;
 
 public class PrimaryController {
     @FXML Button submitBtn;
-    @FXML TextField numNodeTextField;
+    @FXML TextField numNodesTextField;
     int numNodesInt;
 
     @FXML
@@ -22,14 +22,15 @@ public class PrimaryController {
     @FXML
     private void onSubmitClicked() throws IOException, NumberFormatException {
         System.out.println("Submit clicked");
-        System.out.println("Number of nodes: " + numNodeTextField.getText());
+        System.out.println("Number of nodes: " + numNodesTextField.getText());
       
-        if(numNodeTextField.getText().equals("")){
+        if(numNodesTextField.getText().equals("")){
             
         }
         else{
-            numNodesInt = Integer.parseInt(numNodeTextField.getText());
-        AppState.numNodes = numNodesInt;}
+            System.out.println("Number of nodes: " + numNodesTextField.getText());
+            numNodesInt = Integer.parseInt(numNodesTextField.getText());
+            AppState.numNodes = numNodesInt;}
        
        switchToSecondary();
     }
