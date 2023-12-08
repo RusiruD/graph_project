@@ -116,8 +116,10 @@ public class SecondaryController {
         
       }
 
+
     @FXML
-    public  boolean isReflexive(){
+    public boolean isReflexive(){
+
        int reflexiveEdgeCounter=0;
         for(Edge x:edges){
             if(x.getSource().getNodeNum()==x.getDestinationNode().getNodeNum()){
@@ -128,7 +130,6 @@ public class SecondaryController {
                 }
           
                
-         reflexiveLbl.toFront();
         reflexiveLbl.setTextFill(Color.RED);
         return false;
     }
@@ -136,6 +137,10 @@ public class SecondaryController {
 
     @FXML
     public  boolean isSymmetric(){
+      if(AppState.undirected){
+        symmetricLbl.setTextFill(Color.GREEN);
+        return true;}
+
         int symmetricEdgeCounter = 0;
         for(Edge edge:edges){
             for(Edge edge1:edges){

@@ -8,8 +8,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.QuadCurve;
 import rusiru.project.controllers.SecondaryController;
 
 public class Node extends StackPane {
@@ -70,6 +74,9 @@ public class Node extends StackPane {
            
             Line line = createLine(AppState.previousStackPane, currentStackPane, this, AppState.previousNode);
             root.getChildren().add(line);
+            if(this.equals(AppState.previousNode)){
+            QuadCurve arc = createArc(AppState.previousStackPane, currentStackPane, this, AppState.previousNode);
+            root.getChildren().add(arc);}
             AppState.alreadyClicked = false;
         }
         else{
@@ -79,6 +86,29 @@ public class Node extends StackPane {
             AppState.previousStackPane=currentStackPane ;
             AppState.previousNode = this;
         }
+    }
+    private QuadCurve createArc(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
+         double x = startStackPane.getLayoutX() + startStackPane.getTranslateX() + startStackPane.getWidth() / 2.0;
+        double y = startStackPane.getLayoutY() + startStackPane.getTranslateY() + startStackPane.getHeight() / 2.0;
+        
+   QuadCurve arc = new QuadCurve(x,y, x+15, y-150, x+25, y-5);
+     arc.startXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)));
+       arc.startYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)));
+
+       arc.controlXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(15));
+         arc.controlYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(150));
+   
+   
+        arc.endXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(15));
+        arc.endYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(5));
+
+    arc.setStroke(Color.BLUE);
+        arc.setStrokeWidth(2);
+        arc.setFill(Color.TRANSPARENT);
+   return arc;
+
+
+
     }
     private Line createLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
         startNode.setoutDegree(startNode.getoutDegree()+1);
@@ -90,10 +120,18 @@ public class Node extends StackPane {
         Line line = new Line();
         line.setStroke(Color.BLUE);
         line.setStrokeWidth(2);
+       
+
         line.startXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)));
         line.startYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)));
         line.endXProperty().bind(endStackPane.layoutXProperty().add(endStackPane.translateXProperty()).add(endStackPane.widthProperty().divide(2)));
         line.endYProperty().bind(endStackPane.layoutYProperty().add(endStackPane.translateYProperty()).add(endStackPane.heightProperty().divide(2)));
+
+       
+
+        
+        
+
         return line;
        }
 
