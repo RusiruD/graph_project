@@ -7,9 +7,11 @@ import java.util.Set;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import rusiru.project.App;
 import rusiru.project.AppState;
 import rusiru.project.Edge;
@@ -20,7 +22,18 @@ public class SecondaryController {
     private ArrayList<Node> nodes;
 
      @FXML Pane root;
-
+    @FXML  Label reflexiveLbl;
+    @FXML  Label symmetricLbl;
+    @FXML  Label transitiveLbl;
+    @FXML  Label antiSymmetricLbl;
+    @FXML  Label equivalenceLbl;
+    @FXML  Label partialOrderLbl;
+    @FXML  Label simpleGraphLbl;
+    @FXML  Label multiGraphLbl;
+    @FXML  Label pseudoGraphLbl;
+    @FXML  Label completeGraphLbl;
+  
+    
      @FXML
     private void initialize(){
         System.out.println("ed");
@@ -70,43 +83,62 @@ public class SecondaryController {
         AppState.alreadyClicked = false;}
         else{}
     }
+    @FXML
+      public void onCheckGraphClicked(){
+        System.out.println("Check graph clicked");
+       
+        isReflexive();
+        isSymmetric();
+        isTransitive();
+        isAntiSymmetric();
+        isEquivalence();
+        isPartialOrder();
+        isSimple();
+       
+        isComplete();
+        
+      }
 
     @FXML
-    public static boolean isReflexive(){
+    public  boolean isReflexive(){
        int reflexiveEdgeCounter=0;
         for(Edge x:edges){
             if(x.getSource().getNodeNum()==x.getDestinationNode().getNodeNum()){
                 reflexiveEdgeCounter++;}}
                 if(reflexiveEdgeCounter==AppState.numNodes){
+                    reflexiveLbl.setTextFill(Color.GREEN);
                     return true;
                 }
           
-         
-       
+               
+         reflexiveLbl.toFront();
+        reflexiveLbl.setTextFill(Color.RED);
         return false;
     }
 
 
     @FXML
-    public static boolean isSymmetric(){
+    public  boolean isSymmetric(){
         int symmetricEdgeCounter = 0;
         for(Edge edge:edges){
             for(Edge edge1:edges){
 
-                if ((edge.getDestinationNode().getNodeNum())==(edge1.getSource().getNodeNum())){
+                if (((edge.getDestinationNode().getNodeNum())==(edge1.getSource().getNodeNum()))
+                && ((edge.getSource().getNodeNum())==(edge1.getDestinationNode().getNodeNum())) && edge != edge1){
                     symmetricEdgeCounter++;
                 }
             }}
             if (symmetricEdgeCounter == edges.size()) {
+                symmetricLbl.setTextFill(Color.GREEN);
                 return true;
               } 
-              
+                symmetricLbl.setTextFill(Color.RED);
                 return false;
               }
 
   
     
-              public static boolean isTransitive() {
+              public  boolean isTransitive() {
                 int possibleTransitiveEdgeCounter = 0;
                 int transitiveEdgeCounter = 0;
                 // checks if there is an edge with a destination that is the same as the source of another
@@ -118,13 +150,13 @@ public class SecondaryController {
                   for (Edge edge1 : edges) {
             
                     if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())
-                        && !(edge1.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum()))) {
+                        && (edge1.getDestinationNode().getNodeNum()!=(edge.getSource().getNodeNum()))) {
                       possibleTransitiveEdgeCounter++;
                       // checks if there is an edge-edge3 that comes from the same source the first edge did
                       // and goes to the same destination the second edge did
                       for (Edge edge3 : edges) {
                         if (edge.getSource().getNodeNum()==(edge3.getSource().getNodeNum())
-                            && edge1.getDestinationNode().getNodeNum()==(edge3.getDestinationNode().getNodeNum())) {
+                            && edge1.getDestinationNode().getNodeNum()==(edge3.getDestinationNode().getNodeNum()) && edge != edge3 && edge1 != edge3) {
                           transitiveEdgeCounter++;
                         }
                       }
@@ -133,8 +165,10 @@ public class SecondaryController {
                 }
                 // if the counter is equal to the number of edges, then the graph is transitive
                 if (possibleTransitiveEdgeCounter == transitiveEdgeCounter) {
+                    transitiveLbl.setTextFill(Color.GREEN);
                   return true;
                 } else {
+                    transitiveLbl.setTextFill(Color.RED);
                   return false;
                 }
               }
@@ -144,7 +178,7 @@ public class SecondaryController {
                *
                * @return true if the graph is anti-symmetric, false otherwise.
                */
-              public static boolean isAntiSymmetric() {
+              public  boolean isAntiSymmetric() {
                 int antisymmetricEdgeCounter = 0;
                 int possibleAntiSymmetricEdgeCounter = 0;
                 // checks if there is an edge with a destination that is the same as the source of another
@@ -166,8 +200,10 @@ public class SecondaryController {
                 }
                 // if the counter is equal to the number of edges, then the graph is anti-symmetric
                 if (possibleAntiSymmetricEdgeCounter == antisymmetricEdgeCounter) {
+                    antiSymmetricLbl.setTextFill(Color.GREEN);
                   return true;
                 } else {
+                    antiSymmetricLbl.setTextFill(Color.RED);
             
                   return false;
                 }
@@ -177,22 +213,26 @@ public class SecondaryController {
 
 
     @FXML 
-    public static boolean isEquivalence(int[][] adjacencyMatrix){
+    public  boolean isEquivalence(){
         if(isReflexive() && isSymmetric() && isTransitive()){
+            equivalenceLbl.setTextFill(Color.GREEN);
             return true;
         }
+        equivalenceLbl.setTextFill(Color.RED);
         return false;}
 
     @FXML
-    public static boolean isPartialOrder(int[][] adjacencyMatrix){
+    public boolean isPartialOrder(){
         if(isReflexive() && isAntiSymmetric() && isTransitive()){
+            partialOrderLbl.setTextFill(Color.GREEN);
             return true;
         }
+        partialOrderLbl.setTextFill(Color.RED);
         return false;
     }
 
     @FXML
-    public static boolean isComplete(){
+    public  boolean isComplete(){
         int completeEdgeCounter = 0;
         for (Edge edge : edges) {
           for (Edge edge1 : edges) {
@@ -202,33 +242,41 @@ public class SecondaryController {
           }
         }
         if (completeEdgeCounter == edges.size() * edges.size()) {
+            completeGraphLbl.setTextFill(Color.GREEN);
           return true;
         } 
+            completeGraphLbl.setTextFill(Color.RED);
           return false;
         
       }
 
       @FXML
-      public static boolean isSimple(){
+      public  boolean isSimple(){
         
         for (Edge edge : edges) {
-          for (Edge edge1 : edges) {
-            if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())) {
+         
+            if (edge.getDestinationNode().getNodeNum()==(edge.getSource().getNodeNum())) {
+                simpleGraphLbl.setTextFill(Color.RED);
               return false;
             }
           }
-        }
+        
+
         for (Edge edge : edges) {
           for (Edge edge1 : edges) {
             if (edge.getSource().getNodeNum()==(edge1.getSource().getNodeNum())
                 && edge.getDestinationNode().getNodeNum()==(edge1.getDestinationNode().getNodeNum())
                 && edge != edge1) {
+                    simpleGraphLbl.setTextFill(Color.RED);
               return false;
             }
           }
         }
+        simpleGraphLbl.setTextFill(Color.GREEN);
         return true;
       }
+
+      
     
 
 }
