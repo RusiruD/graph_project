@@ -296,12 +296,15 @@ public class SecondaryController {
     @FXML
     public  boolean isComplete(){
         int completeEdgeCounter = 0;
-        for (Edge edge : edges) {
-          for (Edge edge1 : edges) {
-            if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())) {
-              completeEdgeCounter++;
-            }
-          }
+        for(Node node:nodes){
+          if((node.getinDegree()+node.getoutDegree())!=AppState.numNodes-1){
+            completeGraphLbl.setTextFill(Color.RED);
+            return false;
+           
+               
+                }
+                completeGraphLbl.setTextFill(Color.GREEN);
+            return true;
         }
         if (completeEdgeCounter == edges.size() * edges.size()) {
             completeGraphLbl.setTextFill(Color.GREEN);
