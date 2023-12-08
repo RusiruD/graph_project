@@ -10,11 +10,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import rusiru.project.controllers.SecondaryController;
 
 public class Node extends StackPane {
     private int num;
     double sceneX, sceneY, layoutX, layoutY;
     private double xOffset, yOffset;
+
       public Node(int Nodenum, Pane root){
         num=Nodenum;
         double radius = 25;
@@ -62,6 +64,7 @@ public class Node extends StackPane {
         System.out.println("Node clicked");
         StackPane currentStackPane = (StackPane) event.getSource();
         if(AppState.alreadyClicked){
+            AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
            
             Line line = createLine(AppState.previousStackPane, currentStackPane, this, AppState.previousNode);
             root.getChildren().add(line);
@@ -69,21 +72,23 @@ public class Node extends StackPane {
         }
         else{
              
-          
+            currentStackPane.getChildren().get(0).setStyle("-fx-fill: red;");
             AppState.alreadyClicked = true;
             AppState.previousStackPane=currentStackPane ;
             AppState.previousNode = this;
         }
     }
-    private Line createLine(StackPane startDot, StackPane endDot, Node startNode, Node endNode){
-      
+    private Line createLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
+        
+        Edge edge = new Edge(startNode, endNode, 0);
+        SecondaryController.edges.add(edge);
         Line line = new Line();
         line.setStroke(Color.BLUE);
         line.setStrokeWidth(2);
-        line.startXProperty().bind(startDot.layoutXProperty().add(startDot.translateXProperty()).add(startDot.widthProperty().divide(2)));
-        line.startYProperty().bind(startDot.layoutYProperty().add(startDot.translateYProperty()).add(startDot.heightProperty().divide(2)));
-        line.endXProperty().bind(endDot.layoutXProperty().add(endDot.translateXProperty()).add(endDot.widthProperty().divide(2)));
-        line.endYProperty().bind(endDot.layoutYProperty().add(endDot.translateYProperty()).add(endDot.heightProperty().divide(2)));
+        line.startXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)));
+        line.startYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)));
+        line.endXProperty().bind(endStackPane.layoutXProperty().add(endStackPane.translateXProperty()).add(endStackPane.widthProperty().divide(2)));
+        line.endYProperty().bind(endStackPane.layoutYProperty().add(endStackPane.translateYProperty()).add(endStackPane.heightProperty().divide(2)));
         return line;
        }
 
@@ -93,6 +98,8 @@ public class Node extends StackPane {
         public int getNodeNum(){
             return num;
         }
+
+        
 
         
 }
