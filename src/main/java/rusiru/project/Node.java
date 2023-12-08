@@ -14,6 +14,8 @@ import rusiru.project.controllers.SecondaryController;
 
 public class Node extends StackPane {
     private int num;
+    private int inDegree;
+    private int outDegree;
     double sceneX, sceneY, layoutX, layoutY;
     private double xOffset, yOffset;
 
@@ -57,7 +59,7 @@ public class Node extends StackPane {
         nodePane.setLayoutX(event.getSceneX() - xOffset);
         nodePane.setLayoutY(event.getSceneY() - yOffset);
     });
-       
+       SecondaryController.nodes.add(this);
     }
     @FXML
     private void onNodeClicked(MouseEvent event, Pane root){
@@ -79,7 +81,8 @@ public class Node extends StackPane {
         }
     }
     private Line createLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
-        
+        startNode.setoutDegree(startNode.getoutDegree()+1);
+        endNode.setinDegree(endNode.getinDegree()+1);
         Edge edge = new Edge(startNode, endNode, 0);
         Edge edge1 = new Edge(endNode, startNode, 0);
         SecondaryController.edges.add(edge);
@@ -99,6 +102,18 @@ public class Node extends StackPane {
 
         public int getNodeNum(){
             return num;
+        }
+        public int getinDegree(){
+            return inDegree;
+        }
+        public int getoutDegree(){
+            return outDegree;
+        }
+        public void setinDegree(int inDegree){
+            this.inDegree = inDegree;
+        }
+        public void setoutDegree(int outDegree){
+            this.outDegree = outDegree;
         }
 
         

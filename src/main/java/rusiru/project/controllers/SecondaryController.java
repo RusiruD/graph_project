@@ -2,6 +2,7 @@ package rusiru.project.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ import rusiru.project.Node;
 
 public class SecondaryController {
     public static ArrayList<Edge> edges= new ArrayList<Edge>();
-    private ArrayList<Node> nodes;
+    public static ArrayList<Node> nodes = new ArrayList<Node>();
 
      @FXML Pane root;
     @FXML  Label reflexiveLbl;
@@ -32,6 +33,8 @@ public class SecondaryController {
     @FXML  Label multiGraphLbl;
     @FXML  Label pseudoGraphLbl;
     @FXML  Label completeGraphLbl;
+    @FXML  Label connectedLbl;
+    @FXML  Label eulerCircuitLbl;
   
     
      @FXML
@@ -94,8 +97,12 @@ public class SecondaryController {
         isEquivalence();
         isPartialOrder();
         isSimple();
+        isMulti();
+        isPseudo();
        
         isComplete();
+        isConnected();
+        isEulerCircuit();
         
       }
 
@@ -230,27 +237,7 @@ public class SecondaryController {
         partialOrderLbl.setTextFill(Color.RED);
         return false;
     }
-
-    @FXML
-    public  boolean isComplete(){
-        int completeEdgeCounter = 0;
-        for (Edge edge : edges) {
-          for (Edge edge1 : edges) {
-            if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())) {
-              completeEdgeCounter++;
-            }
-          }
-        }
-        if (completeEdgeCounter == edges.size() * edges.size()) {
-            completeGraphLbl.setTextFill(Color.GREEN);
-          return true;
-        } 
-            completeGraphLbl.setTextFill(Color.RED);
-          return false;
-        
-      }
-
-      @FXML
+     @FXML
       public  boolean isSimple(){
         
         for (Edge edge : edges) {
@@ -275,6 +262,113 @@ public class SecondaryController {
         simpleGraphLbl.setTextFill(Color.GREEN);
         return true;
       }
+
+      @FXML
+      public boolean isMulti(){
+        /*for (Edge edge : edges) {
+          for (Edge edge1 : edges) {
+            if (edge.getSource().getNodeNum()==(edge1.getSource().getNodeNum())
+                && edge.getDestinationNode().getNodeNum()==(edge1.getDestinationNode().getNodeNum())
+                && edge != edge1) {
+                    multiGraphLbl.setTextFill(Color.GREEN);
+              return true;
+            }
+          }
+        }*/
+        multiGraphLbl.setTextFill(Color.RED);
+        return false;
+      }
+
+      @FXML
+      public boolean isPseudo(){
+        for (Edge edge : edges) {
+         
+           if(edge.getSource().getNodeNum()==(edge.getDestinationNode().getNodeNum())){
+                    pseudoGraphLbl.setTextFill(Color.GREEN);
+              return true;
+            }
+          
+        }
+        pseudoGraphLbl.setTextFill(Color.RED);
+        return false;
+      }
+
+    @FXML
+    public  boolean isComplete(){
+        int completeEdgeCounter = 0;
+        for (Edge edge : edges) {
+          for (Edge edge1 : edges) {
+            if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())) {
+              completeEdgeCounter++;
+            }
+          }
+        }
+        if (completeEdgeCounter == edges.size() * edges.size()) {
+            completeGraphLbl.setTextFill(Color.GREEN);
+          return true;
+        } 
+            completeGraphLbl.setTextFill(Color.RED);
+          return false;
+        
+      }
+
+      @FXML
+      public boolean isConnected(){
+        Set<Integer> visited = new HashSet<>();
+
+        // Choose any vertex as the starting point
+        int startVertex = 0;
+
+        // Perform DFS from the starting vertex
+        dfs(edges, startVertex, visited);
+
+        // Check if all vertices are visited
+        if(visited.size() == AppState.numNodes)
+        {
+            connectedLbl.setTextFill(Color.GREEN);
+            return true;
+        }
+        connectedLbl.setTextFill(Color.RED);
+        return false;
+      }
+
+      public boolean isEulerCircuit(){
+        if(isConnected()){
+            for(Node node:nodes){
+                if(node.getinDegree()==node.getoutDegree()){
+                    System.out.println("rff");
+                    if((node.getinDegree()+node.getoutDegree())%2==0){
+                        System.out.println("rd");
+                        eulerCircuitLbl.setTextFill(Color.GREEN);
+
+                        return true;
+                    }
+                    
+                   
+                }
+            }
+           
+        }
+        eulerCircuitLbl.setTextFill(Color.RED);
+
+        return false;
+      }
+
+     private static void dfs(List<Edge> edges, int vertex, Set<Integer> visited) {
+        if (visited.contains(vertex)) {
+            return;
+        }
+
+        visited.add(vertex);
+
+        for (Edge edge : edges) {
+            if (edge.getSource().getNodeNum() == vertex) {
+                dfs(edges, edge.getDestinationNode().getNodeNum(), visited);
+            } else if (edge.getDestinationNode().getNodeNum() == vertex) {
+                dfs(edges, edge.getSource().getNodeNum(), visited);
+            }
+        }
+    }
 
       
     
