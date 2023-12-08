@@ -190,4 +190,45 @@ public class SecondaryController {
         }
         return false;
     }
+
+    @FXML
+    public static boolean isComplete(){
+        int completeEdgeCounter = 0;
+        for (Edge edge : edges) {
+          for (Edge edge1 : edges) {
+            if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())) {
+              completeEdgeCounter++;
+            }
+          }
+        }
+        if (completeEdgeCounter == edges.size() * edges.size()) {
+          return true;
+        } 
+          return false;
+        
+      }
+
+      @FXML
+      public static boolean isSimple(){
+        
+        for (Edge edge : edges) {
+          for (Edge edge1 : edges) {
+            if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())) {
+              return false;
+            }
+          }
+        }
+        for (Edge edge : edges) {
+          for (Edge edge1 : edges) {
+            if (edge.getSource().getNodeNum()==(edge1.getSource().getNodeNum())
+                && edge.getDestinationNode().getNodeNum()==(edge1.getDestinationNode().getNodeNum())
+                && edge != edge1) {
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+    
+
 }

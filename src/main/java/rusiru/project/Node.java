@@ -81,7 +81,9 @@ public class Node extends StackPane {
     private Line createLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
         
         Edge edge = new Edge(startNode, endNode, 0);
+        Edge edge1 = new Edge(endNode, startNode, 0);
         SecondaryController.edges.add(edge);
+        SecondaryController.edges.add(edge1);
         Line line = new Line();
         line.setStroke(Color.BLUE);
         line.setStrokeWidth(2);
