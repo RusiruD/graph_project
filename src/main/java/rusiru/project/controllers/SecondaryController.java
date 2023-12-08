@@ -2,6 +2,7 @@ package rusiru.project.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,7 @@ import rusiru.project.Node;
 public class SecondaryController {
     public static ArrayList<Edge> edges= new ArrayList<Edge>();
     public static ArrayList<Node> nodes = new ArrayList<Node>();
+    public static List<List<Integer>> adjacencyList = new ArrayList<List<Integer>>();
 
      @FXML Pane root;
     @FXML  Label reflexiveLbl;
@@ -35,6 +37,9 @@ public class SecondaryController {
     @FXML  Label completeGraphLbl;
     @FXML  Label connectedLbl;
     @FXML  Label eulerCircuitLbl;
+    @FXML  Label acyclicLbl;
+    @FXML  Label bipartiteLbl;
+    @FXML  Label treeLbl;
   
     
      @FXML
@@ -48,6 +53,7 @@ public class SecondaryController {
        
         for(int i=0; i<AppState.numNodes; i++){
             createNode(i);
+            adjacencyList.add(new ArrayList<Integer>());
             System.out.println("ed");
               
         }
@@ -81,7 +87,8 @@ public class SecondaryController {
         if (clickedOnBackground) {
           
         System.out.println("Pane clicked");
-        AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
+        if(AppState.previousStackPane!=null){
+        AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");}
         AppState.previousStackPane = null;
         AppState.alreadyClicked = false;}
         else{}
@@ -103,6 +110,9 @@ public class SecondaryController {
         isComplete();
         isConnected();
         isEulerCircuit();
+        isCyclic();
+        isBipartite();
+        isTree();
         
       }
 
@@ -354,6 +364,90 @@ public class SecondaryController {
         }
         eulerCircuitLbl.setTextFill(Color.RED);
 
+        return false;
+      }
+
+      public boolean isCyclic(){
+        boolean[] visited = new boolean[AppState.numNodes];
+
+        for (int i = 0; i < AppState.numNodes; i++) {
+            if (!visited[i] && isCyclicDFS(i, -1, visited)) {
+                acyclicLbl.setTextFill(Color.RED);
+                return true;
+            }
+        }
+
+        acyclicLbl.setTextFill(Color.GREEN);
+        return false;
+
+      }
+    
+      private boolean isCyclicDFS(int current, int parent, boolean[] visited) {
+        visited[current] = true;
+
+        for (int neighbor : adjacencyList.get(current)) {
+            if (!visited[neighbor]) {
+                // If the neighbor is not visited, continue DFS
+                if (isCyclicDFS(neighbor, current, visited)) {
+                    return true;
+                }
+            } else if (neighbor != parent) {
+                // If the neighbor is visited and not the parent, there is a cycle
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+       
+    
+
+      public boolean isBipartite(){
+         int[] colors = new int[AppState.numNodes];
+        Arrays.fill(colors, -1);  // Initialize colors as -1 (unvisited)
+
+        for (int i = 0; i < AppState.numNodes; i++) {
+            if (colors[i] == -1 && !isBipartiteDFS(edges, i, 0, colors)) {
+                bipartiteLbl.setTextFill(Color.RED);
+                return false;
+            }
+        }
+        bipartiteLbl.setTextFill(Color.GREEN);
+        return true;
+      }
+      private static boolean isBipartiteDFS(List<Edge> edges, int vertex, int color, int[] colors) {
+        colors[vertex] = color;
+
+        for (Edge edge : edges) {
+            int source = edge.getSource().getNodeNum();
+            int destination = edge.getDestinationNode().getNodeNum();
+
+            if (source == vertex) {
+                int neighbor = destination;
+                if (colors[neighbor] == -1) {
+                    // Recursively check the neighbor with the opposite color
+                    if (!isBipartiteDFS(edges, neighbor, 1 - color, colors)) {
+                        return false;
+                    }
+                } else if (colors[neighbor] == color) {
+                    // If the neighbor has the same color, the graph is not bipartite
+                    return false;
+                }
+                // If the neighbor has a different color, continue to the next neighbor
+            }
+        }
+
+        
+        return true;}
+
+
+      public boolean isTree(){
+        if(isConnected() && !isCyclic()){
+            treeLbl.setTextFill(Color.GREEN);
+            return true;
+        }
+        treeLbl.setTextFill(Color.RED);
         return false;
       }
 

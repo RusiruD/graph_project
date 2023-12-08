@@ -84,9 +84,9 @@ public class Node extends StackPane {
         startNode.setoutDegree(startNode.getoutDegree()+1);
         endNode.setinDegree(endNode.getinDegree()+1);
         Edge edge = new Edge(startNode, endNode, 0);
-        Edge edge1 = new Edge(endNode, startNode, 0);
+        SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
+            SecondaryController.adjacencyList.get(edge.getDestinationNode().getNodeNum()).add(edge.getSource().getNodeNum());
         SecondaryController.edges.add(edge);
-        SecondaryController.edges.add(edge1);
         Line line = new Line();
         line.setStroke(Color.BLUE);
         line.setStrokeWidth(2);
