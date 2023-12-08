@@ -11,7 +11,8 @@ import javafx.scene.shape.Circle;
 
 public class Node extends StackPane {
     private int num;
-    
+    double sceneX, sceneY, layoutX, layoutY;
+    private double xOffset, yOffset;
       public Node(int Nodenum, Pane root){
         num=Nodenum;
         double radius = 25;
@@ -34,9 +35,27 @@ public class Node extends StackPane {
         nodePane.setMaxSize(paneSize, paneSize);
        nodePane.setMinSize(paneSize, paneSize);
 
+        
+      nodePane.setOnMousePressed(e -> {
+        sceneX = e.getSceneX();
+        sceneY = e.getSceneY();
+        layoutX = nodePane.getLayoutX();
+        layoutY = nodePane.getLayoutY();
+    });
+
+
+   nodePane.setOnMousePressed(event -> {
+        xOffset = event.getSceneX() - nodePane.getLayoutX();
+        yOffset = event.getSceneY() - nodePane.getLayoutY();
+    });
+
+   nodePane.setOnMouseDragged(event -> {
+        nodePane.setLayoutX(event.getSceneX() - xOffset);
+        nodePane.setLayoutY(event.getSceneY() - yOffset);
+    });
        
     }
-    
+
     public StackPane getStackPane(){
         return this;}
 
