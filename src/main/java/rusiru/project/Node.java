@@ -4,10 +4,12 @@ import java.util.Random;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 
 public class Node extends StackPane {
     private int num;
@@ -43,7 +45,7 @@ public class Node extends StackPane {
         layoutY = nodePane.getLayoutY();
     });
 
-
+    nodePane.setOnMouseClicked(event -> onNodeClicked(event,root));
    nodePane.setOnMousePressed(event -> {
         xOffset = event.getSceneX() - nodePane.getLayoutX();
         yOffset = event.getSceneY() - nodePane.getLayoutY();
@@ -55,6 +57,35 @@ public class Node extends StackPane {
     });
        
     }
+    @FXML
+    private void onNodeClicked(MouseEvent event, Pane root){
+        System.out.println("Node clicked");
+        StackPane currentStackPane = (StackPane) event.getSource();
+        if(AppState.alreadyClicked){
+           
+            Line line = createLine(AppState.previousStackPane, currentStackPane, this, AppState.previousNode);
+            root.getChildren().add(line);
+            AppState.alreadyClicked = false;
+        }
+        else{
+             
+          
+            AppState.alreadyClicked = true;
+            AppState.previousStackPane=currentStackPane ;
+            AppState.previousNode = this;
+        }
+    }
+    private Line createLine(StackPane startDot, StackPane endDot, Node startNode, Node endNode){
+      
+        Line line = new Line();
+        line.setStroke(Color.BLUE);
+        line.setStrokeWidth(2);
+        line.startXProperty().bind(startDot.layoutXProperty().add(startDot.translateXProperty()).add(startDot.widthProperty().divide(2)));
+        line.startYProperty().bind(startDot.layoutYProperty().add(startDot.translateYProperty()).add(startDot.heightProperty().divide(2)));
+        line.endXProperty().bind(endDot.layoutXProperty().add(endDot.translateXProperty()).add(endDot.widthProperty().divide(2)));
+        line.endYProperty().bind(endDot.layoutYProperty().add(endDot.translateYProperty()).add(endDot.heightProperty().divide(2)));
+        return line;
+       }
 
     public StackPane getStackPane(){
         return this;}
@@ -62,4 +93,6 @@ public class Node extends StackPane {
         public int getNodeNum(){
             return num;
         }
+
+        
 }

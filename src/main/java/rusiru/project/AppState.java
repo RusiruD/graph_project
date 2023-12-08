@@ -1,10 +1,17 @@
 package rusiru.project;
 
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
+
 public class AppState {
     public static int numNodes=0;
     public static int[][] adjacencyMatrix;
-
     
+    public static Circle previousCircle;
+    public static Node previousNode;
+    public static boolean alreadyClicked = false;
+    public static StackPane previousStackPane;
+
     public static void createAdjacencyMatrix(int numNodes) {
         adjacencyMatrix = new int[numNodes][numNodes];
      }
