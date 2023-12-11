@@ -6,6 +6,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -40,6 +41,7 @@ public class Node extends StackPane {
          Random random = new Random();
         dot = new Circle();
          dot.setRadius(radius);
+         dot.setFill(Color.LIGHTGREEN);
         nodePane.setLayoutX((random.nextInt(550)+10));
         nodePane.setLayoutY(random.nextInt(400)+10);
        
@@ -113,7 +115,8 @@ public class Node extends StackPane {
         else if (!AppState.undirected && !this.equals(AppState.previousNode)){
              Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this);
             root.getChildren().add(line);
-            StackPane arrow = getArrow(line);
+           line.toBack();
+            StackPane arrow = getArrow(line, AppState.previousNode, this, this.getCircle());
             root.getChildren().add(arrow);
                Edge edge = new Edge(AppState.previousNode, this, 0);
       
@@ -193,20 +196,75 @@ public class Node extends StackPane {
         return arrow;
        }
 
-       private StackPane getArrow(Line line) {
-        double size = 12; // Arrow size
+       private StackPane getArrow(Line line, StackPane startDot, StackPane endDot, Circle circle) {
+         double size = 12; // Arrow size
         StackPane arrow = new StackPane();
-        arrow.setStyle("-fx-background-color:#333333;-fx-border-width:1px;-fx-border-color:black;-fx-shape: \"M0,-4L4,0L0,4Z\"");//
+        arrow.setStyle("-fx-background-color:#000000 ;-fx-border-width:1px;-fx-border-color:yellow ;-fx-shape: \"M0,-4L4,0L0,4Z\"");//
         arrow.setPrefSize(size, size);
         arrow.setMaxSize(size, size);
         arrow.setMinSize(size, size);
 
+      
         arrow.rotateProperty().bind(Bindings.createDoubleBinding(() ->
                 Math.toDegrees(Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX())),
                 line.startXProperty(), line.startYProperty(), line.endXProperty(), line.endYProperty()));
 
-        arrow.translateXProperty().bind(line.endXProperty().subtract(size / 2).subtract(0));
-        arrow.translateYProperty().bind(line.endYProperty().subtract(size / 2).subtract(0));
+       // arrow.translateXProperty().bind(line.endXProperty().subtract(size / 2).subtract(0));
+       // arrow.translateYProperty().bind(line.endYProperty().subtract(size / 2).subtract(0));
+
+       //arrow.layoutXProperty().bind(line.startXProperty().add(line.endXProperty()).divide(2));
+   // arrow.layoutYProperty().bind(line.startYProperty().add(line.endYProperty()).divide(2));
+    //DoubleBinding d = Bindings.createDoubleBinding(() ->
+      //           Math.sqrt(Math.pow(line.getEndX() - line.getStartX(), 2) + Math.pow(line.getEndY() - line.getStartY(), 2)) / 2,
+        //         line.startXProperty(), line.startYProperty(), line.endXProperty(), line.endYProperty());
+                DoubleProperty xDifferenceProperty = new SimpleDoubleProperty();
+
+        xDifferenceProperty.bind(Bindings.createDoubleBinding(
+            () -> line.getEndX() - line.getStartX(),
+            line.startXProperty(), line.endXProperty()
+    ));
+    DoubleProperty yDifferenceProperty = new SimpleDoubleProperty();
+    yDifferenceProperty.bind(Bindings.createDoubleBinding(
+            () -> line.getEndY() - line.getStartY(),
+            line.startYProperty(), line.endYProperty()
+           
+    ));
+   
+        DoubleProperty angle = new SimpleDoubleProperty();
+        angle.bind(Bindings.createDoubleBinding(
+            () -> (Math.atan2(yDifferenceProperty.get(), xDifferenceProperty.get())),
+            xDifferenceProperty, yDifferenceProperty
+    ));
+
+      DoubleProperty y = new SimpleDoubleProperty();
+        y.bind(Bindings.createDoubleBinding(
+            () -> 31 * Math.sin((angle.get())),
+            angle
+    ));
+        DoubleProperty x = new SimpleDoubleProperty();
+        x.bind(Bindings.createDoubleBinding(
+            () -> 31 * Math.cos((angle.get())),
+            angle
+    ));
+       
+       
+       double angle1 = Math.toDegrees(Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX()));
+       System.out.println(angle1);
+       System.out.println(angle.get());
+       System.out.println(y.get());
+         System.out.println(x.get());
+        arrow.layoutXProperty().bind(line.endXProperty().subtract(6).subtract(x));
+    
+        arrow.layoutYProperty().bind(line.endYProperty().subtract(6).subtract(y));
+       
+       //arrow.layoutXProperty().bind(line.endXProperty().subtract(25));
+    
+       // arrow.layoutYProperty().bind(line.endYProperty().subtract(25));
+       
+  //arrow.layoutXProperty().bind(line.endXProperty().subtract(0));
+  // arrow.layoutYProperty().bind(line.endYProperty().subtract(0));
+
+     
 
     
        
