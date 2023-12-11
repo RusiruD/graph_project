@@ -111,7 +111,7 @@ public class SecondaryController {
         isConnected();
         isEulerCircuit();
         isCyclic();
-        isBipartite();
+        isBipartite(); 
         isTree();
         
       }
@@ -161,6 +161,10 @@ public class SecondaryController {
   
     
               public  boolean isTransitive() {
+                if(AppState.undirected){
+                    transitiveLbl.setTextFill(Color.RED);
+                    return false;
+                }
                 int possibleTransitiveEdgeCounter = 0;
                 int transitiveEdgeCounter = 0;
                 // checks if there is an edge with a destination that is the same as the source of another

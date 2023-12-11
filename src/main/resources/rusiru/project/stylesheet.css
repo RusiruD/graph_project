@@ -1,0 +1,7 @@
+
+.red-end-line {
+    -fx-shape: "M 1 0 L 0 0 L 0 1"; /* Arrow shape for the end part */
+    -fx-scale-shape: false;
+    -fx-translate-x: 100%; /* Position at the end of the line */
+    -fx-stroke: red; /* Set the color of the end part to red */
+}
