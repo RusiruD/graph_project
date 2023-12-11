@@ -18,5 +18,16 @@ public class Edge {
     public Node getDestinationNode() {
         return Destination;
     }
-    
+    public int getWeight() {
+        return weight;
+    }
+    public void setSource(Node Source) {
+        this.Source = Source;
+    }
+    public void setDestination(Node Destination) {
+        this.Destination = Destination;
+    }
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 }

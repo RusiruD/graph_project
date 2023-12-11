@@ -44,7 +44,6 @@ public class SecondaryController {
     
      @FXML
     private void initialize(){
-        System.out.println("ed");
         root.setPadding(new Insets(20));
          
 
@@ -54,7 +53,6 @@ public class SecondaryController {
         for(int i=0; i<AppState.numNodes; i++){
             createNode(i);
             adjacencyList.add(new ArrayList<Integer>());
-            System.out.println("ed");
               
         }
         AppState.createAdjacencyMatrix(AppState.numNodes);
@@ -86,7 +84,6 @@ public class SecondaryController {
 
         if (clickedOnBackground) {
           
-        System.out.println("Pane clicked");
         if(AppState.previousStackPane!=null){
         AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");}
         AppState.previousStackPane = null;
@@ -113,6 +110,9 @@ public class SecondaryController {
         isCyclic();
         isBipartite(); 
         isTree();
+        for (Edge edge: edges) {
+            System.out.println(edge.getSource().getNodeNum() + " " + edge.getDestinationNode().getNodeNum() + " " + edge.getWeight());
+        }
         
       }
 
@@ -358,9 +358,7 @@ public class SecondaryController {
         if(isConnected()){
             for(Node node:nodes){
                 if(node.getinDegree()==node.getoutDegree()){
-                    System.out.println("rff");
                     if((node.getinDegree()+node.getoutDegree())%2==0){
-                        System.out.println("rd");
                         eulerCircuitLbl.setTextFill(Color.GREEN);
 
                         return true;

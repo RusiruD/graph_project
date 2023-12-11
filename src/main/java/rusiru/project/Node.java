@@ -9,7 +9,9 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -41,7 +43,7 @@ public class Node extends StackPane {
          Random random = new Random();
         dot = new Circle();
          dot.setRadius(radius);
-         dot.setFill(Color.LIGHTGREEN);
+        
         nodePane.setLayoutX((random.nextInt(550)+10));
         nodePane.setLayoutY(random.nextInt(400)+10);
        
@@ -80,16 +82,14 @@ public class Node extends StackPane {
 
     @FXML
     private void onNodeClicked(MouseEvent event, Pane root){
-        System.out.println("Node clicked");
         StackPane currentStackPane = (StackPane) event.getSource();
         if(AppState.alreadyClicked){
             AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
             
             if(AppState.undirected && !this.equals(AppState.previousNode)){
-            Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this);
-            root.getChildren().add(line);
-            Line line2 = createSecondLine(AppState.previousStackPane, currentStackPane,  AppState.previousNode, this);
-            root.getChildren().add(line2);
+            //Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this);
+            //root.getChildren().add(line);
+          
                Edge edge = new Edge(AppState.previousNode, this, 0);
         Edge edge1 = new Edge(this, AppState.previousNode, 0);
         SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
@@ -105,23 +105,25 @@ public class Node extends StackPane {
             SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
           
        
-            QuadCurve arc = createSelfLoop(AppState.previousStackPane, currentStackPane, this, AppState.previousNode);
+            QuadCurve arc = createSelfLoop(AppState.previousStackPane, currentStackPane, this, AppState.previousNode, root, edge);
             root.getChildren().add(arc);
             StackPane arrow = createSelfLoopArrow(arc);
             root.getChildren().add(arrow);
         }
           
+        //directed edge
         
         else if (!AppState.undirected && !this.equals(AppState.previousNode)){
-             Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this);
+             Edge edge = new Edge(AppState.previousNode, this, 0);
+             Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge);
             root.getChildren().add(line);
            line.toBack();
             StackPane arrow = getArrow(line, AppState.previousNode, this, this.getCircle());
             root.getChildren().add(arrow);
-               Edge edge = new Edge(AppState.previousNode, this, 0);
+           
       
         SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
-            SecondaryController.adjacencyList.get(edge.getDestinationNode().getNodeNum()).add(edge.getSource().getNodeNum());
+        SecondaryController.adjacencyList.get(edge.getDestinationNode().getNodeNum()).add(edge.getSource().getNodeNum());
         SecondaryController.edges.add(edge);
       
         }
@@ -135,9 +137,9 @@ public class Node extends StackPane {
             AppState.previousNode = this;
         }
     }
+    
 
-
-    private QuadCurve createSelfLoop(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
+    private QuadCurve createSelfLoop(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
           startNode.setoutDegree(startNode.getoutDegree()+1);
         endNode.setinDegree(endNode.getinDegree()+1);
      
@@ -149,7 +151,38 @@ public class Node extends StackPane {
 
        arc.controlXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(25));
          arc.controlYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(100));
-   
+
+         Label weightLbl = new Label("0");
+           weightLbl.layoutXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(14));
+        weightLbl.layoutYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(80));
+        TextField weightTextField = new TextField();
+        weightTextField.setVisible(false);
+        weightTextField.layoutXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(14));
+        weightTextField.layoutYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(80));
+
+        weightLbl.setOnMouseClicked(event -> {
+            weightLbl.setVisible(false);
+            weightTextField.setText(weightLbl.getText());
+            weightTextField.setPrefWidth(40);
+            
+            weightTextField.setVisible(true);
+            weightTextField.requestFocus();
+        });
+
+        weightTextField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                weightLbl.setText(weightTextField.getText());
+                weightTextField.setVisible(false);
+                weightLbl.setVisible(true);
+                edge.setWeight(Integer.parseInt(weightLbl.getText()));
+
+
+            }
+        });
+        root.getChildren().add(weightTextField);
+
+          
+        root.getChildren().add(weightLbl);
    
         arc.endXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(15));
         arc.endYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(20));
@@ -162,8 +195,10 @@ public class Node extends StackPane {
 
 
     }
-    private Line createLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
-        System.out.println(startNode.getNodeNum() + " " + endNode.getNodeNum());
+
+    
+    private Line createLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
+        
         startNode.setoutDegree(startNode.getoutDegree()+1);
         endNode.setinDegree(endNode.getinDegree()+1);
      
@@ -177,7 +212,43 @@ public class Node extends StackPane {
         line.endYProperty().bind(endStackPane.layoutYProperty().add(endStackPane.translateYProperty()).add(endStackPane.heightProperty().divide(2)));
 
 
-        
+          Label weightLbl = new Label("0");
+
+          
+        // Create the label and bind its position to the midpoint
+      
+        weightLbl.layoutXProperty().bind(line.startXProperty().add(line.endXProperty()).divide(2));
+        weightLbl.layoutYProperty().bind(line.startYProperty().add(line.endYProperty()).divide(2));
+
+
+        TextField weightTextField = new TextField();
+        weightTextField.setVisible(false);
+        weightTextField.layoutXProperty().bind(line.startXProperty().add(line.endXProperty()).divide(2));
+        weightTextField.layoutYProperty().bind(line.startYProperty().add(line.endYProperty()).divide(2));
+      
+        weightLbl.setOnMouseClicked(event -> {
+            weightLbl.setVisible(false);
+            weightTextField.setText(weightLbl.getText());
+            weightTextField.setPrefWidth(40);
+            
+            weightTextField.setVisible(true);
+            weightTextField.requestFocus();
+        });
+
+        weightTextField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                weightLbl.setText(weightTextField.getText());
+                weightTextField.setVisible(false);
+                weightLbl.setVisible(true);
+                edge.setWeight(Integer.parseInt(weightLbl.getText()));
+
+
+            }
+        });
+        root.getChildren().add(weightTextField);
+
+          
+        root.getChildren().add(weightLbl);
         
 
         return line;
@@ -209,14 +280,6 @@ public class Node extends StackPane {
                 Math.toDegrees(Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX())),
                 line.startXProperty(), line.startYProperty(), line.endXProperty(), line.endYProperty()));
 
-       // arrow.translateXProperty().bind(line.endXProperty().subtract(size / 2).subtract(0));
-       // arrow.translateYProperty().bind(line.endYProperty().subtract(size / 2).subtract(0));
-
-       //arrow.layoutXProperty().bind(line.startXProperty().add(line.endXProperty()).divide(2));
-   // arrow.layoutYProperty().bind(line.startYProperty().add(line.endYProperty()).divide(2));
-    //DoubleBinding d = Bindings.createDoubleBinding(() ->
-      //           Math.sqrt(Math.pow(line.getEndX() - line.getStartX(), 2) + Math.pow(line.getEndY() - line.getStartY(), 2)) / 2,
-        //         line.startXProperty(), line.startYProperty(), line.endXProperty(), line.endYProperty());
                 DoubleProperty xDifferenceProperty = new SimpleDoubleProperty();
 
         xDifferenceProperty.bind(Bindings.createDoubleBinding(
@@ -248,41 +311,17 @@ public class Node extends StackPane {
     ));
        
        
-       double angle1 = Math.toDegrees(Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX()));
-       System.out.println(angle1);
-       System.out.println(angle.get());
-       System.out.println(y.get());
-         System.out.println(x.get());
+      
+      
         arrow.layoutXProperty().bind(line.endXProperty().subtract(6).subtract(x));
     
         arrow.layoutYProperty().bind(line.endYProperty().subtract(6).subtract(y));
        
-       //arrow.layoutXProperty().bind(line.endXProperty().subtract(25));
     
-       // arrow.layoutYProperty().bind(line.endYProperty().subtract(25));
-       
-  //arrow.layoutXProperty().bind(line.endXProperty().subtract(0));
-  // arrow.layoutYProperty().bind(line.endYProperty().subtract(0));
-
-     
-
-    
-       
-
-     
         return arrow;
     }
        
-       private Line createSecondLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode){
-         Line line1 = new Line();
-        line1.setStroke(Color.BLUE);
-        line1.setStrokeWidth(2);
-           line1.startXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)));
-        line1.startYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).add(20));
-        line1.endXProperty().bind(endStackPane.layoutXProperty().add(endStackPane.translateXProperty()).add(endStackPane.widthProperty().divide(2)));
-        line1.endYProperty().bind(endStackPane.layoutYProperty().add(endStackPane.translateYProperty()).add(endStackPane.heightProperty().divide(2)).add(20));
-        return line1;
-       }
+      
 
     public StackPane getStackPane(){
         return this;}
