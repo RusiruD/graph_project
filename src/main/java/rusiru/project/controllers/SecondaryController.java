@@ -101,8 +101,10 @@ public class SecondaryController {
         isSymmetric();
         isTransitive();
         isAntiSymmetric();
+
         isEquivalence();
         isPartialOrder();
+
         isSimple();
         isMulti();
         isPseudo();
@@ -134,20 +136,23 @@ public class SecondaryController {
       
       if(reflexiveEdgeCounter==AppState.numNodes){
           reflexiveLbl.setTextFill(Color.GREEN);
+          AppState.isReflexive=true;
           return true;
       }
           
-               
+               System.out.println("reflexive called");
       reflexiveLbl.setTextFill(Color.RED);
-      
+      AppState.isReflexive=false;
       return false;
     }
 
 
     @FXML
     public  boolean isSymmetric(){
+
       if(AppState.undirected){
         symmetricLbl.setTextFill(Color.GREEN);
+        AppState.isSymmetric=true;
         return true;}
 
         int symmetricEdgeCounter = 0;
@@ -158,21 +163,28 @@ public class SecondaryController {
                 && ((edge.getSource().getNodeNum())==(edge1.getDestinationNode().getNodeNum()))){
                     symmetricEdgeCounter++;
                 }
-            }}
-            if (symmetricEdgeCounter == edges.size()) {
-                symmetricLbl.setTextFill(Color.GREEN);
-                return true;
-              } 
-                symmetricLbl.setTextFill(Color.RED);
-                return false;
+            }
+        }
+        if (symmetricEdgeCounter == edges.size()) {
+              symmetricLbl.setTextFill(Color.GREEN);
+              AppState.isSymmetric=true;
+              return true;
+        }
+        else{ 
+              symmetricLbl.setTextFill(Color.RED);
+              AppState.isSymmetric=false;
+              return false;
               }
+            }
+
 
   
     
-              public  boolean isTransitive() {
-                if(AppState.undirected){
-                    transitiveLbl.setTextFill(Color.RED);
-                    return false;
+    public  boolean isTransitive() {
+      if(AppState.undirected){
+          transitiveLbl.setTextFill(Color.RED);
+          AppState.isTransitive=false;
+          return false;
                 }
                 int possibleTransitiveEdgeCounter = 0;
                 int transitiveEdgeCounter = 0;
@@ -205,9 +217,11 @@ public class SecondaryController {
                 // if the counter is equal to the number of edges, then the graph is transitive
                 if (possibleTransitiveEdgeCounter == transitiveEdgeCounter) {
                     transitiveLbl.setTextFill(Color.GREEN);
+                  AppState.isTransitive=true;
                   return true;
                 } else {
                     transitiveLbl.setTextFill(Color.RED);
+                  AppState.isTransitive=false;
                   return false;
                 }
               }
@@ -240,9 +254,11 @@ public class SecondaryController {
                 // if the counter is equal to the number of edges, then the graph is anti-symmetric
                 if (possibleAntiSymmetricEdgeCounter == antisymmetricEdgeCounter) {
                     antiSymmetricLbl.setTextFill(Color.GREEN);
+                  AppState.isAntiSymmetric=true;
                   return true;
                 } else {
                     antiSymmetricLbl.setTextFill(Color.RED);
+                  AppState.isAntiSymmetric=false;
             
                   return false;
                 }
@@ -253,7 +269,7 @@ public class SecondaryController {
 
     @FXML 
     public  boolean isEquivalence(){
-        if(isReflexive() && isSymmetric() && isTransitive()){
+        if(AppState.isReflexive && AppState.isSymmetric && AppState.isTransitive){
             equivalenceLbl.setTextFill(Color.GREEN);
             return true;
         }
@@ -262,7 +278,7 @@ public class SecondaryController {
 
     @FXML
     public boolean isPartialOrder(){
-        if(isReflexive() && isAntiSymmetric() && isTransitive()){
+        if(AppState.isReflexive && AppState.isAntiSymmetric && AppState.isTransitive){
             partialOrderLbl.setTextFill(Color.GREEN);
             return true;
         }
@@ -273,10 +289,12 @@ public class SecondaryController {
       public  boolean isSimple(){
        if(!containsMultiEdges() && !containsSelfLoop()){
         if(AppState.undirected){
+          directedSimpleGraphLbl.setTextFill(Color.RED);
           simpleGraphLbl.setTextFill(Color.GREEN);
          
         }
         else{
+          simpleGraphLbl.setTextFill(Color.GREEN);
           directedSimpleGraphLbl.setTextFill(Color.GREEN);
           
         }
@@ -297,9 +315,11 @@ public class SecondaryController {
 
         if(containsMultiEdges()&&!containsSelfLoop()){
           if(AppState.undirected){
+            directedMultiGraphLbl.setTextFill(Color.RED);
             multiGraphLbl.setTextFill(Color.GREEN);
           }
           else{
+            multiGraphLbl.setTextFill(Color.GREEN);
             directedMultiGraphLbl.setTextFill(Color.GREEN);
           }
 
@@ -322,10 +342,12 @@ public class SecondaryController {
 
        if(containsMultiEdges() && containsSelfLoop()){
         if(AppState.undirected){
+          directedPseudoGraphLbl.setTextFill(Color.RED);
           pseudoGraphLbl.setTextFill(Color.GREEN);
          
         }
         else{
+          pseudoGraphLbl.setTextFill(Color.GREEN);
           directedPseudoGraphLbl.setTextFill(Color.GREEN);
          
         }

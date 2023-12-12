@@ -13,6 +13,10 @@ public class AppState {
     public static StackPane previousStackPane;
     public static boolean undirected;
     public static boolean weighted;
+    public static boolean isReflexive;
+    public static boolean isSymmetric;
+    public static boolean isTransitive;
+    public static boolean isAntiSymmetric;
     public static void createAdjacencyMatrix(int numNodes) {
         adjacencyMatrix = new int[numNodes][numNodes];
      }
