@@ -40,6 +40,9 @@ public class SecondaryController {
     @FXML  Label acyclicLbl;
     @FXML  Label bipartiteLbl;
     @FXML  Label treeLbl;
+    @FXML Label directedSimpleGraphLbl;
+    @FXML Label directedMultiGraphLbl;
+    @FXML Label directedPseudoGraphLbl;
   
     
      @FXML
@@ -103,6 +106,9 @@ public class SecondaryController {
         isSimple();
         isMulti();
         isPseudo();
+        isSimpleDirected();
+        isMultiDirected();
+        isPseudoDirected();
        
         isComplete();
         isConnected();
@@ -267,59 +273,137 @@ public class SecondaryController {
     }
      @FXML
       public  boolean isSimple(){
+        if(!AppState.undirected){
+                              simpleGraphLbl.setTextFill(Color.RED);
+
+            return false;
+        }
+       
         
-        for (Edge edge : edges) {
-         
-            if (edge.getDestinationNode().getNodeNum()==(edge.getSource().getNodeNum())) {
-                simpleGraphLbl.setTextFill(Color.RED);
-              return false;
-            }
+        
+        
+        else if(containsSelfLoop()){
+            simpleGraphLbl.setTextFill(Color.RED);
+            return false;
           }
         
 
-        for (Edge edge : edges) {
-          for (Edge edge1 : edges) {
-            if (edge.getSource().getNodeNum()==(edge1.getSource().getNodeNum())
-                && edge.getDestinationNode().getNodeNum()==(edge1.getDestinationNode().getNodeNum())
-                && edge != edge1) {
-                    simpleGraphLbl.setTextFill(Color.RED);
+        else if(containsMultiEdges()){
+        simpleGraphLbl.setTextFill(Color.RED);
+        return false;}
+
+
+        else {
+          simpleGraphLbl.setTextFill(Color.GREEN);
+        
+        return true;}
+
+      }
+
+
+      @FXML 
+      public boolean isSimpleDirected(){
+          if(AppState.undirected){
+             directedSimpleGraphLbl.setTextFill(Color.RED);
+            
+              return false;
+          }
+          
+          else if(containsSelfLoop()){
+              directedSimpleGraphLbl.setTextFill(Color.RED);
               return false;
             }
-          }
-        }
-        simpleGraphLbl.setTextFill(Color.GREEN);
-        return true;
+          else if(containsMultiEdges()){
+              directedSimpleGraphLbl.setTextFill(Color.RED);
+              return false;
+            }
+        
+
+        else{
+        directedSimpleGraphLbl.setTextFill(Color.GREEN);
+        return true;}
+
       }
 
       @FXML
       public boolean isMulti(){
-        /*for (Edge edge : edges) {
-          for (Edge edge1 : edges) {
-            if (edge.getSource().getNodeNum()==(edge1.getSource().getNodeNum())
-                && edge.getDestinationNode().getNodeNum()==(edge1.getDestinationNode().getNodeNum())
-                && edge != edge1) {
+        if(!AppState.undirected){
+          multiGraphLbl.setTextFill(Color.RED);
+          return false;
+        }
+
+      else {
+       if(containsMultiEdges() & !containsSelfLoop()){
                     multiGraphLbl.setTextFill(Color.GREEN);
               return true;
             }
-          }
-        }*/
-        multiGraphLbl.setTextFill(Color.RED);
-        return false;
+        else{
+          multiGraphLbl.setTextFill(Color.RED);
+          return false;
+        }}
+
+          
+      }
+      @FXML
+      public boolean isMultiDirected(){
+        if(AppState.undirected){
+          return false;
+        }
+
+        
+        else {
+          
+       if(containsMultiEdges() && !containsSelfLoop()){
+        directedMultiGraphLbl.setTextFill(Color.GREEN);
+        return true;}
+        else{
+          directedMultiGraphLbl.setTextFill(Color.RED);
+          return false;
+        }}
+
+
       }
 
       @FXML
       public boolean isPseudo(){
-        for (Edge edge : edges) {
-         
-           if(edge.getSource().getNodeNum()==(edge.getDestinationNode().getNodeNum())){
-                    pseudoGraphLbl.setTextFill(Color.GREEN);
-              return true;
-            }
-          
+       
+
+        if(AppState.undirected){
+                  pseudoGraphLbl.setTextFill(Color.RED);
+
+          return false;
         }
-        pseudoGraphLbl.setTextFill(Color.RED);
-        return false;
+
+        if(containsMultiEdges() && containsSelfLoop()){
+          pseudoGraphLbl.setTextFill(Color.GREEN);
+          return true;
+        }
+        else{
+          pseudoGraphLbl.setTextFill(Color.RED);
+          return false;
+        }
       }
+
+    @FXML 
+    public boolean isPseudoDirected(){
+      
+        if(AppState.undirected){
+                  directedPseudoGraphLbl.setTextFill(Color.RED);
+
+          return false;
+        }
+       
+        if(containsMultiEdges() && containsSelfLoop()){
+          directedPseudoGraphLbl.setTextFill(Color.GREEN);
+          return true;
+        }
+        else{
+          directedPseudoGraphLbl.setTextFill(Color.RED);
+          return false;
+        }
+      }
+
+      
 
     @FXML
     public  boolean isComplete(){
@@ -484,6 +568,23 @@ public class SecondaryController {
     }
 
       
-    
+    public boolean containsSelfLoop(){
+        for(Edge edge:edges){
+            if(edge.getSource().getNodeNum()==edge.getDestinationNode().getNodeNum()){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean containsMultiEdges(){
+        for(Edge edge:edges){
+            for(Edge edge1:edges){
+                if(edge.getSource().getNodeNum()==edge1.getSource().getNodeNum() && edge.getDestinationNode().getNodeNum()==edge1.getDestinationNode().getNodeNum() && edge!=edge1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }
