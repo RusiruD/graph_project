@@ -114,9 +114,11 @@ public class SecondaryController {
         isConnected();
         isEulerCircuit();
         isCyclic();
-        isBipartite(); 
+        //isBipartite(); 
         isTree();
-       
+       for(Edge edge : edges){
+         System.out.println("edge"+edge.getSource().getNodeNum()+edge.getDestinationNode().getNodeNum());
+       }
       }
 
 
@@ -365,7 +367,6 @@ public class SecondaryController {
 
     @FXML
     public  boolean isComplete(){
-        int completeEdgeCounter = 0;
         for(Node node:nodes){
           if((node.getinDegree())!=AppState.numNodes-1){
             completeGraphLbl.setTextFill(Color.RED);
@@ -377,12 +378,7 @@ public class SecondaryController {
                 return true;
               
         
-        /*if (completeEdgeCounter == edges.size() * edges.size()) {
-            completeGraphLbl.setTextFill(Color.GREEN);
-          return true;
-        } 
-            completeGraphLbl.setTextFill(Color.RED);
-          return false;*/
+      
         
       }
 
@@ -441,41 +437,49 @@ public class SecondaryController {
         return false;
       }
 
-      public boolean isCyclic(){
-        boolean[] visited = new boolean[AppState.numNodes];
+      
 
-        for (int i = 0; i < AppState.numNodes; i++) {
-            if (!visited[i] && isCyclicDFS(i, -1, visited)) {
-                acyclicLbl.setTextFill(Color.RED);
-                return true;
-            }
-        }
+     
 
-        acyclicLbl.setTextFill(Color.GREEN);
-        return false;
-
+    // Add this method to your SecondaryController class
+    public boolean isCyclic() {
+      Set<Integer> visited = new HashSet<>();
+      Set<Integer> currentlyVisiting = new HashSet<>();
+  
+      for (Node node : nodes) {
+          int nodeNum = node.getNodeNum();
+          if (!visited.contains(nodeNum) && isCyclicDFS(nodeNum, visited, currentlyVisiting)) {
+              acyclicLbl.setTextFill(Color.RED);
+              return true;
+          }
       }
-    
-      private boolean isCyclicDFS(int current, int parent, boolean[] visited) {
-        visited[current] = true;
+      acyclicLbl.setTextFill(Color.GREEN);
+      return false;
+  }
+  
+  private boolean isCyclicDFS(int current, Set<Integer> visited, Set<Integer> currentlyVisiting) {
+      visited.add(current);
+      currentlyVisiting.add(current);
+  
+      for (Edge edge : edges) {
+          if (edge.getSource().getNodeNum() == current) {
+              int neighbor = edge.getDestinationNode().getNodeNum();
+  
+              if (!visited.contains(neighbor)) {
+                  if (isCyclicDFS(neighbor, visited, currentlyVisiting)) {
+                      return true;
+                  }
+              } else if (currentlyVisiting.contains(neighbor)) {
+                  // If the neighbor is in the currentlyVisiting set, there is a cycle
+                  return true;
+              }
+          }
+      }
+  
+      currentlyVisiting.remove(current); // Backtrack when leaving the current node
+      return false;
+  }
 
-        for (int neighbor : adjacencyList.get(current)) {
-            if (!visited[neighbor]) {
-                // If the neighbor is not visited, continue DFS
-                if (isCyclicDFS(neighbor, current, visited)) {
-                    return true;
-                }
-            } else if (neighbor != parent) {
-                // If the neighbor is visited and not the parent, there is a cycle
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-       
-    
 
       public boolean isBipartite(){
          int[] colors = new int[AppState.numNodes];
@@ -490,13 +494,14 @@ public class SecondaryController {
         bipartiteLbl.setTextFill(Color.GREEN);
         return true;
       }
+    
       private static boolean isBipartiteDFS(List<Edge> edges, int vertex, int color, int[] colors) {
         colors[vertex] = color;
-
+    
         for (Edge edge : edges) {
             int source = edge.getSource().getNodeNum();
             int destination = edge.getDestinationNode().getNodeNum();
-
+    
             if (source == vertex) {
                 int neighbor = destination;
                 if (colors[neighbor] == -1) {
@@ -511,9 +516,9 @@ public class SecondaryController {
                 // If the neighbor has a different color, continue to the next neighbor
             }
         }
-
-        
-        return true;}
+    
+        return true;
+    }
 
 
       public boolean isTree(){
