@@ -106,9 +106,7 @@ public class SecondaryController {
         isSimple();
         isMulti();
         isPseudo();
-        isSimpleDirected();
-        isMultiDirected();
-        isPseudoDirected();
+        
        
         isComplete();
         isConnected();
@@ -273,135 +271,76 @@ public class SecondaryController {
     }
      @FXML
       public  boolean isSimple(){
-        if(!AppState.undirected){
-                              simpleGraphLbl.setTextFill(Color.RED);
-
-            return false;
-        }
-       
-        
-        
-        
-        else if(containsSelfLoop()){
-            simpleGraphLbl.setTextFill(Color.RED);
-            return false;
-          }
-        
-
-        else if(containsMultiEdges()){
-        simpleGraphLbl.setTextFill(Color.RED);
-        return false;}
-
-
-        else {
+       if(!containsMultiEdges() && !containsSelfLoop()){
+        if(AppState.undirected){
           simpleGraphLbl.setTextFill(Color.GREEN);
-        
-        return true;}
-
-      }
-
-
-      @FXML 
-      public boolean isSimpleDirected(){
-          if(AppState.undirected){
-             directedSimpleGraphLbl.setTextFill(Color.RED);
-            
-              return false;
-          }
-          
-          else if(containsSelfLoop()){
-              directedSimpleGraphLbl.setTextFill(Color.RED);
-              return false;
-            }
-          else if(containsMultiEdges()){
-              directedSimpleGraphLbl.setTextFill(Color.RED);
-              return false;
-            }
-        
-
+         
+        }
         else{
-        directedSimpleGraphLbl.setTextFill(Color.GREEN);
-        return true;}
+          directedSimpleGraphLbl.setTextFill(Color.GREEN);
+          
+        }
+        return true;
+       }
+       else{
+        simpleGraphLbl.setTextFill(Color.RED);
+        directedSimpleGraphLbl.setTextFill(Color.RED);
+        return false;
+       }
 
       }
 
+
+    
       @FXML
       public boolean isMulti(){
-        if(!AppState.undirected){
-          multiGraphLbl.setTextFill(Color.RED);
-          return false;
-        }
 
-      else {
-       if(containsMultiEdges() & !containsSelfLoop()){
-                    multiGraphLbl.setTextFill(Color.GREEN);
-              return true;
-            }
+        if(containsMultiEdges()&&!containsSelfLoop()){
+          if(AppState.undirected){
+            multiGraphLbl.setTextFill(Color.GREEN);
+          }
+          else{
+            directedMultiGraphLbl.setTextFill(Color.GREEN);
+          }
+
+          return true;
+
+        }
         else{
           multiGraphLbl.setTextFill(Color.RED);
-          return false;
-        }}
-
-          
-      }
-      @FXML
-      public boolean isMultiDirected(){
-        if(AppState.undirected){
-          return false;
-        }
-
-        
-        else {
-          
-       if(containsMultiEdges() && !containsSelfLoop()){
-        directedMultiGraphLbl.setTextFill(Color.GREEN);
-        return true;}
-        else{
           directedMultiGraphLbl.setTextFill(Color.RED);
           return false;
-        }}
-
-
+        }
       }
+
+
+    
 
       @FXML
       public boolean isPseudo(){
        
 
+       if(containsMultiEdges() && containsSelfLoop()){
         if(AppState.undirected){
-                  pseudoGraphLbl.setTextFill(Color.RED);
-
-          return false;
-        }
-
-        if(containsMultiEdges() && containsSelfLoop()){
           pseudoGraphLbl.setTextFill(Color.GREEN);
-          return true;
+         
         }
         else{
-          pseudoGraphLbl.setTextFill(Color.RED);
-          return false;
-        }
-      }
-
-    @FXML 
-    public boolean isPseudoDirected(){
-      
-        if(AppState.undirected){
-                  directedPseudoGraphLbl.setTextFill(Color.RED);
-
-          return false;
-        }
-       
-        if(containsMultiEdges() && containsSelfLoop()){
           directedPseudoGraphLbl.setTextFill(Color.GREEN);
-          return true;
+         
         }
-        else{
-          directedPseudoGraphLbl.setTextFill(Color.RED);
-          return false;
-        }
+      return true;
       }
+      else{
+        pseudoGraphLbl.setTextFill(Color.RED);
+        directedPseudoGraphLbl.setTextFill(Color.RED);
+        return false;
+      }
+
+       
+      }
+
+  
 
       
 
