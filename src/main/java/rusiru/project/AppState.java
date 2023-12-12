@@ -12,6 +12,7 @@ public class AppState {
     public static boolean alreadyClicked = false;
     public static StackPane previousStackPane;
     public static boolean undirected;
+    public static boolean weighted;
     public static void createAdjacencyMatrix(int numNodes) {
         adjacencyMatrix = new int[numNodes][numNodes];
      }

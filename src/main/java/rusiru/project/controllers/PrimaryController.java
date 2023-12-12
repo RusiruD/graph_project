@@ -12,6 +12,7 @@ public class PrimaryController {
     @FXML Button submitBtn;
     @FXML TextField numNodesTextField;
     @FXML CheckBox undirected;
+    @FXML CheckBox weighted;
     int numNodesInt;
 
     @FXML
@@ -24,6 +25,7 @@ public class PrimaryController {
     @FXML
     private void onSubmitClicked() throws IOException, NumberFormatException {
         AppState.undirected = undirected.isSelected();
+        AppState.weighted = weighted.isSelected();
         System.out.println("Submit clicked");
         System.out.println("Number of nodes: " + numNodesTextField.getText());
       

@@ -10,5 +10,6 @@
       <Button fx:id="submitBtn" layoutX="247.0" layoutY="367.0" mnemonicParsing="false" onMouseClicked="#onSubmitClicked" prefHeight="17.0" prefWidth="148.0" text="Submit" />
       <TextField fx:id="numNodesTextField" layoutX="247.0" layoutY="200.0" />
       <CheckBox fx:id="undirected" layoutX="285.0" layoutY="113.0" mnemonicParsing="false" text="undirected" />
+      <CheckBox fx:id="weighted" layoutX="285.0" layoutY="141.0" mnemonicParsing="false" text="weighted" />
    </children>
 </Pane>

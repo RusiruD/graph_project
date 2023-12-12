@@ -110,10 +110,7 @@ public class SecondaryController {
         isCyclic();
         isBipartite(); 
         isTree();
-        for (Edge edge: edges) {
-            System.out.println(edge.getSource().getNodeNum() + " " + edge.getDestinationNode().getNodeNum() + " " + edge.getWeight());
-        }
-        
+       
       }
 
 
@@ -122,16 +119,24 @@ public class SecondaryController {
 
        int reflexiveEdgeCounter=0;
         for(Edge x:edges){
+        
             if(x.getSource().getNodeNum()==x.getDestinationNode().getNodeNum()){
-                reflexiveEdgeCounter++;}}
-                if(reflexiveEdgeCounter==AppState.numNodes){
-                    reflexiveLbl.setTextFill(Color.GREEN);
-                    return true;
-                }
+           
+                reflexiveEdgeCounter++;
+              }
+        }
+
+      
+      
+      if(reflexiveEdgeCounter==AppState.numNodes){
+          reflexiveLbl.setTextFill(Color.GREEN);
+          return true;
+      }
           
                
-        reflexiveLbl.setTextFill(Color.RED);
-        return false;
+      reflexiveLbl.setTextFill(Color.RED);
+      
+      return false;
     }
 
 
@@ -146,7 +151,7 @@ public class SecondaryController {
             for(Edge edge1:edges){
 
                 if (((edge.getDestinationNode().getNodeNum())==(edge1.getSource().getNodeNum()))
-                && ((edge.getSource().getNodeNum())==(edge1.getDestinationNode().getNodeNum())) && edge != edge1){
+                && ((edge.getSource().getNodeNum())==(edge1.getDestinationNode().getNodeNum()))){
                     symmetricEdgeCounter++;
                 }
             }}
@@ -176,8 +181,12 @@ public class SecondaryController {
                   for (Edge edge1 : edges) {
             
                     if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())
-                        && (edge1.getDestinationNode().getNodeNum()!=(edge.getSource().getNodeNum()))) {
+                        && (edge1.getDestinationNode().getNodeNum()!=(edge.getSource().getNodeNum()) && edge1!=edge && edge.getDestinationNode()!=edge.getSource() && edge1.getDestinationNode()!=edge1.getSource())) {
                       possibleTransitiveEdgeCounter++;
+                      System.out.println("transitive edge possible " + possibleTransitiveEdgeCounter);
+                      System.out.println("source"+ edge.getSource().getNodeNum() + "destination" + edge.getDestinationNode().getNodeNum());
+                      System.out.println("source"+ edge1.getSource().getNodeNum() + "destination" + edge1.getDestinationNode().getNodeNum());
+
                       // checks if there is an edge-edge3 that comes from the same source the first edge did
                       // and goes to the same destination the second edge did
                       for (Edge edge3 : edges) {

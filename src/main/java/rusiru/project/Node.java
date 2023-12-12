@@ -24,6 +24,7 @@ import javafx.scene.shape.CubicCurveTo;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.QuadCurve;
+import javafx.scene.shape.Shape;
 import rusiru.project.controllers.SecondaryController;
 
 public class Node extends StackPane {
@@ -83,51 +84,54 @@ public class Node extends StackPane {
     @FXML
     private void onNodeClicked(MouseEvent event, Pane root){
         StackPane currentStackPane = (StackPane) event.getSource();
+
+
         if(AppState.alreadyClicked){
             AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
             
             if(AppState.undirected && !this.equals(AppState.previousNode)){
-            //Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this);
-            //root.getChildren().add(line);
+           
           
-               Edge edge = new Edge(AppState.previousNode, this, 0);
-        Edge edge1 = new Edge(this, AppState.previousNode, 0);
-        SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
-            SecondaryController.adjacencyList.get(edge.getDestinationNode().getNodeNum()).add(edge.getSource().getNodeNum());
-        SecondaryController.edges.add(edge);
-        SecondaryController.edges.add(edge1);
+                Edge edge = new Edge(AppState.previousNode, this, 0);
+                Edge edge1 = new Edge(this, AppState.previousNode, 0);
+               
+                SecondaryController.edges.add(edge);
+                SecondaryController.edges.add(edge1);
             }
 
             //self loop
 
-        else if(this.equals(AppState.previousNode) && !(this.hasSelfLoop)){
-            Edge edge = new Edge(this, this, 0);
-            SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
+             else if(this.equals(AppState.previousNode) && !(this.hasSelfLoop)){
+                Edge edge = new Edge(this, this, 0);
+                SecondaryController.edges.add(edge);
+                SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
           
        
-            QuadCurve arc = createSelfLoop(AppState.previousStackPane, currentStackPane, this, AppState.previousNode, root, edge);
-            root.getChildren().add(arc);
-            StackPane arrow = createSelfLoopArrow(arc);
-            root.getChildren().add(arrow);
-        }
+                QuadCurve arc = createSelfLoop(AppState.previousStackPane, currentStackPane, this, AppState.previousNode, root, edge);
+                root.getChildren().add(arc);
+                StackPane arrow = createSelfLoopArrow(arc);
+                root.getChildren().add(arrow);
+            }
           
         //directed edge
         
-        else if (!AppState.undirected && !this.equals(AppState.previousNode)){
-             Edge edge = new Edge(AppState.previousNode, this, 0);
-             Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge);
-            root.getChildren().add(line);
-           line.toBack();
-            StackPane arrow = getArrow(line, AppState.previousNode, this, this.getCircle());
-            root.getChildren().add(arrow);
+            else if (!AppState.undirected && !this.equals(AppState.previousNode)){
+                Edge edge = new Edge(AppState.previousNode, this, 0);
+                Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge);
+                root.getChildren().add(line);
+                line.toBack();
+                StackPane arrow = createEdgeArrow(line, AppState.previousNode, this, this.getCircle());
+                root.getChildren().add(arrow);
            
       
-        SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
-        SecondaryController.adjacencyList.get(edge.getDestinationNode().getNodeNum()).add(edge.getSource().getNodeNum());
-        SecondaryController.edges.add(edge);
+                SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
+                SecondaryController.adjacencyList.get(edge.getDestinationNode().getNodeNum()).add(edge.getSource().getNodeNum());
+                SecondaryController.edges.add(edge);
       
+            }
+
+        AppState.alreadyClicked = false;
         }
-      AppState.alreadyClicked = false;}
 
         else{
              
@@ -140,57 +144,32 @@ public class Node extends StackPane {
     
 
     private QuadCurve createSelfLoop(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
-          startNode.setoutDegree(startNode.getoutDegree()+1);
+
+        startNode.setoutDegree(startNode.getoutDegree()+1);
         endNode.setinDegree(endNode.getinDegree()+1);
      
-          double x = startStackPane.getLayoutX() + startStackPane.getTranslateX() + startStackPane.getWidth() / 2.0;
+        double x = startStackPane.getLayoutX() + startStackPane.getTranslateX() + startStackPane.getWidth() / 2.0;
         double y = startStackPane.getLayoutY() + startStackPane.getTranslateY() + startStackPane.getHeight() / 2.0;
-   QuadCurve arc = new QuadCurve(x,y, x+15, y-150, x+25, y-5);
-     arc.startXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)));
-       arc.startYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(25));
+        
+        QuadCurve arc = new QuadCurve(x,y, x+15, y-150, x+25, y-5);
+        arc.startXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)));
+        arc.startYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(25));
 
-       arc.controlXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(25));
-         arc.controlYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(100));
-
-         Label weightLbl = new Label("0");
-           weightLbl.layoutXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(14));
-        weightLbl.layoutYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(80));
-        TextField weightTextField = new TextField();
-        weightTextField.setVisible(false);
-        weightTextField.layoutXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(14));
-        weightTextField.layoutYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(80));
-
-        weightLbl.setOnMouseClicked(event -> {
-            weightLbl.setVisible(false);
-            weightTextField.setText(weightLbl.getText());
-            weightTextField.setPrefWidth(40);
-            
-            weightTextField.setVisible(true);
-            weightTextField.requestFocus();
-        });
-
-        weightTextField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                weightLbl.setText(weightTextField.getText());
-                weightTextField.setVisible(false);
-                weightLbl.setVisible(true);
-                edge.setWeight(Integer.parseInt(weightLbl.getText()));
-
-
-            }
-        });
-        root.getChildren().add(weightTextField);
-
-          
-        root.getChildren().add(weightLbl);
-   
+        arc.controlXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(25));
+        arc.controlYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(100));
+        
         arc.endXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).add(15));
         arc.endYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(20));
 
-    arc.setStroke(Color.BLUE);
+        arc.setStroke(Color.BLUE);
         arc.setStrokeWidth(2);
         arc.setFill(Color.TRANSPARENT);
-   return arc;
+
+        if(AppState.weighted){
+           makeWeightedEdge(root, null, arc, true, edge);
+        }
+        
+        return arc;
 
 
 
@@ -211,48 +190,18 @@ public class Node extends StackPane {
         line.endXProperty().bind(endStackPane.layoutXProperty().add(endStackPane.translateXProperty()).add(endStackPane.widthProperty().divide(2)));
         line.endYProperty().bind(endStackPane.layoutYProperty().add(endStackPane.translateYProperty()).add(endStackPane.heightProperty().divide(2)));
 
-
-          Label weightLbl = new Label("0");
-
-          
-        // Create the label and bind its position to the midpoint
-      
-        weightLbl.layoutXProperty().bind(line.startXProperty().add(line.endXProperty()).divide(2));
-        weightLbl.layoutYProperty().bind(line.startYProperty().add(line.endYProperty()).divide(2));
-
-
-        TextField weightTextField = new TextField();
-        weightTextField.setVisible(false);
-        weightTextField.layoutXProperty().bind(line.startXProperty().add(line.endXProperty()).divide(2));
-        weightTextField.layoutYProperty().bind(line.startYProperty().add(line.endYProperty()).divide(2));
-      
-        weightLbl.setOnMouseClicked(event -> {
-            weightLbl.setVisible(false);
-            weightTextField.setText(weightLbl.getText());
-            weightTextField.setPrefWidth(40);
-            
-            weightTextField.setVisible(true);
-            weightTextField.requestFocus();
-        });
-
-        weightTextField.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                weightLbl.setText(weightTextField.getText());
-                weightTextField.setVisible(false);
-                weightLbl.setVisible(true);
-                edge.setWeight(Integer.parseInt(weightLbl.getText()));
-
-
-            }
-        });
-        root.getChildren().add(weightTextField);
+        if(AppState.weighted){
+            makeWeightedEdge(root, line, null, false, edge);
+        
 
           
-        root.getChildren().add(weightLbl);
+           
+        }
         
 
         return line;
        }
+
 
        private StackPane createSelfLoopArrow(QuadCurve arc){
         double size = 12; // Arrow size
@@ -267,61 +216,107 @@ public class Node extends StackPane {
         return arrow;
        }
 
-       private StackPane getArrow(Line line, StackPane startDot, StackPane endDot, Circle circle) {
-         double size = 12; // Arrow size
-        StackPane arrow = new StackPane();
-        arrow.setStyle("-fx-background-color:#000000 ;-fx-border-width:1px;-fx-border-color:yellow ;-fx-shape: \"M0,-4L4,0L0,4Z\"");//
-        arrow.setPrefSize(size, size);
-        arrow.setMaxSize(size, size);
-        arrow.setMinSize(size, size);
+       private StackPane createEdgeArrow(Line line, StackPane startDot, StackPane endDot, Circle circle) {
+            double size = 12; // Arrow size
+            StackPane arrow = new StackPane();
+            arrow.setStyle("-fx-background-color:#000000 ;-fx-border-width:1px;-fx-border-color:yellow ;-fx-shape: \"M0,-4L4,0L0,4Z\"");//
+            arrow.setPrefSize(size, size);
+            arrow.setMaxSize(size, size);
+            arrow.setMinSize(size, size);
 
       
-        arrow.rotateProperty().bind(Bindings.createDoubleBinding(() ->
+            arrow.rotateProperty().bind(Bindings.createDoubleBinding(() ->
                 Math.toDegrees(Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX())),
                 line.startXProperty(), line.startYProperty(), line.endXProperty(), line.endYProperty()));
 
                 DoubleProperty xDifferenceProperty = new SimpleDoubleProperty();
 
-        xDifferenceProperty.bind(Bindings.createDoubleBinding(
+            xDifferenceProperty.bind(Bindings.createDoubleBinding(
             () -> line.getEndX() - line.getStartX(),
             line.startXProperty(), line.endXProperty()
-    ));
-    DoubleProperty yDifferenceProperty = new SimpleDoubleProperty();
-    yDifferenceProperty.bind(Bindings.createDoubleBinding(
+            ));
+
+            DoubleProperty yDifferenceProperty = new SimpleDoubleProperty();
+            yDifferenceProperty.bind(Bindings.createDoubleBinding(
             () -> line.getEndY() - line.getStartY(),
             line.startYProperty(), line.endYProperty()
            
-    ));
+            ));
    
-        DoubleProperty angle = new SimpleDoubleProperty();
-        angle.bind(Bindings.createDoubleBinding(
+            DoubleProperty angle = new SimpleDoubleProperty();
+            angle.bind(Bindings.createDoubleBinding(
             () -> (Math.atan2(yDifferenceProperty.get(), xDifferenceProperty.get())),
             xDifferenceProperty, yDifferenceProperty
-    ));
+            ));
 
-      DoubleProperty y = new SimpleDoubleProperty();
-        y.bind(Bindings.createDoubleBinding(
+            DoubleProperty y = new SimpleDoubleProperty();
+            y.bind(Bindings.createDoubleBinding(
             () -> 31 * Math.sin((angle.get())),
             angle
-    ));
-        DoubleProperty x = new SimpleDoubleProperty();
-        x.bind(Bindings.createDoubleBinding(
+            ));
+
+            DoubleProperty x = new SimpleDoubleProperty();
+            x.bind(Bindings.createDoubleBinding(
             () -> 31 * Math.cos((angle.get())),
             angle
-    ));
+            ));
        
        
       
       
-        arrow.layoutXProperty().bind(line.endXProperty().subtract(6).subtract(x));
+            arrow.layoutXProperty().bind(line.endXProperty().subtract(6).subtract(x));
     
-        arrow.layoutYProperty().bind(line.endYProperty().subtract(6).subtract(y));
+            arrow.layoutYProperty().bind(line.endYProperty().subtract(6).subtract(y));
        
     
-        return arrow;
+            return arrow;
     }
        
       
+    public void makeWeightedEdge(Pane root, Line line, QuadCurve arc, boolean isSelfLoop, Edge edge){
+       
+            Label weightLbl = new Label("0");
+            TextField weightTextField = new TextField();
+            weightTextField.setVisible(false);
+
+             weightLbl.setOnMouseClicked(event -> {
+            weightLbl.setVisible(false);
+            weightTextField.setText(weightLbl.getText());
+            weightTextField.setPrefWidth(40);
+            
+            weightTextField.setVisible(true);
+            weightTextField.requestFocus();
+            });
+
+            weightTextField.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.ENTER) {
+                weightLbl.setText(weightTextField.getText());
+                weightTextField.setVisible(false);
+                weightLbl.setVisible(true);
+                edge.setWeight(Integer.parseInt(weightLbl.getText()));
+            }});
+
+        if(isSelfLoop){
+            
+            weightLbl.layoutXProperty().bind(arc.startXProperty().add(14));
+            weightLbl.layoutYProperty().bind(arc.startYProperty().subtract(70));
+            weightTextField.layoutXProperty().bind(arc.startXProperty().add(14));
+            weightTextField.layoutYProperty().bind(arc.startYProperty().subtract(80));
+        
+        }
+        else{
+        
+            // Create the label and bind its position to the midpoint
+            weightLbl.layoutXProperty().bind(line.startXProperty().add(line.endXProperty()).divide(2));
+            weightLbl.layoutYProperty().bind(line.startYProperty().add(line.endYProperty()).divide(2));
+
+            weightTextField.layoutXProperty().bind(line.startXProperty().add(line.endXProperty()).divide(2));
+            weightTextField.layoutYProperty().bind(line.startYProperty().add(line.endYProperty()).divide(2));
+        }
+
+        root.getChildren().addAll(weightTextField, weightLbl);
+    
+    }
 
     public StackPane getStackPane(){
         return this;}
