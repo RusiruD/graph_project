@@ -17,6 +17,7 @@ public class AppState {
     public static boolean isSymmetric;
     public static boolean isTransitive;
     public static boolean isAntiSymmetric;
+    public static boolean isConnected;
     public static void createAdjacencyMatrix(int numNodes) {
         adjacencyMatrix = new int[numNodes][numNodes];
      }

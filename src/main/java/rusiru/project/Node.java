@@ -97,6 +97,8 @@ public class Node extends StackPane {
                
                 SecondaryController.edges.add(edge);
                 SecondaryController.edges.add(edge1);
+                 SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
+                  SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
             }
 
             //self loop

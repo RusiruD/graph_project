@@ -140,7 +140,6 @@ public class SecondaryController {
           return true;
       }
           
-               System.out.println("reflexive called");
       reflexiveLbl.setTextFill(Color.RED);
       AppState.isReflexive=false;
       return false;
@@ -199,9 +198,7 @@ public class SecondaryController {
                     if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())
                         && (edge1.getDestinationNode().getNodeNum()!=(edge.getSource().getNodeNum()) && edge1!=edge && edge.getDestinationNode()!=edge.getSource() && edge1.getDestinationNode()!=edge1.getSource())) {
                       possibleTransitiveEdgeCounter++;
-                      System.out.println("transitive edge possible " + possibleTransitiveEdgeCounter);
-                      System.out.println("source"+ edge.getSource().getNodeNum() + "destination" + edge.getDestinationNode().getNodeNum());
-                      System.out.println("source"+ edge1.getSource().getNodeNum() + "destination" + edge1.getDestinationNode().getNodeNum());
+                    
 
                       // checks if there is an edge-edge3 that comes from the same source the first edge did
                       // and goes to the same destination the second edge did
@@ -370,21 +367,22 @@ public class SecondaryController {
     public  boolean isComplete(){
         int completeEdgeCounter = 0;
         for(Node node:nodes){
-          if((node.getinDegree()+node.getoutDegree())!=AppState.numNodes-1){
+          if((node.getinDegree())!=AppState.numNodes-1){
             completeGraphLbl.setTextFill(Color.RED);
             return false;
            
                
-                }
+                }}
                 completeGraphLbl.setTextFill(Color.GREEN);
-            return true;
-        }
-        if (completeEdgeCounter == edges.size() * edges.size()) {
+                return true;
+              
+        
+        /*if (completeEdgeCounter == edges.size() * edges.size()) {
             completeGraphLbl.setTextFill(Color.GREEN);
           return true;
         } 
             completeGraphLbl.setTextFill(Color.RED);
-          return false;
+          return false;*/
         
       }
 
@@ -402,25 +400,40 @@ public class SecondaryController {
         if(visited.size() == AppState.numNodes)
         {
             connectedLbl.setTextFill(Color.GREEN);
+            AppState.isConnected=true;
             return true;
         }
         connectedLbl.setTextFill(Color.RED);
+        AppState.isConnected=false;
         return false;
       }
 
       public boolean isEulerCircuit(){
-        if(isConnected()){
+        
+        if(AppState.isConnected){
             for(Node node:nodes){
-                if(node.getinDegree()==node.getoutDegree()){
-                    if((node.getinDegree()+node.getoutDegree())%2==0){
-                        eulerCircuitLbl.setTextFill(Color.GREEN);
+              
+                  if(AppState.undirected){
+                    if((node.getinDegree()+node.getoutDegree())%2!=0){
 
-                        return true;
-                    }
+                        eulerCircuitLbl.setTextFill(Color.RED);
+                        return false;
+                    }}
+                  else{
+                    if((node.getinDegree()!=node.getoutDegree())){
+
+                        eulerCircuitLbl.setTextFill(Color.RED);
+                        return false;
+                    }}
+                  
+                  
+                  
                     
                    
                 }
-            }
+            
+            eulerCircuitLbl.setTextFill(Color.GREEN);
+            return true;
            
         }
         eulerCircuitLbl.setTextFill(Color.RED);
@@ -512,19 +525,21 @@ public class SecondaryController {
         return false;
       }
 
-     private static void dfs(List<Edge> edges, int vertex, Set<Integer> visited) {
+      private static void dfs(List<Edge> edges, int vertex, Set<Integer> visited) {
         if (visited.contains(vertex)) {
             return;
         }
-
+    
         visited.add(vertex);
-
+    
         for (Edge edge : edges) {
             if (edge.getSource().getNodeNum() == vertex) {
                 dfs(edges, edge.getDestinationNode().getNodeNum(), visited);
-            } else if (edge.getDestinationNode().getNodeNum() == vertex) {
-                dfs(edges, edge.getSource().getNodeNum(), visited);
             }
+            // Uncomment the following block if the graph is undirected
+            // else if (edge.getDestinationNode().getNodeNum() == vertex) {
+            //     dfs(edges, edge.getSource().getNodeNum(), visited);
+            // }
         }
     }
 
