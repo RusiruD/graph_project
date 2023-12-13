@@ -18,6 +18,13 @@ public class AppState {
     public static boolean isTransitive;
     public static boolean isAntiSymmetric;
     public static boolean isConnected;
+    public static boolean isDirectedPseudoGraph;
+    public static boolean isDirectedSimpleGraph;
+    public static boolean isDirectedMultiGraph;
+    public static boolean isPseudoGraph;
+    public static boolean isSimpleGraph;
+    public static boolean isMultiGraph;
+
     public static void createAdjacencyMatrix(int numNodes) {
         adjacencyMatrix = new int[numNodes][numNodes];
      }

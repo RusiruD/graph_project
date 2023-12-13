@@ -293,18 +293,24 @@ public class SecondaryController {
       public  boolean isSimple(){
        if(!containsMultiEdges() && !containsSelfLoop()){
         if(AppState.undirected){
+          AppState.isSimpleGraph=true;
+          AppState.isDirectedSimpleGraph=false;
           directedSimpleGraphLbl.setTextFill(Color.RED);
           simpleGraphLbl.setTextFill(Color.GREEN);
          
         }
         else{
-          simpleGraphLbl.setTextFill(Color.GREEN);
+          AppState.isSimpleGraph=false;
+          AppState.isDirectedSimpleGraph=true;
+          simpleGraphLbl.setTextFill(Color.RED);
           directedSimpleGraphLbl.setTextFill(Color.GREEN);
           
         }
         return true;
        }
        else{
+        AppState.isSimpleGraph=false;
+        AppState.isDirectedSimpleGraph=false;
         simpleGraphLbl.setTextFill(Color.RED);
         directedSimpleGraphLbl.setTextFill(Color.RED);
         return false;
@@ -346,18 +352,24 @@ public class SecondaryController {
 
        if(containsMultiEdges() && containsSelfLoop()){
         if(AppState.undirected){
+          AppState.isPseudoGraph=true;
+          AppState.isDirectedPseudoGraph=false;
           directedPseudoGraphLbl.setTextFill(Color.RED);
           pseudoGraphLbl.setTextFill(Color.GREEN);
          
         }
         else{
-          pseudoGraphLbl.setTextFill(Color.GREEN);
+          AppState.isPseudoGraph=false;
+          AppState.isDirectedPseudoGraph=true;
+          pseudoGraphLbl.setTextFill(Color.RED);
           directedPseudoGraphLbl.setTextFill(Color.GREEN);
          
         }
       return true;
       }
       else{
+        AppState.isPseudoGraph=false;
+        AppState.isDirectedPseudoGraph=false;
         pseudoGraphLbl.setTextFill(Color.RED);
         directedPseudoGraphLbl.setTextFill(Color.RED);
         return false;
@@ -372,6 +384,9 @@ public class SecondaryController {
 
     @FXML
     public  boolean isComplete(){
+      if(!AppState.undirected || !AppState.isSimpleGraph){
+        completeGraphLbl.setTextFill(Color.RED);
+        return false;}
         for(Node node:nodes){
           if((node.getinDegree())!=AppState.numNodes-1){
             completeGraphLbl.setTextFill(Color.RED);
@@ -546,7 +561,7 @@ public class SecondaryController {
 
 
       public boolean isTree(){
-        if(isConnected() && !isCyclic()){
+        if(isConnected() && !isCyclic() && AppState.undirected){
             treeLbl.setTextFill(Color.GREEN);
             return true;
         }
