@@ -128,7 +128,7 @@ public class Node extends StackPane {
                 if(!AppState.undirected){
                 StackPane arrow = createSelfLoopArrow(arc);
                 root.getChildren().add(arrow);}
-                
+
             }
           
         //directed edge
@@ -204,6 +204,7 @@ public class Node extends StackPane {
     }
 
     private QuadCurve createDirectedMultiEdge(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
+
 
         startNode.setoutDegree(startNode.getoutDegree()+1);
         endNode.setinDegree(endNode.getinDegree()+1);
@@ -324,9 +325,18 @@ public class Node extends StackPane {
     
     private Line createLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
         System.out.println("create line");
+
+        if(AppState.undirected){
+            startNode.setoutDegree(startNode.getoutDegree()+1);
+            endNode.setinDegree(endNode.getinDegree()+1);
+            startNode.setinDegree(startNode.getinDegree()+1);
+            endNode.setoutDegree(endNode.getoutDegree()+1);
+        }
+        else{
         startNode.setoutDegree(startNode.getoutDegree()+1);
-        endNode.setinDegree(endNode.getinDegree()+1);
-     
+        endNode.setinDegree(endNode.getinDegree()+1);}
+
+        
         Line line = new Line();
         line.setStroke(Color.BLUE);
         line.setStrokeWidth(2);
@@ -512,11 +522,11 @@ public class Node extends StackPane {
         public int getoutDegree(){
             return outDegree;
         }
-        public void setinDegree(int inDegree){
-            this.inDegree = inDegree;
+        public void setinDegree(int newInDegree){
+            this.inDegree = newInDegree;
         }
-        public void setoutDegree(int outDegree){
-            this.outDegree = outDegree;
+        public void setoutDegree(int newOutDegree){
+            this.outDegree = newOutDegree;
         }
         public Circle getCircle(){
             return dot;
