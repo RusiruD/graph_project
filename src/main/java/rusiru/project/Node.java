@@ -259,14 +259,12 @@ public class Node extends StackPane {
         // Calculate the coordinates of the end point
         double xEnd = (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * x2 + t * t * x3;
         double yEnd = (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * y2 + t * t * y3;
-        System.out.println(xEnd+" x,y"+yEnd);
         // Calculate the angle of the line formed by the end point and the control point
         double angle = Math.atan2(y3 - y2, x3 - x2);
 
         // Calculate the new point at a certain distance along the line
         double x = xEnd - distance * Math.cos(angle);
         double y = yEnd - distance * Math.sin(angle);
-        System.out.println(x+" x,y"+y);
         ArrayList<Double> list = new ArrayList<Double>(2);
         list.add(x);
         list.add(y);

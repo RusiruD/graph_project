@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -114,11 +115,9 @@ public class SecondaryController {
         isConnected();
         isEulerCircuit();
         isCyclic();
-        //isBipartite(); 
+        isBipartite(); 
         isTree();
-       for(Edge edge : edges){
-         System.out.println("edge"+edge.getSource().getNodeNum()+edge.getDestinationNode().getNodeNum());
-       }
+       
       }
 
 
@@ -438,6 +437,48 @@ public class SecondaryController {
       }
 
       
+ @FXML
+    public boolean isBipartite() {
+        // Initialize colors for vertices
+        int[] colors = new int[AppState.numNodes];
+        Arrays.fill(colors, -1);
+
+        // Iterate through each vertex
+        for (int i = 0; i < AppState.numNodes; i++) {
+            if (colors[i] == -1) {
+                if (!isBipartiteDFS(i, colors)) {
+                    bipartiteLbl.setTextFill(Color.RED);
+                    
+                    return false;
+                }
+            }
+        }
+
+        bipartiteLbl.setTextFill(Color.GREEN);
+        return true;
+    }
+
+    private boolean isBipartiteDFS(int vertex, int[] colors) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(vertex);
+        colors[vertex] = 0; // Assign color 0 to the starting vertex
+
+        while (!stack.isEmpty()) {
+            int current = stack.pop();
+
+            for (int neighbor : adjacencyList.get(current)) {
+                if (colors[neighbor] == -1) {
+                    colors[neighbor] = 1 - colors[current]; // Assign the opposite color
+                    stack.push(neighbor);
+                } else if (colors[neighbor] == colors[current]) {
+                    // If adjacent vertices have the same color, the graph is not bipartite
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 
      
 
@@ -481,44 +522,7 @@ public class SecondaryController {
   }
 
 
-      public boolean isBipartite(){
-         int[] colors = new int[AppState.numNodes];
-        Arrays.fill(colors, -1);  // Initialize colors as -1 (unvisited)
-
-        for (int i = 0; i < AppState.numNodes; i++) {
-            if (colors[i] == -1 && !isBipartiteDFS(edges, i, 0, colors)) {
-                bipartiteLbl.setTextFill(Color.RED);
-                return false;
-            }
-        }
-        bipartiteLbl.setTextFill(Color.GREEN);
-        return true;
-      }
-    
-      private static boolean isBipartiteDFS(List<Edge> edges, int vertex, int color, int[] colors) {
-        colors[vertex] = color;
-    
-        for (Edge edge : edges) {
-            int source = edge.getSource().getNodeNum();
-            int destination = edge.getDestinationNode().getNodeNum();
-    
-            if (source == vertex) {
-                int neighbor = destination;
-                if (colors[neighbor] == -1) {
-                    // Recursively check the neighbor with the opposite color
-                    if (!isBipartiteDFS(edges, neighbor, 1 - color, colors)) {
-                        return false;
-                    }
-                } else if (colors[neighbor] == color) {
-                    // If the neighbor has the same color, the graph is not bipartite
-                    return false;
-                }
-                // If the neighbor has a different color, continue to the next neighbor
-            }
-        }
-    
-        return true;
-    }
+ 
 
 
       public boolean isTree(){
