@@ -96,6 +96,15 @@ public class Node extends StackPane {
           
                 Edge edge = new Edge(AppState.previousNode, this, 0);
                 Edge edge1 = new Edge(this, AppState.previousNode, 0);
+                if(isMultiEdge(edge)){
+                    QuadCurve arc = createMultiEdge(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge);
+                    root.getChildren().add(arc);
+                   
+                    arc.toBack();
+
+                }
+
+                else{
                 Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge1);
                 SecondaryController.edges.add(edge);
                 SecondaryController.edges.add(edge1);
@@ -104,7 +113,7 @@ public class Node extends StackPane {
                   root.getChildren().add(line);
                                   line.toBack();
 
-            }
+            }}
 
             //self loop
 
@@ -126,7 +135,7 @@ public class Node extends StackPane {
                 
                 Edge edge = new Edge(AppState.previousNode, this, 0);
                 if(isMultiEdge(edge)){
-                    QuadCurve arc = createMultiEdge(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge);
+                    QuadCurve arc = createDirectedMultiEdge(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge);
                     root.getChildren().add(arc);
                     StackPane arrow = createSelfLoopArrow(arc);
                     root.getChildren().add(arrow);
@@ -192,7 +201,7 @@ public class Node extends StackPane {
 
     }
 
-    private QuadCurve createMultiEdge(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
+    private QuadCurve createDirectedMultiEdge(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
 
         startNode.setoutDegree(startNode.getoutDegree()+1);
         endNode.setinDegree(endNode.getinDegree()+1);
@@ -250,6 +259,43 @@ public class Node extends StackPane {
         return arc;
 
     }
+
+    private QuadCurve createMultiEdge(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
+
+        startNode.setoutDegree(startNode.getoutDegree()+1);
+        endNode.setinDegree(endNode.getinDegree()+1);
+        Random random = new Random();
+        int randomNumber = random.nextInt(161) - 65;
+        int randomNumber2 = random.nextInt(140) - 65;
+
+        double x = startStackPane.getLayoutX() + startStackPane.getTranslateX() + startStackPane.getWidth() / 2.0;
+        double y = startStackPane.getLayoutY() + startStackPane.getTranslateY() + startStackPane.getHeight() / 2.0;
+        
+        QuadCurve arc = new QuadCurve(x,y, x+15, y-150, x+25, y-5);
+        
+           
+           
+
+        arc.startXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)));
+        arc.startYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)));
+
+        arc.controlXProperty().bind(startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).subtract(randomNumber));
+        arc.controlYProperty().bind(startStackPane.layoutYProperty().add(startStackPane.translateYProperty()).add(startStackPane.heightProperty().divide(2)).subtract(randomNumber2));
+        arc.endXProperty().bind(endStackPane.layoutXProperty().add(endStackPane.translateXProperty()).add(endStackPane.widthProperty().divide(2)).subtract(0));
+        arc.endYProperty().bind(endStackPane.layoutYProperty().add(endStackPane.translateYProperty()).add(endStackPane.heightProperty().divide(2)).subtract(0));
+        
+        arc.setStroke(Color.BLUE);
+        arc.setStrokeWidth(2);
+        arc.setFill(Color.TRANSPARENT);
+         if(AppState.weighted){
+           makeWeightedEdge(root, null, arc, true, edge);
+        }
+        
+        return arc;
+    
+    }
+
+
      private static ArrayList<Double> calculatePointAtDistanceFromEnd( double distance, StackPane startStackPane, StackPane endStackPane, int randomNumber, int randomNumber2) {
         double t = 1.0; // set t to 1 to represent the end of the curve
            double x1=startStackPane.layoutXProperty().add(startStackPane.translateXProperty()).add(startStackPane.widthProperty().divide(2)).get();
