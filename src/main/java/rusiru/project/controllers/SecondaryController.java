@@ -541,10 +541,11 @@ public class SecondaryController {
             if (edge.getSource().getNodeNum() == vertex) {
                 dfs(edges, edge.getDestinationNode().getNodeNum(), visited);
             }
-            // Uncomment the following block if the graph is undirected
-            // else if (edge.getDestinationNode().getNodeNum() == vertex) {
-            //     dfs(edges, edge.getSource().getNodeNum(), visited);
-            // }
+            if(AppState.undirected){
+           
+          if (edge.getDestinationNode().getNodeNum() == vertex) {
+             dfs(edges, edge.getSource().getNodeNum(), visited);
+            }}
         }
     }
 
