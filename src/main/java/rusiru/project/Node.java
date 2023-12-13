@@ -125,8 +125,10 @@ public class Node extends StackPane {
        
                 QuadCurve arc = createSelfLoop(AppState.previousStackPane, currentStackPane, this, AppState.previousNode, root, edge);
                 root.getChildren().add(arc);
+                if(!AppState.undirected){
                 StackPane arrow = createSelfLoopArrow(arc);
-                root.getChildren().add(arrow);
+                root.getChildren().add(arrow);}
+                
             }
           
         //directed edge
@@ -192,7 +194,7 @@ public class Node extends StackPane {
         arc.setFill(Color.TRANSPARENT);
 
         if(AppState.weighted){
-           makeWeightedEdge(root, null, arc, true, edge);
+           makeWeightedEdge(root, null, arc, true, false, edge);
         }
         
         return arc;
@@ -253,7 +255,7 @@ public class Node extends StackPane {
         arc.setFill(Color.TRANSPARENT);
 
         if(AppState.weighted){
-           makeWeightedEdge(root, null, arc, true, edge);
+           makeWeightedEdge(root, null, arc, false,true, edge);
         }
         
         return arc;
@@ -265,8 +267,8 @@ public class Node extends StackPane {
         startNode.setoutDegree(startNode.getoutDegree()+1);
         endNode.setinDegree(endNode.getinDegree()+1);
         Random random = new Random();
-        int randomNumber = random.nextInt(161) - 65;
-        int randomNumber2 = random.nextInt(140) - 65;
+        int randomNumber = random.nextInt(161) ;
+        int randomNumber2 = random.nextInt(140) ;
 
         double x = startStackPane.getLayoutX() + startStackPane.getTranslateX() + startStackPane.getWidth() / 2.0;
         double y = startStackPane.getLayoutY() + startStackPane.getTranslateY() + startStackPane.getHeight() / 2.0;
@@ -288,7 +290,7 @@ public class Node extends StackPane {
         arc.setStrokeWidth(2);
         arc.setFill(Color.TRANSPARENT);
          if(AppState.weighted){
-           makeWeightedEdge(root, null, arc, true, edge);
+           makeWeightedEdge(root, null, arc, false, true, edge);
         }
         
         return arc;
@@ -335,7 +337,7 @@ public class Node extends StackPane {
         line.endYProperty().bind(endStackPane.layoutYProperty().add(endStackPane.translateYProperty()).add(endStackPane.heightProperty().divide(2)));
 
         if(AppState.weighted){
-            makeWeightedEdge(root, line, null, false, edge);
+            makeWeightedEdge(root, line, null, false, false, edge);
         
 
           
@@ -423,7 +425,7 @@ public class Node extends StackPane {
     }
        
       
-    public void makeWeightedEdge(Pane root, Line line, QuadCurve arc, boolean isSelfLoop, Edge edge){
+    public void makeWeightedEdge(Pane root, Line line, QuadCurve arc, boolean isSelfLoop, boolean isMultiEdge, Edge edge){
        
             Label weightLbl = new Label("0");
             TextField weightTextField = new TextField();
@@ -443,6 +445,7 @@ public class Node extends StackPane {
                 weightLbl.setText(weightTextField.getText());
                 weightTextField.setVisible(false);
                 weightLbl.setVisible(true);
+
                 if(AppState.undirected){
                     for(Edge e: SecondaryController.edges){
                         if(e.getSource().equals(edge.getSource()) && e.getDestinationNode().equals(edge.getDestinationNode()) && !e.equals(edge)){
@@ -463,8 +466,15 @@ public class Node extends StackPane {
             weightLbl.layoutXProperty().bind(arc.startXProperty().add(14));
             weightLbl.layoutYProperty().bind(arc.startYProperty().subtract(70));
             weightTextField.layoutXProperty().bind(arc.startXProperty().add(14));
-            weightTextField.layoutYProperty().bind(arc.startYProperty().subtract(80));
+            weightTextField.layoutYProperty().bind(arc.startYProperty().subtract(70));
         
+        }
+        else if(isMultiEdge){
+             weightLbl.layoutXProperty().bind(arc.controlXProperty().add(0));
+            weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(0));
+            weightTextField.layoutXProperty().bind(arc.controlXProperty().add(0));
+            weightTextField.layoutYProperty().bind(arc.controlYProperty().subtract(0));
+
         }
         else{
         
@@ -479,6 +489,7 @@ public class Node extends StackPane {
         root.getChildren().addAll(weightTextField, weightLbl);
     
     }
+
     public boolean isMultiEdge(Edge edge){
         for(Edge e: SecondaryController.edges){
             if(e.getSource().equals(edge.getSource()) && e.getDestinationNode().equals(edge.getDestinationNode()) && !e.equals(edge)){
