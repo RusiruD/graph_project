@@ -39,6 +39,7 @@ public class SecondaryController {
     @FXML  Label connectedLbl;
     @FXML  Label eulerCircuitLbl;
     @FXML  Label acyclicLbl;
+    @FXML Label completeDigraphLbl;
     @FXML  Label bipartiteLbl;
     @FXML  Label treeLbl;
     @FXML Label directedSimpleGraphLbl;
@@ -384,18 +385,36 @@ public class SecondaryController {
 
     @FXML
     public  boolean isComplete(){
-      if(!AppState.undirected || !AppState.isSimpleGraph){
-        completeGraphLbl.setTextFill(Color.RED);
+      completeDigraphLbl.setTextFill(Color.RED);
+      completeGraphLbl.setTextFill(Color.RED);
+      double numEdges=0.5* AppState.numNodes*(AppState.numNodes-1);
+      if(AppState.undirected & (!AppState.isSimpleGraph || edges.size()!=2*( int)numEdges)){
+        System.out.println("rted");
+      completeGraphLbl.setTextFill(Color.RED);
+      return false;}
+      else if(!AppState.undirected &  edges.size()!=2* numEdges){
+        completeDigraphLbl.setTextFill(Color.RED);
         return false;}
+    
+
+
         for(Node node:nodes){
           if((node.getinDegree())!=AppState.numNodes-1){
+            System.out.println("34ds");
             completeGraphLbl.setTextFill(Color.RED);
-            return false;
-           
-               
-                }}
-                completeGraphLbl.setTextFill(Color.GREEN);
-                return true;
+            completeDigraphLbl.setTextFill(Color.RED);
+            return false;}}
+
+            if(AppState.undirected){
+              completeGraphLbl.setTextFill(Color.GREEN);
+              return true;
+            }
+            else{
+              completeDigraphLbl.setTextFill(Color.GREEN);
+              return true;
+            }
+       
+ 
               
         
       
