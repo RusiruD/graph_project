@@ -496,7 +496,7 @@ public class SecondaryController {
   
       for (Node node : nodes) {
           int nodeNum = node.getNodeNum();
-          if (!visited.contains(nodeNum) && isCyclicDFS(nodeNum, visited, currentlyVisiting, 3)) {
+          if (!visited.contains(nodeNum) && isCyclicDFS(nodeNum, -1, visited, currentlyVisiting, 3, AppState.undirected)) {
               acyclicLbl.setTextFill(Color.RED);
               return true;
           }
@@ -505,28 +505,43 @@ public class SecondaryController {
       return false;
   }
   
-  private boolean isCyclicDFS(int current, Set<Integer> visited, Set<Integer> currentlyVisiting, int minCycleSize) {
+  private boolean isCyclicDFS(int current, int parent, Set<Integer> visited, Set<Integer> currentlyVisiting, int minCycleSize, boolean isUndirected) {
       visited.add(current);
       currentlyVisiting.add(current);
   
       for (Edge edge : edges) {
-          if (edge.getSource().getNodeNum() == current) {
-              int neighbor = edge.getDestinationNode().getNodeNum();
+          int neighbor;
+          if (!isUndirected) {
+              if (edge.getSource().getNodeNum() == current) {
+                  neighbor = edge.getDestinationNode().getNodeNum();
+              } else {
+                  continue; // Skip edges that don't originate from the current node in a directed graph
+              }
+          } else {
+              // For undirected graph, consider both source and destination
+              if (edge.getSource().getNodeNum() == current) {
+                  neighbor = edge.getDestinationNode().getNodeNum();
+              } else if (edge.getDestinationNode().getNodeNum() == current) {
+                  neighbor = edge.getSource().getNodeNum();
+              } else {
+                  continue; // Skip edges that don't involve the current node in an undirected graph
+              }
+          }
   
-              if (!visited.contains(neighbor)) {
-                  if (isCyclicDFS(neighbor, visited, currentlyVisiting, minCycleSize)) {
-                      return true;
-                  }
-              } else if (currentlyVisiting.contains(neighbor) && currentlyVisiting.size() >= minCycleSize) {
-                  // If the neighbor is in the currentlyVisiting set and the size is >= minCycleSize, there is a cycle
+          if (!visited.contains(neighbor)) {
+              if (isCyclicDFS(neighbor, current, visited, currentlyVisiting, minCycleSize, AppState.undirected)) {
                   return true;
               }
+          } else if (currentlyVisiting.contains(neighbor) && currentlyVisiting.size() >= minCycleSize && neighbor != parent) {
+              // If the neighbor is in the currentlyVisiting set, the size is >= minCycleSize, and it's not the parent, there is a cycle
+              return true;
           }
       }
   
       currentlyVisiting.remove(current); // Backtrack when leaving the current node
       return false;
   }
+  
   
 
 
