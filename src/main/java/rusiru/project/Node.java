@@ -93,15 +93,17 @@ public class Node extends StackPane {
             AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
             
             if(AppState.undirected && !this.equals(AppState.previousNode)){
-           
           
                 Edge edge = new Edge(AppState.previousNode, this, 0);
                 Edge edge1 = new Edge(this, AppState.previousNode, 0);
-               
+                Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge1);
                 SecondaryController.edges.add(edge);
                 SecondaryController.edges.add(edge1);
                  SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
                   SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
+                  root.getChildren().add(line);
+                                  line.toBack();
+
             }
 
             //self loop
@@ -273,7 +275,7 @@ public class Node extends StackPane {
     
     
     private Line createLine(StackPane startStackPane, StackPane endStackPane, Node startNode, Node endNode, Pane root, Edge edge){
-        
+        System.out.println("create line");
         startNode.setoutDegree(startNode.getoutDegree()+1);
         endNode.setinDegree(endNode.getinDegree()+1);
      
@@ -395,7 +397,19 @@ public class Node extends StackPane {
                 weightLbl.setText(weightTextField.getText());
                 weightTextField.setVisible(false);
                 weightLbl.setVisible(true);
+                if(AppState.undirected){
+                    for(Edge e: SecondaryController.edges){
+                        if(e.getSource().equals(edge.getSource()) && e.getDestinationNode().equals(edge.getDestinationNode()) && !e.equals(edge)){
+                            e.setWeight(Integer.parseInt(weightLbl.getText()));
+                            
+                        }
+                    }
+                }
+               
+
+                
                 edge.setWeight(Integer.parseInt(weightLbl.getText()));
+                
             }});
 
         if(isSelfLoop){

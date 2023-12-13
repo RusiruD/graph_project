@@ -224,43 +224,49 @@ public class SecondaryController {
                 }
               }
             
-              /**
-               * Checks whether the graph is anti-symmetric.
-               *
-               * @return true if the graph is anti-symmetric, false otherwise.
-               */
-              public  boolean isAntiSymmetric() {
-                int antisymmetricEdgeCounter = 0;
-                int possibleAntiSymmetricEdgeCounter = 0;
-                // checks if there is an edge with a destination that is the same as the source of another
-                // edge-edge1
-                for (Edge edge : edges) {
+      /**
+        * Checks whether the graph is anti-symmetric.
+        *
+       * @return true if the graph is anti-symmetric, false otherwise.
+        */
+      
+      public  boolean isAntiSymmetric() {
+        if(AppState.undirected){
+          antiSymmetricLbl.setTextFill(Color.RED);
+          AppState.isAntiSymmetric=false;
+          return false;
+          }
+        int antisymmetricEdgeCounter = 0;
+        int possibleAntiSymmetricEdgeCounter = 0;
+        // checks if there is an edge with a destination that is the same as the source of another
+        // edge-edge1
+         for (Edge edge : edges) {
             
-                  for (Edge edge1 : edges) {
-                    // increments the counter if the destination of the first edge is the same as the source of
-                    // the second edge
-                    if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())
-                        && edge.getSource().getNodeNum()==(edge1.getDestinationNode().getNodeNum())) {
-                      possibleAntiSymmetricEdgeCounter++;
-                      // increments different counter if the edges equal each other
-                      if (edge.equals(edge1)) {
-                        antisymmetricEdgeCounter++;
-                      }
-                    }
-                  }
-                }
-                // if the counter is equal to the number of edges, then the graph is anti-symmetric
-                if (possibleAntiSymmetricEdgeCounter == antisymmetricEdgeCounter) {
-                    antiSymmetricLbl.setTextFill(Color.GREEN);
-                  AppState.isAntiSymmetric=true;
-                  return true;
-                } else {
-                    antiSymmetricLbl.setTextFill(Color.RED);
-                  AppState.isAntiSymmetric=false;
-            
-                  return false;
-                }
+          for (Edge edge1 : edges) {
+            // increments the counter if the destination of the first edge is the same as the source of
+            // the second edge
+            if (edge.getDestinationNode().getNodeNum()==(edge1.getSource().getNodeNum())
+                && edge.getSource().getNodeNum()==(edge1.getDestinationNode().getNodeNum())) {
+              possibleAntiSymmetricEdgeCounter++;
+              // increments different counter if the edges equal each other
+              if (edge.equals(edge1)) {
+                 antisymmetricEdgeCounter++;
               }
+            }
+          }
+        }
+                // if the counter is equal to the number of edges, then the graph is anti-symmetric
+        if (possibleAntiSymmetricEdgeCounter == antisymmetricEdgeCounter) {
+            antiSymmetricLbl.setTextFill(Color.GREEN);
+          AppState.isAntiSymmetric=true;
+          return true;
+        } else {
+            antiSymmetricLbl.setTextFill(Color.RED);
+          AppState.isAntiSymmetric=false;
+            
+          return false;
+        }
+      }
    
        
 
@@ -483,13 +489,14 @@ public class SecondaryController {
      
 
     // Add this method to your SecondaryController class
+   
     public boolean isCyclic() {
       Set<Integer> visited = new HashSet<>();
       Set<Integer> currentlyVisiting = new HashSet<>();
   
       for (Node node : nodes) {
           int nodeNum = node.getNodeNum();
-          if (!visited.contains(nodeNum) && isCyclicDFS(nodeNum, visited, currentlyVisiting)) {
+          if (!visited.contains(nodeNum) && isCyclicDFS(nodeNum, visited, currentlyVisiting, 3)) {
               acyclicLbl.setTextFill(Color.RED);
               return true;
           }
@@ -498,7 +505,7 @@ public class SecondaryController {
       return false;
   }
   
-  private boolean isCyclicDFS(int current, Set<Integer> visited, Set<Integer> currentlyVisiting) {
+  private boolean isCyclicDFS(int current, Set<Integer> visited, Set<Integer> currentlyVisiting, int minCycleSize) {
       visited.add(current);
       currentlyVisiting.add(current);
   
@@ -507,11 +514,11 @@ public class SecondaryController {
               int neighbor = edge.getDestinationNode().getNodeNum();
   
               if (!visited.contains(neighbor)) {
-                  if (isCyclicDFS(neighbor, visited, currentlyVisiting)) {
+                  if (isCyclicDFS(neighbor, visited, currentlyVisiting, minCycleSize)) {
                       return true;
                   }
-              } else if (currentlyVisiting.contains(neighbor)) {
-                  // If the neighbor is in the currentlyVisiting set, there is a cycle
+              } else if (currentlyVisiting.contains(neighbor) && currentlyVisiting.size() >= minCycleSize) {
+                  // If the neighbor is in the currentlyVisiting set and the size is >= minCycleSize, there is a cycle
                   return true;
               }
           }
@@ -520,9 +527,7 @@ public class SecondaryController {
       currentlyVisiting.remove(current); // Backtrack when leaving the current node
       return false;
   }
-
-
- 
+  
 
 
       public boolean isTree(){
