@@ -519,7 +519,6 @@ public class Node extends StackPane {
       Node endNode,
       Pane root,
       Edge edge) {
-    System.out.println("create line");
 
     if (AppState.undirected) {
       startNode.setoutDegree(startNode.getoutDegree() + 1);
@@ -576,8 +575,8 @@ public class Node extends StackPane {
     arrow.setPrefSize(size, size);
     arrow.setMaxSize(size, size);
     arrow.setMinSize(size, size);
-    arrow.translateXProperty().bind(arc.endXProperty().subtract(size / 2).subtract(0));
-    arrow.translateYProperty().bind(arc.endYProperty().subtract(size / 2).subtract(0));
+    arrow.translateXProperty().bind(arc.endXProperty().subtract(size / 2));
+    arrow.translateYProperty().bind(arc.endYProperty().subtract(size / 2));
     arrow
         .rotateProperty()
         .bind(
@@ -642,9 +641,9 @@ public class Node extends StackPane {
     DoubleProperty x = new SimpleDoubleProperty();
     x.bind(Bindings.createDoubleBinding(() -> 31 * Math.cos((angle.get())), angle));
 
-    arrow.layoutXProperty().bind(line.endXProperty().subtract(6).subtract(x));
+    arrow.layoutXProperty().bind(line.endXProperty().subtract(size / 2).subtract(x));
 
-    arrow.layoutYProperty().bind(line.endYProperty().subtract(6).subtract(y));
+    arrow.layoutYProperty().bind(line.endYProperty().subtract(size / 2).subtract(y));
 
     return arrow;
   }
@@ -695,9 +694,9 @@ public class Node extends StackPane {
       weightTextField.layoutYProperty().bind(arc.startYProperty().subtract(70));
 
     } else if (isMultiEdge) {
-      weightLbl.layoutXProperty().bind(arc.controlXProperty().add(0));
-      weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(0));
-      weightTextField.layoutXProperty().bind(arc.controlXProperty().add(0));
+      weightLbl.layoutXProperty().bind(arc.controlXProperty());
+      weightLbl.layoutYProperty().bind(arc.controlYProperty());
+      weightTextField.layoutXProperty().bind(arc.controlXProperty());
       weightTextField.layoutYProperty().bind(arc.controlYProperty().subtract(0));
 
     } else {

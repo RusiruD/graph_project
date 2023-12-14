@@ -115,9 +115,9 @@ public class SecondaryController {
   public boolean isReflexive() {
 
     int reflexiveEdgeCounter = 0;
-    for (Edge x : edges) {
+    for (Edge edge : edges) {
 
-      if (x.getSource().getNodeNum() == x.getDestinationNode().getNodeNum()) {
+      if (edge.getSource().getNodeNum() == edge.getDestinationNode().getNodeNum()) {
 
         reflexiveEdgeCounter++;
       }
@@ -144,11 +144,11 @@ public class SecondaryController {
     }
 
     int symmetricEdgeCounter = 0;
-    for (Edge edge : edges) {
-      for (Edge edge1 : edges) {
+    for (Edge edge1 : edges) {
+      for (Edge edge2 : edges) {
 
-        if (((edge.getDestinationNode().getNodeNum()) == (edge1.getSource().getNodeNum()))
-            && ((edge.getSource().getNodeNum()) == (edge1.getDestinationNode().getNodeNum()))) {
+        if (((edge1.getDestinationNode().getNodeNum()) == (edge2.getSource().getNodeNum()))
+            && ((edge1.getSource().getNodeNum()) == (edge2.getDestinationNode().getNodeNum()))) {
           symmetricEdgeCounter++;
         }
       }
@@ -170,26 +170,26 @@ public class SecondaryController {
     int transitiveEdgeCounter = 0;
     // checks if there is an edge with a destination that is the same as the source of another
     // edge-edge1
-    for (Edge edge : edges) {
+    for (Edge edge1 : edges) {
       // increments the counter if the destination of the first edge is the same as the source of
       // the second edge
       // and if the destination of the second edge is not the same as the source of the second edge
-      for (Edge edge1 : edges) {
+      for (Edge edge2 : edges) {
 
-        if (edge.getDestinationNode().getNodeNum() == (edge1.getSource().getNodeNum())
-            && (edge1.getDestinationNode().getNodeNum() != (edge.getSource().getNodeNum())
-                && edge1 != edge
-                && edge.getDestinationNode() != edge.getSource()
-                && edge1.getDestinationNode() != edge1.getSource())) {
+        if (edge1.getDestinationNode().getNodeNum() == (edge2.getSource().getNodeNum())
+            && (edge1.getDestinationNode().getNodeNum() != (edge1.getSource().getNodeNum())
+                && edge2 != edge1
+                && edge1.getDestinationNode() != edge1.getSource()
+                && edge2.getDestinationNode() != edge2.getSource())) {
           possibleTransitiveEdgeCounter++;
 
           // checks if there is an edge-edge3 that comes from the same source the first edge did
           // and goes to the same destination the second edge did
           for (Edge edge3 : edges) {
-            if (edge.getSource().getNodeNum() == (edge3.getSource().getNodeNum())
+            if (edge1.getSource().getNodeNum() == (edge3.getSource().getNodeNum())
                 && edge1.getDestinationNode().getNodeNum()
                     == (edge3.getDestinationNode().getNodeNum())
-                && edge != edge3
+                && edge1 != edge3
                 && edge1 != edge3) {
               transitiveEdgeCounter++;
             }
@@ -209,11 +209,6 @@ public class SecondaryController {
     }
   }
 
-  /**
-   * Checks whether the graph is anti-symmetric.
-   *
-   * @return true if the graph is anti-symmetric, false otherwise.
-   */
   public boolean isAntiSymmetric() {
     if (AppState.undirected) {
       antiSymmetricLbl.setTextFill(Color.RED);
@@ -616,11 +611,11 @@ public class SecondaryController {
   }
 
   public boolean containsMultiEdges() {
-    for (Edge edge : edges) {
-      for (Edge edge1 : edges) {
-        if (edge.getSource().getNodeNum() == edge1.getSource().getNodeNum()
-            && edge.getDestinationNode().getNodeNum() == edge1.getDestinationNode().getNodeNum()
-            && edge != edge1) {
+    for (Edge edge1 : edges) {
+      for (Edge edge2 : edges) {
+        if (edge1.getSource().getNodeNum() == edge2.getSource().getNodeNum()
+            && edge1.getDestinationNode().getNodeNum() == edge2.getDestinationNode().getNodeNum()
+            && edge1 != edge2) {
           return true;
         }
       }
