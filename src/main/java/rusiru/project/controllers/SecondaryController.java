@@ -353,7 +353,7 @@ public class SecondaryController {
     }
 
     for (Node node : nodes) {
-      if ((node.getinDegree()) != AppState.numNodes - 1) {
+      if ((node.getInDegree()) != AppState.numNodes - 1) {
         completeGraphLbl.setTextFill(Color.RED);
         completeDigraphLbl.setTextFill(Color.RED);
         return false;
@@ -396,13 +396,13 @@ public class SecondaryController {
       for (Node node : nodes) {
 
         if (AppState.undirected) {
-          if ((node.getinDegree() + node.getoutDegree()) % 2 != 0) {
+          if ((node.getInDegree() + node.getOutDegree()) % 2 != 0) {
 
             eulerCircuitLbl.setTextFill(Color.RED);
             return false;
           }
         } else {
-          if ((node.getinDegree() != node.getoutDegree())) {
+          if ((node.getInDegree() != node.getOutDegree())) {
 
             eulerCircuitLbl.setTextFill(Color.RED);
             return false;
