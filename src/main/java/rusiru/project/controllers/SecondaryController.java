@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -182,11 +184,7 @@ public class SecondaryController {
   
     
     public  boolean isTransitive() {
-      if(AppState.undirected){
-          transitiveLbl.setTextFill(Color.RED);
-          AppState.isTransitive=false;
-          return false;
-                }
+      
                 int possibleTransitiveEdgeCounter = 0;
                 int transitiveEdgeCounter = 0;
                 // checks if there is an edge with a destination that is the same as the source of another
@@ -389,7 +387,6 @@ public class SecondaryController {
       completeGraphLbl.setTextFill(Color.RED);
       double numEdges=0.5* AppState.numNodes*(AppState.numNodes-1);
       if(AppState.undirected & (!AppState.isSimpleGraph || edges.size()!=2*( int)numEdges)){
-        System.out.println("rted");
       completeGraphLbl.setTextFill(Color.RED);
       return false;}
       else if(!AppState.undirected &  edges.size()!=2* numEdges){
@@ -400,7 +397,6 @@ public class SecondaryController {
 
         for(Node node:nodes){
           if((node.getinDegree())!=AppState.numNodes-1){
-            System.out.println("34ds");
             completeGraphLbl.setTextFill(Color.RED);
             completeDigraphLbl.setTextFill(Color.RED);
             return false;}}
@@ -477,50 +473,98 @@ public class SecondaryController {
       }
 
       
- @FXML
-    public boolean isBipartite() {
-        // Initialize colors for vertices
-        int[] colors = new int[AppState.numNodes];
+ 
+      public boolean isBipartite() {
+        boolean isUndirected = AppState.undirected;
+        boolean isDirected = !isUndirected; // Assuming undirected or directed, not both
+        int numNodes = AppState.numNodes;
+        int[] colors = new int[numNodes + 1];
         Arrays.fill(colors, -1);
-
-        // Iterate through each vertex
-        for (int i = 0; i < AppState.numNodes; i++) {
-            if (colors[i] == -1) {
-                if (!isBipartiteDFS(i, colors)) {
-                    bipartiteLbl.setTextFill(Color.RED);
-                    
-                    return false;
+    
+        for (Node node : nodes) {
+            if (colors[node.getNodeNum()] == -1) {
+                if (isDirected) {
+                    if (!isBipartiteDFS(node.getNodeNum(), colors)) {
+                        bipartiteLbl.setTextFill(Color.RED);
+                        return false;
+                    }
+                } else {
+                    if (!bipartiteBfs(node.getNodeNum(), edges, colors)) {
+                        bipartiteLbl.setTextFill(Color.RED);
+                        return false;
+                    }
                 }
             }
         }
-
+    
         bipartiteLbl.setTextFill(Color.GREEN);
         return true;
     }
-
+   
     private boolean isBipartiteDFS(int vertex, int[] colors) {
-        Stack<Integer> stack = new Stack<>();
-        stack.push(vertex);
-        colors[vertex] = 0; // Assign color 0 to the starting vertex
+      Stack<Integer> stack = new Stack<>();
+      stack.push(vertex);
+      colors[vertex] = 0; // Assign color 0 to the starting vertex
 
-        while (!stack.isEmpty()) {
-            int current = stack.pop();
+      while (!stack.isEmpty()) {
+          int current = stack.pop();
 
-            for (int neighbor : adjacencyList.get(current)) {
+          for (int neighbor : adjacencyList.get(current)) {
+              if (colors[neighbor] == -1) {
+                  colors[neighbor] = 1 - colors[current]; // Assign the opposite color
+                  stack.push(neighbor);
+              } else if (colors[neighbor] == colors[current]) {
+                  // If adjacent vertices have the same color, the graph is not bipartite
+                  return false;
+              }
+          }
+      }
+
+      return true;
+  }
+
+    private static boolean bipartiteBfs(int startNode, ArrayList<Edge> edges, int[] colors) {
+      
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(startNode);
+        colors[startNode] = 0;
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+
+            for (Edge edge : edges) {
+                int neighbor;
+                if (!AppState.undirected) {
+                    if (edge.getSource().getNodeNum() == current) {
+                        neighbor = edge.getDestinationNode().getNodeNum();
+                    } else {
+                        continue; // Skip edges that don't originate from the current node in a directed graph
+                    }
+                } else {
+                    // For undirected graph, consider both source and destination
+                    if (edge.getSource().getNodeNum() == current) {
+                        neighbor = edge.getDestinationNode().getNodeNum();
+                    } else if (edge.getDestinationNode().getNodeNum() == current) {
+                        neighbor = edge.getSource().getNodeNum();
+                    } else {
+                        continue; // Skip edges that don't involve the current node in an undirected graph
+                    }
+                }
+
                 if (colors[neighbor] == -1) {
-                    colors[neighbor] = 1 - colors[current]; // Assign the opposite color
-                    stack.push(neighbor);
+                    colors[neighbor] = 1 - colors[current];
+                    queue.add(neighbor);
                 } else if (colors[neighbor] == colors[current]) {
-                    // If adjacent vertices have the same color, the graph is not bipartite
-                    return false;
+                    return false; // Graph is not bipartite
                 }
             }
         }
 
-        return true;
+        return true; // Graph is bipartite
     }
 
-     
+   
+
 
     // Add this method to your SecondaryController class
    

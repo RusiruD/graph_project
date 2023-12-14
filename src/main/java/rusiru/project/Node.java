@@ -106,14 +106,15 @@ public class Node extends StackPane {
 
                 else{
                 Line line = createLine(AppState.previousStackPane, currentStackPane, AppState.previousNode, this, root, edge1);
-                SecondaryController.edges.add(edge);
-                SecondaryController.edges.add(edge1);
-                 SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
-                  SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
+               
                   root.getChildren().add(line);
                                   line.toBack();
 
-            }}
+                }
+         SecondaryController.edges.add(edge);
+                SecondaryController.edges.add(edge1);
+                 SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());
+                  SecondaryController.adjacencyList.get(edge.getSource().getNodeNum()).add(edge.getDestinationNode().getNodeNum());}
 
             //self loop
 
