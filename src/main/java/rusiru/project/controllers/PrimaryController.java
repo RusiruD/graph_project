@@ -9,34 +9,33 @@ import rusiru.project.App;
 import rusiru.project.AppState;
 
 public class PrimaryController {
-    @FXML Button submitBtn;
-    @FXML TextField numNodesTextField;
-    @FXML CheckBox undirected;
-    @FXML CheckBox weighted;
-    int numNodesInt;
+  @FXML Button submitBtn;
+  @FXML TextField numNodesTextField;
+  @FXML CheckBox undirected;
+  @FXML CheckBox weighted;
+  int numNodesInt;
 
-    @FXML
-    private void switchToSecondary() throws IOException {
+  @FXML
+  private void switchToSecondary() throws IOException {
 
-     
-        App.setRoot("secondary");
+    App.setRoot("secondary");
+  }
+
+  @FXML
+  private void onSubmitClicked() throws IOException, NumberFormatException {
+    AppState.undirected = undirected.isSelected();
+    AppState.weighted = weighted.isSelected();
+    System.out.println("Submit clicked");
+    System.out.println("Number of nodes: " + numNodesTextField.getText());
+
+    if (numNodesTextField.getText().equals("")) {
+
+    } else {
+      System.out.println("Number of nodes: " + numNodesTextField.getText());
+      numNodesInt = Integer.parseInt(numNodesTextField.getText());
+      AppState.numNodes = numNodesInt;
     }
 
-    @FXML
-    private void onSubmitClicked() throws IOException, NumberFormatException {
-        AppState.undirected = undirected.isSelected();
-        AppState.weighted = weighted.isSelected();
-        System.out.println("Submit clicked");
-        System.out.println("Number of nodes: " + numNodesTextField.getText());
-      
-        if(numNodesTextField.getText().equals("")){
-            
-        }
-        else{
-            System.out.println("Number of nodes: " + numNodesTextField.getText());
-            numNodesInt = Integer.parseInt(numNodesTextField.getText());
-            AppState.numNodes = numNodesInt;}
-       
-       switchToSecondary();
-    }
+    switchToSecondary();
+  }
 }
