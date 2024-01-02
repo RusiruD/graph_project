@@ -5,24 +5,31 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="677.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.PrimaryController">
+<Pane maxHeight="-Infinity" maxWidth="680.0" minHeight="-Infinity" minWidth="680.0" prefHeight="465.0" prefWidth="680.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.PrimaryController">
    <children>
-      <Button fx:id="submitBtn" layoutX="290.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#onSubmitClicked" prefHeight="40.0" prefWidth="100.0" text="Submit">
+      <Button fx:id="submitBtn" layoutX="290.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#onSubmitClicked" prefHeight="40.0" prefWidth="100.0" text="Generate">
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
-      <TextField fx:id="numNodesTextField" layoutX="250.0" layoutY="210.0" prefHeight="40.0" promptText="Number of Nodes" styleClass="black-border-textfield" stylesheets="@stylesheet.css">
+      <TextField fx:id="numNodesTextField" layoutX="270.0" layoutY="240.0" prefHeight="40.0" prefWidth="140.0" promptText="Number of Nodes" styleClass="black-border-textfield" stylesheets="@stylesheet.css">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></TextField>
-      <CheckBox fx:id="undirected" layoutX="285.0" layoutY="120.0" mnemonicParsing="false" styleClass="transparent-checkbox" stylesheets="@stylesheet.css" text="Undirected">
+      <CheckBox fx:id="undirected" layoutX="270.0" layoutY="140.0" maxWidth="150.0" minWidth="150.0" mnemonicParsing="false" prefWidth="150.0" styleClass="transparent-checkbox" stylesheets="@stylesheet.css" text="Undirected Edges">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></CheckBox>
-      <CheckBox fx:id="weighted" layoutX="285.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" styleClass="transparent-checkbox" stylesheets="@stylesheet.css" text="Weighted">
+      <CheckBox fx:id="weighted" layoutX="270.0" layoutY="180.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="transparent-checkbox" stylesheets="@stylesheet.css" text="Weighted Edges">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></CheckBox>
+      <Text layoutX="170.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graph Generator" textAlignment="CENTER" wrappingWidth="370.8203125">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Text>
+      <Text layoutX="160.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generate nodes and connect them with edges to form your desired graph. &#10;Then evaluate the graphs properties with a click of a button." />
    </children>
 </Pane>

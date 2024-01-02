@@ -24,6 +24,7 @@ public class Node extends StackPane {
   private int inDegree;
   private boolean hasSelfLoop;
   private int outDegree;
+
   double sceneX, sceneY, layoutX, layoutY;
   private double xOffset, yOffset;
   private Circle dot;
@@ -45,6 +46,7 @@ public class Node extends StackPane {
 
     nodePane.getChildren().addAll(dot, txt);
     root.getChildren().add(nodePane);
+
     nodePane.setPrefSize(paneSize, paneSize);
     nodePane.setMaxSize(paneSize, paneSize);
     nodePane.setMinSize(paneSize, paneSize);
@@ -66,6 +68,10 @@ public class Node extends StackPane {
 
     nodePane.setOnMouseDragged(
         event -> {
+          if (event.getSceneX() - xOffset > 930 - 300) {
+            return;
+          }
+          System.out.println(root.widthProperty().get());
           nodePane.setLayoutX(event.getSceneX() - xOffset);
           nodePane.setLayoutY(event.getSceneY() - yOffset);
         });

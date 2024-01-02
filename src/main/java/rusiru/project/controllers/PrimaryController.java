@@ -19,6 +19,7 @@ public class PrimaryController {
   private void switchToSecondary() throws IOException {
 
     App.setRoot("secondary");
+    App.setStage(950, 560);
   }
 
   @FXML
