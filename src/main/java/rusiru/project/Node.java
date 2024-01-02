@@ -37,7 +37,8 @@ public class Node extends StackPane {
     Random random = new Random();
     dot = new Circle();
     dot.setRadius(radius);
-
+    DoubleProperty widthProperty = new SimpleDoubleProperty();
+    widthProperty.bind(root.widthProperty().subtract(300));
     nodePane.setLayoutX((random.nextInt(550) + 10));
     nodePane.setLayoutY(random.nextInt(400) + 10);
 
@@ -68,7 +69,8 @@ public class Node extends StackPane {
 
     nodePane.setOnMouseDragged(
         event -> {
-          if (event.getSceneX() - xOffset > 930 - 300) {
+          if (event.getSceneX() - xOffset > widthProperty.get()) {
+
             return;
           }
           nodePane.setLayoutX(event.getSceneX() - xOffset);
