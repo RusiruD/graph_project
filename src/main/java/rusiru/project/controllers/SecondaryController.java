@@ -46,11 +46,12 @@ public class SecondaryController {
   @FXML Label directedMultiGraphLbl;
   @FXML Label directedPseudoGraphLbl;
   @FXML Button addNodeBtn;
+  @FXML Pane checkPropertiesPane;
 
   @FXML
   private void initialize() {
     root.setPadding(new Insets(20));
-
+    checkPropertiesPane.layoutXProperty().bind(root.widthProperty().subtract(240));
     // Generate a random integer between 100 and 300 (inclusive)
 
     for (int i = 0; i < AppState.numNodes; i++) {

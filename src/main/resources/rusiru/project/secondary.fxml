@@ -6,26 +6,30 @@
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPaneClicked" prefHeight="530.0" prefWidth="930.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.SecondaryController">
    <children>
-      <Label fx:id="reflexiveLbl" layoutX="700.0" layoutY="30.0" prefHeight="40.0" prefWidth="100.0" text="Reflexive" />
-      <Label fx:id="symmetricLbl" layoutX="700.0" layoutY="60.0" prefHeight="40.0" prefWidth="100.0" text="Symmetric" />
-      <Label fx:id="completeGraphLbl" layoutX="700.0" layoutY="300.0" prefHeight="40.0" prefWidth="100.0" text="Complete Graph" />
-      <Label fx:id="partialOrderLbl" layoutX="700.0" layoutY="180.0" prefHeight="40.0" prefWidth="100.0" text="Partial Order" />
-      <Label fx:id="multiGraphLbl" layoutX="700.0" layoutY="240.0" prefHeight="40.0" prefWidth="100.0" text="Multigraph" />
-      <Label fx:id="simpleGraphLbl" layoutX="700.0" layoutY="210.0" prefHeight="40.0" prefWidth="100.0" text="Simple Graph" />
-      <Label fx:id="equivalenceLbl" layoutX="700.0" layoutY="150.0" prefHeight="40.0" prefWidth="100.0" text="Equivalence" />
-      <Label fx:id="antiSymmetricLbl" layoutX="700.0" layoutY="90.0" prefHeight="40.0" prefWidth="100.0" text="Anti Symmetric" />
-      <Label fx:id="transitiveLbl" layoutX="700.0" layoutY="120.0" prefHeight="40.0" prefWidth="100.0" text="Transitive" />
-      <Label fx:id="pseudoGraphLbl" layoutX="700.0" layoutY="270.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph" />
-      <Button fx:id="checkGraph" layoutX="700.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#onCheckGraphClicked" text="Check" />
-      <Label fx:id="eulerCircuitLbl" layoutX="700.0" layoutY="330.0" prefHeight="40.0" prefWidth="100.0" text="Euler Circuit" />
-      <Label fx:id="connectedLbl" layoutX="700.0" layoutY="360.0" prefHeight="40.0" prefWidth="100.0" text="Connected" />
-      <Label fx:id="bipartiteLbl" layoutX="700.0" layoutY="420.0" prefHeight="40.0" prefWidth="100.0" text="Bipartite" />
-      <Label fx:id="acyclicLbl" layoutX="700.0" layoutY="390.0" prefHeight="40.0" prefWidth="100.0" text="Acyclic" />
-      <Label fx:id="treeLbl" layoutX="700.0" layoutY="450.0" prefHeight="40.0" prefWidth="100.0" text="Tree" />
-      <Label fx:id="directedSimpleGraphLbl" layoutX="800.0" layoutY="30.0" prefHeight="40.0" prefWidth="123.0" text="Directed Simple Graph" />
-      <Label fx:id="directedMultiGraphLbl" layoutX="800.0" layoutY="60.0" prefHeight="40.0" prefWidth="112.0" text="Directed Multigraph" />
-      <Label fx:id="directedPseudoGraphLbl" layoutX="800.0" layoutY="90.0" prefHeight="40.0" prefWidth="123.0" text="Directed PseudoGraph" />
-      <Label fx:id="completeDigraphLbl" layoutX="800.0" layoutY="120.0" prefHeight="40.0" prefWidth="100.0" text="Complete Digraph" />
-      <Button fx:id="addNodeBtn" layoutX="830.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#addNode" text="Add Node" />
+      <Pane fx:id="checkPropertiesPane" layoutX="691.0" prefHeight="530.0" prefWidth="240.0">
+         <children>
+            <Button fx:id="addNodeBtn" layoutX="10.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#addNode" text="Add Node" />
+            <Label fx:id="completeDigraphLbl" layoutX="100.0" layoutY="110.0" prefHeight="40.0" prefWidth="100.0" text="Complete Digraph" />
+            <Label fx:id="directedPseudoGraphLbl" layoutX="100.0" layoutY="80.0" prefHeight="40.0" prefWidth="123.0" text="Directed PseudoGraph" />
+            <Label fx:id="directedMultiGraphLbl" layoutX="100.0" layoutY="50.0" prefHeight="40.0" prefWidth="112.0" text="Directed Multigraph" />
+            <Label fx:id="directedSimpleGraphLbl" layoutX="100.0" layoutY="20.0" prefHeight="40.0" prefWidth="123.0" text="Directed Simple Graph" />
+            <Label fx:id="symmetricLbl" layoutX="10.0" layoutY="50.0" prefHeight="40.0" prefWidth="100.0" text="Symmetric" />
+            <Label fx:id="reflexiveLbl" layoutX="10.0" layoutY="20.0" prefHeight="40.0" prefWidth="100.0" text="Reflexive" />
+            <Label fx:id="completeGraphLbl" layoutX="10.0" layoutY="290.0" prefHeight="40.0" prefWidth="100.0" text="Complete Graph" />
+            <Label fx:id="partialOrderLbl" layoutX="10.0" layoutY="170.0" prefHeight="40.0" prefWidth="100.0" text="Partial Order" />
+            <Label fx:id="multiGraphLbl" layoutX="10.0" layoutY="230.0" prefHeight="40.0" prefWidth="100.0" text="Multigraph" />
+            <Label fx:id="simpleGraphLbl" layoutX="10.0" layoutY="200.0" prefHeight="40.0" prefWidth="100.0" text="Simple Graph" />
+            <Label fx:id="equivalenceLbl" layoutX="10.0" layoutY="140.0" prefHeight="40.0" prefWidth="100.0" text="Equivalence" />
+            <Label fx:id="antiSymmetricLbl" layoutX="10.0" layoutY="80.0" prefHeight="40.0" prefWidth="100.0" text="Anti Symmetric" />
+            <Label fx:id="transitiveLbl" layoutX="10.0" layoutY="110.0" prefHeight="40.0" prefWidth="100.0" text="Transitive" />
+            <Label fx:id="pseudoGraphLbl" layoutX="10.0" layoutY="440.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph" />
+            <Button fx:id="checkGraph" layoutX="120.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#onCheckGraphClicked" text="Check" />
+            <Label fx:id="eulerCircuitLbl" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="100.0" text="Euler Circuit" />
+            <Label fx:id="connectedLbl" layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="100.0" text="Connected" />
+            <Label fx:id="bipartiteLbl" layoutX="10.0" layoutY="380.0" prefHeight="40.0" prefWidth="100.0" text="Bipartite" />
+            <Label fx:id="acyclicLbl" layoutX="10.0" layoutY="350.0" prefHeight="40.0" prefWidth="100.0" text="Acyclic" />
+            <Label fx:id="treeLbl" layoutX="10.0" layoutY="410.0" prefHeight="40.0" prefWidth="100.0" text="Tree" />
+         </children>
+      </Pane>
    </children>
 </Pane>

@@ -71,7 +71,6 @@ public class Node extends StackPane {
           if (event.getSceneX() - xOffset > 930 - 300) {
             return;
           }
-          System.out.println(root.widthProperty().get());
           nodePane.setLayoutX(event.getSceneX() - xOffset);
           nodePane.setLayoutY(event.getSceneY() - yOffset);
         });
