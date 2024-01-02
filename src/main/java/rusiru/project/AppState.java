@@ -35,6 +35,12 @@ public class AppState {
   }
 
   public static void setAdjacencyMatrix(int[][] adjacencyMatrix) {
+    for (int i = 0; i < AppState.adjacencyMatrix.length; i++) {
+      for (int j = 0; j < AppState.adjacencyMatrix[j].length; j++) {
+        adjacencyMatrix[i][j] = AppState.adjacencyMatrix[i][j];
+      }
+    }
+
     AppState.adjacencyMatrix = adjacencyMatrix;
   }
 

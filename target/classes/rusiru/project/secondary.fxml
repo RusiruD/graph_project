@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPaneClicked" prefHeight="529.0" prefWidth="927.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.SecondaryController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPaneClicked" prefHeight="529.0" prefWidth="927.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.SecondaryController">
    <children>
       <Label fx:id="reflexiveLbl" layoutX="700.0" layoutY="30.0" prefHeight="40.0" prefWidth="100.0" text="Reflexive" />
       <Label fx:id="symmetricLbl" layoutX="700.0" layoutY="60.0" prefHeight="40.0" prefWidth="100.0" text="Symmetric" />
@@ -26,5 +26,6 @@
       <Label fx:id="directedMultiGraphLbl" layoutX="800.0" layoutY="60.0" prefHeight="40.0" prefWidth="112.0" text="Directed Multigraph" />
       <Label fx:id="directedPseudoGraphLbl" layoutX="800.0" layoutY="90.0" prefHeight="40.0" prefWidth="123.0" text="Directed PseudoGraph" />
       <Label fx:id="completeDigraphLbl" layoutX="800.0" layoutY="120.0" prefHeight="40.0" prefWidth="100.0" text="Complete Digraph" />
+      <Button fx:id="addNodeBtn" layoutX="830.0" layoutY="478.0" mnemonicParsing="false" onMouseClicked="#addNode" text="Add Node" />
    </children>
 </Pane>

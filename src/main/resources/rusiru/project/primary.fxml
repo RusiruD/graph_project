@@ -4,12 +4,25 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.PrimaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="677.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.PrimaryController">
    <children>
-      <Button fx:id="submitBtn" layoutX="247.0" layoutY="367.0" mnemonicParsing="false" onMouseClicked="#onSubmitClicked" prefHeight="17.0" prefWidth="148.0" text="Submit" />
-      <TextField fx:id="numNodesTextField" layoutX="247.0" layoutY="200.0" />
-      <CheckBox fx:id="undirected" layoutX="285.0" layoutY="113.0" mnemonicParsing="false" text="undirected" />
-      <CheckBox fx:id="weighted" layoutX="285.0" layoutY="141.0" mnemonicParsing="false" text="weighted" />
+      <Button fx:id="submitBtn" layoutX="290.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#onSubmitClicked" prefHeight="40.0" prefWidth="100.0" text="Submit">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Button>
+      <TextField fx:id="numNodesTextField" layoutX="250.0" layoutY="210.0" prefHeight="40.0" promptText="Number of Nodes" styleClass="black-border-textfield" stylesheets="@stylesheet.css">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></TextField>
+      <CheckBox fx:id="undirected" layoutX="285.0" layoutY="120.0" mnemonicParsing="false" styleClass="transparent-checkbox" stylesheets="@stylesheet.css" text="Undirected">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></CheckBox>
+      <CheckBox fx:id="weighted" layoutX="285.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" styleClass="transparent-checkbox" stylesheets="@stylesheet.css" text="Weighted">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></CheckBox>
    </children>
 </Pane>

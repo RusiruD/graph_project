@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.Stack;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -44,6 +45,7 @@ public class SecondaryController {
   @FXML Label directedSimpleGraphLbl;
   @FXML Label directedMultiGraphLbl;
   @FXML Label directedPseudoGraphLbl;
+  @FXML Button addNodeBtn;
 
   @FXML
   private void initialize() {
@@ -55,7 +57,6 @@ public class SecondaryController {
       createNode(i);
       adjacencyList.add(new ArrayList<Integer>());
     }
-    AppState.createAdjacencyMatrix(AppState.numNodes);
   }
 
   @FXML
@@ -621,5 +622,11 @@ public class SecondaryController {
       }
     }
     return false;
+  }
+
+  @FXML
+  private void addNode() {
+    AppState.numNodes++;
+    createNode(AppState.numNodes - 1);
   }
 }
