@@ -1,10 +1,12 @@
 package rusiru.project.controllers;
 
 import java.io.IOException;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import rusiru.project.App;
 import rusiru.project.AppState;
 
@@ -13,7 +15,17 @@ public class PrimaryController {
   @FXML TextField numNodesTextField;
   @FXML CheckBox undirected;
   @FXML CheckBox weighted;
+  @FXML Pane introPane;
+  @FXML Pane root;
   int numNodesInt;
+
+  @FXML
+  private void initialize() {
+    introPane
+        .layoutXProperty()
+        .bind(
+            Bindings.divide(Bindings.subtract(root.widthProperty(), introPane.widthProperty()), 2));
+  }
 
   @FXML
   private void switchToSecondary() throws IOException {
