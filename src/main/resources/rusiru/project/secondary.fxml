@@ -2,6 +2,9 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPaneClicked" prefHeight="530.0" prefWidth="930.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.SecondaryController">
@@ -22,14 +25,20 @@
             <Label fx:id="equivalenceLbl" layoutX="10.0" layoutY="140.0" prefHeight="40.0" prefWidth="100.0" text="Equivalence" />
             <Label fx:id="antiSymmetricLbl" layoutX="10.0" layoutY="80.0" prefHeight="40.0" prefWidth="100.0" text="Anti Symmetric" />
             <Label fx:id="transitiveLbl" layoutX="10.0" layoutY="110.0" prefHeight="40.0" prefWidth="100.0" text="Transitive" />
-            <Label fx:id="pseudoGraphLbl" layoutX="10.0" layoutY="440.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph" />
+            <Label fx:id="pseudoGraphLbl" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph" />
             <Button fx:id="checkGraph" layoutX="120.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#onCheckGraphClicked" text="Check" />
-            <Label fx:id="eulerCircuitLbl" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="100.0" text="Euler Circuit" />
+            <Label fx:id="eulerCircuitLbl" layoutX="10.0" layoutY="440.0" prefHeight="40.0" prefWidth="100.0" text="Euler Circuit" />
             <Label fx:id="connectedLbl" layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="100.0" text="Connected" />
             <Label fx:id="bipartiteLbl" layoutX="10.0" layoutY="380.0" prefHeight="40.0" prefWidth="100.0" text="Bipartite" />
             <Label fx:id="acyclicLbl" layoutX="10.0" layoutY="350.0" prefHeight="40.0" prefWidth="100.0" text="Acyclic" />
             <Label fx:id="treeLbl" layoutX="10.0" layoutY="410.0" prefHeight="40.0" prefWidth="100.0" text="Tree" />
+            <ImageView fx:id="informationImg" fitHeight="23.0" fitWidth="22.0" layoutX="203.0" layoutY="8.0" onMouseClicked="#revealDefinitions" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@information-41225_1280%20(1).png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
+      <TextArea fx:id="definitionTextArea" layoutX="59.0" layoutY="72.0" prefHeight="407.0" prefWidth="595.0" text="Reflexive-If every node has a self loop&#10;Symmetric-If whenever there is an edge(a,b) then (b,a) is also an edge&#10;Anti Symmetric-If whenever (a,b) is an edge and (b,a) is an edge then (a) must be the same as (b)&#10;Transitive-If (a,b) is an edge and (b,c) is an edge then (a,c) must be an edge&#10;Equivalence-The graph is reflexive, symmetric and transitive&#10;Partial Order-The graph is reflexive, antisymmetric and transitive&#10;Simple Graph-The undirected graph contains at most one edge between any 2 nodes and no self loops.&#10;Multigraph-The undirected graph contains multiple edges between node pairs but no self loops.&#10;Pseudograph-The undirected graph contains self loops and multiple edges between node pairs.&#10;Complete Graph-The graph contains an edge between every pair of distinct nodes&#10;Connected-The graph contains a path between every pair of distinct nodes&#10;Acyclic-The graph contains 0 cycles(cycles must contain at least 3 nodes)&#10;Bipartite-The graph can be divided into 2 disjoint node sets so every edge connects a node from one set to the other&#10;Tree-The graph is connected and acyclic&#10;Euler Circuit-The graph contains a circuit that traverses every edge of a graph exactly once and returns to start&#10;Directed Simple Graph-The directed graph contains at most 1 edge between any 2 nodes and no self loops&#10;Directed Multigraph-The directed graph contains multiple edges between node pairs and no self loops&#10;Directed PseudoGraph-The directed graph contains self loops and multiple edges between any 2 nodes&#10;Complete Digraph-The directed graph contains a directed edge between every vertex to every other vertex&#10;" visible="false" />
    </children>
 </Pane>

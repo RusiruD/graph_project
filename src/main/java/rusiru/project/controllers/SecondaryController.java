@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -36,6 +38,7 @@ public class SecondaryController {
   @FXML Label multiGraphLbl;
   @FXML Label pseudoGraphLbl;
   @FXML Label completeGraphLbl;
+  @FXML ImageView informationImg;
   @FXML Label connectedLbl;
   @FXML Label eulerCircuitLbl;
   @FXML Label acyclicLbl;
@@ -47,6 +50,7 @@ public class SecondaryController {
   @FXML Label directedPseudoGraphLbl;
   @FXML Button addNodeBtn;
   @FXML Pane checkPropertiesPane;
+  @FXML TextArea definitionTextArea;
 
   @FXML
   private void initialize() {
@@ -629,5 +633,16 @@ public class SecondaryController {
   private void addNode() {
     AppState.numNodes++;
     createNode(AppState.numNodes - 1);
+    adjacencyList.add(new ArrayList<Integer>());
+  }
+
+  @FXML
+  private void revealDefinitions() {
+    if (definitionTextArea.isVisible()) {
+      definitionTextArea.setVisible(false);
+    } else {
+      definitionTextArea.setVisible(true);
+      definitionTextArea.toFront();
+    }
   }
 }
