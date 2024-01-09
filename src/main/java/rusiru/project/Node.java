@@ -39,8 +39,8 @@ public class Node extends StackPane {
     dot.setRadius(radius);
     DoubleProperty widthProperty = new SimpleDoubleProperty();
     widthProperty.bind(root.widthProperty().subtract(300));
-    nodePane.setLayoutX((random.nextInt(480) + 250));
-    nodePane.setLayoutY(random.nextInt(480) + 20);
+    nodePane.setLayoutX((random.nextInt((int) (root.getWidth() - 520)) + 255));
+    nodePane.setLayoutY(random.nextInt((int) (root.getHeight() - 110)) + 45);
 
     Label txt = new Label(Integer.toString(Nodenum));
     txt.setTextFill(Color.WHITE);
