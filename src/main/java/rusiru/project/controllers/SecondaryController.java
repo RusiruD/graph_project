@@ -98,6 +98,10 @@ public class SecondaryController {
     resetBtn.setVisible(true);
     addNodeBtn.setDisable(false);
     addNodeBtn.setVisible(true);
+    submitBtn.toBack();
+    resetBtn.toFront();
+    submitBtn.setVisible(false);
+    submitBtn.setDisable(true);
   }
 
   @FXML
@@ -132,6 +136,10 @@ public class SecondaryController {
     numNodesTextField.setText("");
     resetBtn.setDisable(true);
     resetBtn.setVisible(false);
+    resetBtn.toBack();
+    submitBtn.toFront();
+    submitBtn.setVisible(true);
+    submitBtn.setDisable(false);
     resetCheckedProperties();
     addNodeBtn.setDisable(true);
     addNodeBtn.setVisible(false);

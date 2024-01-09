@@ -11,42 +11,49 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPaneClicked" prefHeight="550.0" prefWidth="1000.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.SecondaryController">
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPaneClicked" prefHeight="600.0" prefWidth="1200.0" styleClass="white-pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rusiru.project.controllers.SecondaryController">
    <children>
-      <Pane fx:id="introPane" prefHeight="550.0" prefWidth="240.0" stylesheets="@stylesheet.css">
+      <Pane fx:id="introPane" layoutY="50.0" prefHeight="550.0" prefWidth="240.0" stylesheets="@stylesheet.css">
          <children>
-            <Button fx:id="submitBtn" layoutX="70.0" layoutY="410.0" mnemonicParsing="false" onMouseClicked="#onSubmitClicked" prefHeight="40.0" prefWidth="100.0" stylesheets="@stylesheet.css" text="Generate">
+            <Button fx:id="submitBtn" layoutX="70.0" layoutY="450.0" mnemonicParsing="false" onMouseClicked="#onSubmitClicked" prefHeight="40.0" prefWidth="100.0" stylesheets="@stylesheet.css" text="Generate">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <TextField fx:id="numNodesTextField" layoutX="50.0" layoutY="300.0" prefHeight="40.0" prefWidth="140.0" promptText="Number Of Nodes" styleClass="black-border-textfield" stylesheets="@stylesheet.css">
+            <TextField fx:id="numNodesTextField" layoutX="50.0" layoutY="330.0" prefHeight="40.0" prefWidth="140.0" promptText="Number Of Nodes" styleClass="black-border-textfield" stylesheets="@stylesheet.css">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></TextField>
-            <CheckBox fx:id="undirected" layoutX="45.0" layoutY="200.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" stylesheets="@stylesheet.css" text="Undirected Edges">
+            <CheckBox fx:id="undirected" layoutX="45.0" layoutY="245.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" stylesheets="@stylesheet.css" text="Undirected Edges">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></CheckBox>
-            <CheckBox fx:id="weighted" layoutX="45.0" layoutY="133.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" stylesheets="@stylesheet.css" text="Weighted Edges">
+            <CheckBox fx:id="weighted" layoutX="45.0" layoutY="280.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" stylesheets="@stylesheet.css" text="Weighted Edges">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></CheckBox>
-            <Text layoutX="2.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graph Generator">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font></Text>
-            <Button fx:id="resetBtn" disable="true" layoutX="70.0" layoutY="477.0" mnemonicParsing="false" onMouseClicked="#onResetClicked" prefHeight="40.0" prefWidth="100.0" text="Reset" visible="false">
+            <Button fx:id="resetBtn" disable="true" layoutX="70.0" layoutY="450.0" mnemonicParsing="false" onMouseClicked="#onResetClicked" prefHeight="40.0" prefWidth="100.0" text="Reset" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="addNodeBtn" disable="true" layoutX="70.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#addNode" prefHeight="40.0" prefWidth="100.0" text="Add Node" visible="false">
+            <Text layoutX="7.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the type of edges and the number of nodes, then click generate.&#10;&#10;Click on one node then another and an edge will appear between them. Click the same node twice to create a self loop. &#10;&#10;When you are ready, click check to evaluate your graph's properties." wrappingWidth="240.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="17.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Text>
+            <Button fx:id="addNodeBtn" disable="true" layoutX="70.0" layoutY="390.0" mnemonicParsing="false" onMouseClicked="#addNode" prefHeight="40.0" prefWidth="100.0" text="Add Node" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Button>
+               </font>
+            </Button>
          </children>
       </Pane>
-      <Pane fx:id="checkPropertiesPane" layoutX="760.0" prefHeight="550.0" prefWidth="240.0">
+      <Pane fx:id="checkPropertiesPane" layoutX="960.0" layoutY="50.0" prefHeight="550.0" prefWidth="240.0">
          <children>
             <Label fx:id="completeDigraphLbl" layoutX="100.0" layoutY="110.0" prefHeight="40.0" prefWidth="100.0" text="Complete Digraph" />
             <Label fx:id="directedPseudoGraphLbl" layoutX="100.0" layoutY="80.0" prefHeight="40.0" prefWidth="123.0" text="Directed PseudoGraph" />
@@ -76,5 +83,10 @@
          </children>
       </Pane>
       <TextArea fx:id="definitionTextArea" layoutX="59.0" layoutY="72.0" prefHeight="407.0" prefWidth="595.0" text="Reflexive-If every node has a self loop&#10;Symmetric-If whenever there is an edge(a,b) then (b,a) is also an edge&#10;Anti Symmetric-If whenever (a,b) is an edge and (b,a) is an edge then (a) must be the same as (b)&#10;Transitive-If (a,b) is an edge and (b,c) is an edge then (a,c) must be an edge&#10;Equivalence-The graph is reflexive, symmetric and transitive&#10;Partial Order-The graph is reflexive, antisymmetric and transitive&#10;Simple Graph-The undirected graph contains at most one edge between any 2 nodes and no self loops.&#10;Multigraph-The undirected graph contains multiple edges between node pairs but no self loops.&#10;Pseudograph-The undirected graph contains self loops and multiple edges between node pairs.&#10;Complete Graph-The graph contains an edge between every pair of distinct nodes&#10;Connected-The graph contains a path between every pair of distinct nodes&#10;Acyclic-The graph contains 0 cycles(cycles must contain at least 3 nodes)&#10;Bipartite-The graph can be divided into 2 disjoint node sets so every edge connects a node from one set to the other&#10;Tree-The graph is connected and acyclic&#10;Euler Circuit-The graph contains a circuit that traverses every edge of a graph exactly once and returns to start&#10;Directed Simple Graph-The directed graph contains at most 1 edge between any 2 nodes and no self loops&#10;Directed Multigraph-The directed graph contains multiple edges between node pairs and no self loops&#10;Directed PseudoGraph-The directed graph contains self loops and multiple edges between any 2 nodes&#10;Complete Digraph-The directed graph contains a directed edge between every vertex to every other vertex&#10;" visible="false" />
+      <Text layoutX="307.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graph Generator and Evaluator">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font>
+      </Text>
    </children>
 </Pane>
