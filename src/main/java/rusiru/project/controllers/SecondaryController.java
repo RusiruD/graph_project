@@ -1,5 +1,6 @@
 package rusiru.project.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,13 +12,17 @@ import java.util.Stack;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.QuadCurve;
 import rusiru.project.AppState;
 import rusiru.project.Edge;
 import rusiru.project.Node;
@@ -51,6 +56,13 @@ public class SecondaryController {
   @FXML Button addNodeBtn;
   @FXML Pane checkPropertiesPane;
   @FXML TextArea definitionTextArea;
+  @FXML Button submitBtn;
+  @FXML TextField numNodesTextField;
+  @FXML CheckBox undirected;
+  @FXML CheckBox weighted;
+  @FXML Pane introPane;
+  int numNodesInt;
+  @FXML Button resetBtn;
 
   @FXML
   private void initialize() {
@@ -58,10 +70,32 @@ public class SecondaryController {
     checkPropertiesPane.layoutXProperty().bind(root.widthProperty().subtract(240));
     // Generate a random integer between 100 and 300 (inclusive)
 
-    for (int i = 0; i < AppState.numNodes; i++) {
-      createNode(i);
-      adjacencyList.add(new ArrayList<Integer>());
+  }
+
+  @FXML
+  private void onSubmitClicked() throws IOException, NumberFormatException {
+    AppState.undirected = undirected.isSelected();
+    AppState.weighted = weighted.isSelected();
+    System.out.println("Submit clicked");
+    System.out.println("Number of nodes: " + numNodesTextField.getText());
+
+    if (numNodesTextField.getText().equals("")) {
+
+    } else {
+      System.out.println("Number of nodes: " + numNodesTextField.getText());
+      numNodesInt = Integer.parseInt(numNodesTextField.getText());
+      AppState.numNodes = numNodesInt;
+      for (int i = 0; i < AppState.numNodes; i++) {
+        createNode(i);
+        adjacencyList.add(new ArrayList<Integer>());
+      }
     }
+    submitBtn.setDisable(true);
+    undirected.setDisable(true);
+    weighted.setDisable(true);
+    numNodesTextField.setDisable(true);
+    resetBtn.setDisable(false);
+    resetBtn.setVisible(true);
   }
 
   @FXML
@@ -69,6 +103,54 @@ public class SecondaryController {
     Node node = new Node(x, root);
     StackPane dotPane = node.getStackPane();
     return dotPane;
+  }
+
+  @FXML
+  private void onResetClicked(MouseEvent event) {
+    System.out.println("Reset clicked");
+
+    root.getChildren().removeIf(node -> node instanceof StackPane);
+    root.getChildren().removeIf(node -> node instanceof Line);
+    root.getChildren().removeIf(node -> node instanceof QuadCurve);
+    System.out.println(root.getChildren());
+    AppState.resetValues();
+    edges.clear();
+    nodes.clear();
+
+    adjacencyList.clear();
+    submitBtn.setDisable(false);
+    undirected.setDisable(false);
+    undirected.setSelected(false);
+    weighted.setDisable(false);
+    weighted.setSelected(false);
+    numNodesTextField.setDisable(false);
+    numNodesTextField.setText("");
+    resetBtn.setDisable(true);
+    resetBtn.setVisible(false);
+    resetCheckedProperties();
+  }
+
+  @FXML
+  private void resetCheckedProperties() {
+    reflexiveLbl.setTextFill(Color.BLACK);
+    symmetricLbl.setTextFill(Color.BLACK);
+    transitiveLbl.setTextFill(Color.BLACK);
+    antiSymmetricLbl.setTextFill(Color.BLACK);
+    equivalenceLbl.setTextFill(Color.BLACK);
+    partialOrderLbl.setTextFill(Color.BLACK);
+    simpleGraphLbl.setTextFill(Color.BLACK);
+    multiGraphLbl.setTextFill(Color.BLACK);
+    pseudoGraphLbl.setTextFill(Color.BLACK);
+    completeGraphLbl.setTextFill(Color.BLACK);
+    connectedLbl.setTextFill(Color.BLACK);
+    eulerCircuitLbl.setTextFill(Color.BLACK);
+    acyclicLbl.setTextFill(Color.BLACK);
+    completeDigraphLbl.setTextFill(Color.BLACK);
+    bipartiteLbl.setTextFill(Color.BLACK);
+    treeLbl.setTextFill(Color.BLACK);
+    directedSimpleGraphLbl.setTextFill(Color.BLACK);
+    directedMultiGraphLbl.setTextFill(Color.BLACK);
+    directedPseudoGraphLbl.setTextFill(Color.BLACK);
   }
 
   @FXML

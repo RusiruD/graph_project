@@ -39,13 +39,14 @@ public class Node extends StackPane {
     dot.setRadius(radius);
     DoubleProperty widthProperty = new SimpleDoubleProperty();
     widthProperty.bind(root.widthProperty().subtract(300));
-    nodePane.setLayoutX((random.nextInt(550) + 10));
-    nodePane.setLayoutY(random.nextInt(400) + 10);
+    nodePane.setLayoutX((random.nextInt(520) + 240));
+    nodePane.setLayoutY(random.nextInt(480) + 20);
 
     Label txt = new Label(Integer.toString(Nodenum));
     txt.setTextFill(Color.WHITE);
 
     nodePane.getChildren().addAll(dot, txt);
+
     root.getChildren().add(nodePane);
 
     nodePane.setPrefSize(paneSize, paneSize);
@@ -624,8 +625,23 @@ public class Node extends StackPane {
     this.inDegree = newInDegree;
   }
 
+  public Circle getDot() {
+    return dot;
+  }
+
   public void setOutDegree(int newOutDegree) {
     this.outDegree = newOutDegree;
+  }
+
+  public void removeNodeAndChildren(Pane root) {
+    // Remove the current node
+    this.getChildren().clear();
+
+    this.getChildren().removeAll();
+    root.getChildren().remove(this);
+
+    // Remove all children recursively
+
   }
 
   public Circle getCircle() {

@@ -52,4 +52,26 @@ public class AppState {
       System.out.println(); // Move to the next line after each row
     }
   }
+
+  public static void resetValues() {
+    numNodes = 0;
+    previousCircle = null;
+    previousNode = null;
+    alreadyClicked = false;
+    previousStackPane = null;
+    undirected = false;
+    weighted = false;
+    isReflexive = false;
+    isSymmetric = false;
+    isTransitive = false;
+    isAntiSymmetric = false;
+    isConnected = false;
+    isDirectedPseudoGraph = false;
+    isDirectedSimpleGraph = false;
+    isDirectedMultiGraph = false;
+    isPseudoGraph = false;
+    isSimpleGraph = false;
+    isMultiGraph = false;
+    adjacencyMatrix = null;
+  }
 }
