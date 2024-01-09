@@ -114,7 +114,10 @@ public class SecondaryController {
     root.getChildren().removeIf(node -> node instanceof StackPane);
     root.getChildren().removeIf(node -> node instanceof Line);
     root.getChildren().removeIf(node -> node instanceof QuadCurve);
+
     System.out.println(root.getChildren());
+    root.getChildren().removeIf(node -> node.getId() == "weightTextField");
+    root.getChildren().removeIf(node -> node.getId() == "weightLabel");
     AppState.resetValues();
     edges.clear();
     nodes.clear();
@@ -130,6 +133,8 @@ public class SecondaryController {
     resetBtn.setDisable(true);
     resetBtn.setVisible(false);
     resetCheckedProperties();
+    addNodeBtn.setDisable(true);
+    addNodeBtn.setVisible(false);
   }
 
   @FXML

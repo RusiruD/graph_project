@@ -39,7 +39,7 @@ public class Node extends StackPane {
     dot.setRadius(radius);
     DoubleProperty widthProperty = new SimpleDoubleProperty();
     widthProperty.bind(root.widthProperty().subtract(300));
-    nodePane.setLayoutX((random.nextInt(520) + 240));
+    nodePane.setLayoutX((random.nextInt(490) + 240));
     nodePane.setLayoutY(random.nextInt(480) + 20);
 
     Label txt = new Label(Integer.toString(Nodenum));
@@ -530,7 +530,9 @@ public class Node extends StackPane {
       Pane root, Line line, QuadCurve arc, boolean isSelfLoop, boolean isMultiEdge, Edge edge) {
 
     Label weightLbl = new Label("0");
+    weightLbl.setId("weightLabel");
     TextField weightTextField = new TextField();
+    weightTextField.setId("weightTextField");
     weightTextField.setVisible(false);
 
     weightLbl.setOnMouseClicked(
