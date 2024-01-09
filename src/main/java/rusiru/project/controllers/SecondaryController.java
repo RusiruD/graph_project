@@ -96,6 +96,8 @@ public class SecondaryController {
     numNodesTextField.setDisable(true);
     resetBtn.setDisable(false);
     resetBtn.setVisible(true);
+    addNodeBtn.setDisable(false);
+    addNodeBtn.setVisible(true);
   }
 
   @FXML
