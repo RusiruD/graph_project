@@ -23,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
+import javafx.scene.text.Text;
 import rusiru.project.AppState;
 import rusiru.project.Edge;
 import rusiru.project.Node;
@@ -63,17 +64,24 @@ public class SecondaryController {
   @FXML Pane introPane;
   int numNodesInt;
   @FXML Button resetBtn;
+  @FXML Pane titlePane;
+  @FXML Text titleTxt;
 
   @FXML
   private void initialize() {
     root.setPadding(new Insets(20));
     checkPropertiesPane.layoutXProperty().bind(root.widthProperty().subtract(240));
     // Generate a random integer between 100 and 300 (inclusive)
-
+    // titlePane.layoutXProperty().bind();
+    titlePane
+        .layoutXProperty()
+        .bind(root.widthProperty().subtract(titlePane.widthProperty()).divide(2));
   }
 
   @FXML
   private void onSubmitClicked() throws IOException, NumberFormatException {
+    System.out.println(root.layoutXProperty().getValue());
+    System.out.println(root.getWidth());
     AppState.undirected = undirected.isSelected();
     AppState.weighted = weighted.isSelected();
     System.out.println("Submit clicked");
