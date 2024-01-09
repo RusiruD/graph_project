@@ -70,7 +70,8 @@ public class Node extends StackPane {
 
     nodePane.setOnMouseDragged(
         event -> {
-          if (event.getSceneX() - xOffset > widthProperty.get()) {
+          if (event.getSceneX() - xOffset > widthProperty.get()
+              || event.getSceneX() - xOffset < 240) {
 
             return;
           }

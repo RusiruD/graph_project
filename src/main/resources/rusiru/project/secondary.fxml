@@ -36,7 +36,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Text layoutX="7.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the type of edges and the number of nodes, then click generate.&#10;&#10;Click on one node then another and an edge will appear between them. Click the same node twice to create a self loop. &#10;&#10;When you are ready, click check to evaluate your graph's properties." wrappingWidth="240.0">
+            <Text layoutX="8.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the type of edges and the number of nodes, then click generate.&#10;&#10;Click on one node then another and an edge will appear between them. Click the same node twice to create a self loop. &#10;&#10;When you are ready, click check to evaluate your graph's properties." wrappingWidth="240.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -69,13 +69,16 @@
             <Label fx:id="antiSymmetricLbl" layoutX="10.0" layoutY="80.0" prefHeight="40.0" prefWidth="100.0" text="Anti Symmetric" />
             <Label fx:id="transitiveLbl" layoutX="10.0" layoutY="110.0" prefHeight="40.0" prefWidth="100.0" text="Transitive" />
             <Label fx:id="pseudoGraphLbl" layoutX="10.0" layoutY="260.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph" />
-            <Button fx:id="checkGraph" layoutX="120.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#onCheckGraphClicked" text="Check" />
+            <Button fx:id="checkGraph" layoutX="120.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#onCheckGraphClicked" text="Check">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
             <Label fx:id="eulerCircuitLbl" layoutX="10.0" layoutY="440.0" prefHeight="40.0" prefWidth="100.0" text="Euler Circuit" />
             <Label fx:id="connectedLbl" layoutX="10.0" layoutY="320.0" prefHeight="40.0" prefWidth="100.0" text="Connected" />
             <Label fx:id="bipartiteLbl" layoutX="10.0" layoutY="380.0" prefHeight="40.0" prefWidth="100.0" text="Bipartite" />
             <Label fx:id="acyclicLbl" layoutX="10.0" layoutY="350.0" prefHeight="40.0" prefWidth="100.0" text="Acyclic" />
             <Label fx:id="treeLbl" layoutX="10.0" layoutY="410.0" prefHeight="40.0" prefWidth="100.0" text="Tree" />
-            <ImageView fx:id="informationImg" fitHeight="23.0" fitWidth="22.0" layoutX="203.0" layoutY="8.0" onMouseClicked="#revealDefinitions" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="informationImg" fitHeight="23.0" fitWidth="22.0" layoutX="208.0" layoutY="2.0" onMouseClicked="#revealDefinitions" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@information-41225_1280%20(1).png" />
                </image>
