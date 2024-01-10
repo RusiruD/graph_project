@@ -24,7 +24,7 @@ public class Node extends StackPane {
   private int inDegree;
   private boolean hasSelfLoop;
   private int outDegree;
-
+  StackPane nodePane;
   double sceneX, sceneY, layoutX, layoutY;
   private double xOffset, yOffset;
   private Circle dot;
@@ -33,7 +33,7 @@ public class Node extends StackPane {
     num = Nodenum;
     double radius = 25;
     double paneSize = 2 * radius;
-    StackPane nodePane = new StackPane();
+    nodePane = new StackPane();
     Random random = new Random();
     dot = new Circle();
     dot.setRadius(radius);
@@ -235,6 +235,11 @@ public class Node extends StackPane {
   }
 
   private static int generateRandomNumber() {
+    ArrayList<Integer> list = new ArrayList<Integer>(21);
+    for (int i = -100; i <= 100; i += 10) {
+      list.add(i);
+    }
+
     Random random = new Random();
     int range = (90 - (-90)) / 5 + 1; // Total number of possible values
     int randomIndex = random.nextInt(range);
@@ -242,10 +247,49 @@ public class Node extends StackPane {
     return randomValue;
   }
 
+  private static QuadCurve setControlPoint(
+      QuadCurve arc, StackPane startStackPane, StackPane endStackPane) {
+    ArrayList<Integer> list = new ArrayList<Integer>(21);
+
+    list.add(40);
+    list.add(-40);
+    list.add(80);
+    list.add(-80);
+    list.add(120);
+
+    list.add(-120);
+    list.add(120);
+    list.add(-120);
+    list.add(-150);
+    list.add(150);
+
+    int x = edgeCountBetween(startStackPane, endStackPane);
+    System.out.println("x minus 1 " + (x - 1));
+    int num = list.get(x - 2);
+
+    arc.controlXProperty()
+        .bind(
+            startStackPane
+                .layoutXProperty()
+                .add(startStackPane.translateXProperty())
+                .add(startStackPane.widthProperty().divide(2))
+                .subtract(num));
+    arc.controlYProperty()
+        .bind(
+            startStackPane
+                .layoutYProperty()
+                .add(startStackPane.translateYProperty())
+                .add(startStackPane.heightProperty().divide(2))
+                .subtract(num));
+    System.out.println(num);
+    return arc;
+  }
+
   private void createMultiEdge(
       StackPane startStackPane, StackPane endStackPane, Pane root, Edge edge) {
 
-    int randomNum = generateRandomNumber();
+    int randomNum1 = generateRandomNumber();
+    int randomNum2 = generateRandomNumber();
 
     QuadCurve arc = new QuadCurve();
     if (!AppState.undirected) {
@@ -254,7 +298,7 @@ public class Node extends StackPane {
               () -> {
                 ArrayList<Double> coordinates =
                     calculatePointAtDistanceFromEnd(
-                        31, startStackPane, endStackPane, randomNum, randomNum);
+                        31, startStackPane, endStackPane, randomNum1, randomNum2);
                 return coordinates.get(0);
               },
               startStackPane.layoutXProperty(),
@@ -270,7 +314,7 @@ public class Node extends StackPane {
               () -> {
                 ArrayList<Double> coordinates =
                     calculatePointAtDistanceFromEnd(
-                        31, startStackPane, endStackPane, randomNum, randomNum);
+                        31, startStackPane, endStackPane, randomNum1, randomNum2);
                 return coordinates.get(1);
               },
               startStackPane.layoutYProperty(),
@@ -290,15 +334,13 @@ public class Node extends StackPane {
               endStackPane
                   .layoutXProperty()
                   .add(endStackPane.translateXProperty())
-                  .add(endStackPane.widthProperty().divide(2))
-                  .subtract(0));
+                  .add(endStackPane.widthProperty().divide(2)));
       arc.endYProperty()
           .bind(
               endStackPane
                   .layoutYProperty()
                   .add(endStackPane.translateYProperty())
-                  .add(endStackPane.heightProperty().divide(2))
-                  .subtract(0));
+                  .add(endStackPane.heightProperty().divide(2)));
     }
 
     arc.startXProperty()
@@ -314,33 +356,38 @@ public class Node extends StackPane {
                 .add(startStackPane.translateYProperty())
                 .add(startStackPane.heightProperty().divide(2)));
 
-    arc.controlXProperty()
+    /*  arc.controlXProperty()
         .bind(
             startStackPane
                 .layoutXProperty()
                 .add(startStackPane.translateXProperty())
+                .add(endStackPane.translateXProperty())
                 .add(startStackPane.widthProperty().divide(2))
                 .subtract(randomNum));
+
     arc.controlYProperty()
         .bind(
             startStackPane
                 .layoutYProperty()
                 .add(startStackPane.translateYProperty())
+                .add(endStackPane.translateYProperty())
                 .add(startStackPane.heightProperty().divide(2))
-                .subtract(randomNum));
+                .subtract(randomNum));*/
 
-    arc.setStroke(Color.BLUE);
-    arc.setStrokeWidth(2);
-    arc.setFill(Color.TRANSPARENT);
+    QuadCurve arc1 = setControlPoint(arc, startStackPane, endStackPane);
+
+    arc1.setStroke(Color.BLUE);
+    arc1.setStrokeWidth(2);
+    arc1.setFill(Color.TRANSPARENT);
 
     if (AppState.weighted) {
-      createWeightedEdge(root, null, arc, false, true, edge);
+      createWeightedEdge(root, null, arc1, false, true, edge);
     }
     if (!AppState.undirected) {
-      createSelfLoopArrow(arc, root);
+      createSelfLoopArrow(arc1, root);
     }
-    root.getChildren().add(arc);
-    arc.toBack();
+    root.getChildren().add(arc1);
+    arc1.toBack();
   }
 
   private static ArrayList<Double> calculatePointAtDistanceFromEnd(
@@ -540,6 +587,8 @@ public class Node extends StackPane {
 
     weightLbl.setOnMouseClicked(
         event -> {
+          System.out.println(arc.controlXProperty().get());
+          System.out.println(arc.controlYProperty().get());
           weightLbl.setVisible(false);
           weightTextField.setText(weightLbl.getText());
           weightTextField.setPrefWidth(40);
@@ -577,10 +626,52 @@ public class Node extends StackPane {
       weightTextField.layoutYProperty().bind(arc.startYProperty().subtract(70));
 
     } else if (isMultiEdge) {
-      weightLbl.layoutXProperty().bind(arc.controlXProperty());
-      weightLbl.layoutYProperty().bind(arc.controlYProperty());
+
+      weightLbl.layoutXProperty().bind(arc.startXProperty().add(arc.endXProperty()).divide(2));
+      weightLbl.layoutYProperty().bind(arc.startYProperty().add(arc.endYProperty()).divide(2));
       weightTextField.layoutXProperty().bind(arc.controlXProperty());
-      weightTextField.layoutYProperty().bind(arc.controlYProperty().subtract(0));
+      weightTextField.layoutYProperty().bind(arc.controlYProperty());
+
+      if (arc.controlYProperty().get()
+          > ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
+        weightLbl
+            .layoutYProperty()
+            .bind(
+                arc.startYProperty()
+                    .add(arc.endYProperty())
+                    .divide(2)
+                    .add(arc.controlYProperty().divide(10)));
+      }
+      if (arc.controlYProperty().get()
+          < ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
+        weightLbl
+            .layoutYProperty()
+            .bind(
+                arc.startYProperty()
+                    .add(arc.endYProperty())
+                    .divide(2)
+                    .subtract(arc.controlYProperty().divide(10)));
+      }
+      if (arc.controlXProperty().get()
+          > ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
+        weightLbl
+            .layoutXProperty()
+            .bind(
+                arc.startXProperty()
+                    .add(arc.endXProperty())
+                    .divide(2)
+                    .add(arc.controlXProperty().divide(10)));
+      }
+      if (arc.controlXProperty().get()
+          < ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
+        weightLbl
+            .layoutXProperty()
+            .bind(
+                arc.startXProperty()
+                    .add(arc.endXProperty())
+                    .divide(2)
+                    .subtract(arc.controlXProperty().divide(10)));
+      }
 
     } else {
 
@@ -610,8 +701,21 @@ public class Node extends StackPane {
     return false;
   }
 
+  public static int edgeCountBetween(StackPane startStackPane, StackPane endStackPane) {
+    int i = 0;
+    for (Edge edge : SecondaryController.edges) {
+
+      if (edge.getSource().getStackPane().equals(startStackPane)
+          && edge.getDestinationNode().getStackPane().equals(endStackPane)) {
+        i++;
+      }
+    }
+    System.out.println(i);
+    return i;
+  }
+
   public StackPane getStackPane() {
-    return this;
+    return nodePane;
   }
 
   public int getNodeNum() {

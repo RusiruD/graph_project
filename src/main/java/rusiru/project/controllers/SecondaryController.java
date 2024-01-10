@@ -200,7 +200,8 @@ public class SecondaryController {
 
   @FXML
   public void onCheckGraphClicked() {
-    System.out.println("Check graph clicked");
+
+    System.out.println("Check graph clicked ");
 
     isReflexive();
     isSymmetric();
