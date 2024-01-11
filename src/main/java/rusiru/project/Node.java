@@ -689,32 +689,32 @@ public class Node extends StackPane {
       // weightLbl.layoutXProperty().bind(arc.startXProperty().add(arc.endXProperty()).divide(2));
       // weightLbl.layoutYProperty().bind(arc.startYProperty().add(arc.endYProperty()).divide(2));
 
-      weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(70));
-      weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(70));
       weightTextField.layoutXProperty().bind(arc.controlXProperty());
       weightTextField.layoutYProperty().bind(arc.controlYProperty());
 
       if (arc.controlYProperty().get()
           > ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
-
         double s =
             (arc.controlYProperty().get()
                     - ((arc.startYProperty().get() + arc.endYProperty().get()) / 2))
                 / 2;
-        System.out.println("rdds " + s);
         weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(s));
-        /*
-        weightLbl
-            .layoutYProperty()
-            .bind(
-                arc.startYProperty()
-                    .add(arc.endYProperty())
-                    .divide(2)
-                    .add(
-                        arc.controlYProperty()
-                            .divide(((arc.startYProperty().add(arc.endYProperty())).divide(2)))
-                            .multiply(30))
-                    .add(10));*/
+
+        ChangeListener<Number> arcPropertiesListener =
+            new ChangeListener<Number>() {
+              @Override
+              public void changed(
+                  ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                double s =
+                    (arc.controlYProperty().get()
+                            - ((arc.startYProperty().get() + arc.endYProperty().get()) / 2))
+                        / 2;
+                weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(s));
+              }
+            };
+        arc.startYProperty().addListener(arcPropertiesListener);
+        arc.endYProperty().addListener(arcPropertiesListener);
+        arc.controlYProperty().addListener(arcPropertiesListener);
       }
 
       if (arc.controlYProperty().get()
@@ -723,21 +723,24 @@ public class Node extends StackPane {
             (((arc.startYProperty().get() + arc.endYProperty().get()) / 2)
                     - arc.controlYProperty().get())
                 / 2;
-        System.out.println("rd qw " + s);
         weightLbl.layoutYProperty().bind(arc.controlYProperty().add(s));
+        ChangeListener<Number> arcPropertiesListener =
+            new ChangeListener<Number>() {
+              @Override
+              public void changed(
+                  ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                double s =
+                    (((arc.startYProperty().get() + arc.endYProperty().get()) / 2)
+                            - arc.controlYProperty().get())
+                        / 2;
+                weightLbl.layoutYProperty().bind(arc.controlYProperty().add(s));
+              }
+            };
 
-        /*
-        weightLbl
-            .layoutYProperty()
-            .bind(
-                arc.startYProperty()
-                    .add(arc.endYProperty())
-                    .divide(2)
-                    .subtract(
-                        arc.controlYProperty()
-                            .divide(((arc.startYProperty().add(arc.endYProperty())).divide(2)))
-                            .multiply(30))
-                    .subtract(10));*/
+        // Bind the listener to the startYProperty, endYProperty, and controlYProperty of the arc
+        arc.startYProperty().addListener(arcPropertiesListener);
+        arc.endYProperty().addListener(arcPropertiesListener);
+        arc.controlYProperty().addListener(arcPropertiesListener);
       }
 
       if (arc.controlXProperty().get()
@@ -746,20 +749,24 @@ public class Node extends StackPane {
             (arc.controlXProperty().get()
                     - ((arc.startXProperty().get() + arc.endXProperty().get()) / 2))
                 / 2;
-        System.out.println("rd " + s);
         weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(s));
-        /*
-        weightLbl
-            .layoutXProperty()
-            .bind(
-                arc.startXProperty()
-                    .add(arc.endXProperty())
-                    .divide(2)
-                    .add(
-                        arc.controlXProperty()
-                            .divide(((arc.startXProperty().add(arc.endXProperty())).divide(2)))
-                            .multiply(30))
-                    .add(10));*/
+        ChangeListener<Number> arcPropertiesListener =
+            new ChangeListener<Number>() {
+              @Override
+              public void changed(
+                  ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                double s =
+                    (arc.controlXProperty().get()
+                            - ((arc.startXProperty().get() + arc.endXProperty().get()) / 2))
+                        / 2;
+                weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(s));
+              }
+            };
+
+        // Bind the listener to the startYProperty, endYProperty, and controlYProperty of the arc
+        arc.startYProperty().addListener(arcPropertiesListener);
+        arc.endYProperty().addListener(arcPropertiesListener);
+        arc.controlYProperty().addListener(arcPropertiesListener);
       }
       if (arc.controlXProperty().get()
           < ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
@@ -767,20 +774,24 @@ public class Node extends StackPane {
             (((arc.startXProperty().get() + arc.endXProperty().get()) / 2)
                     - arc.controlXProperty().get())
                 / 2;
-        System.out.println("red " + s);
         weightLbl.layoutXProperty().bind(arc.controlXProperty().add(s));
-        /*
-        weightLbl
-            .layoutXProperty()
-            .bind(
-                arc.startXProperty()
-                    .add(arc.endXProperty())
-                    .divide(2)
-                    .subtract(
-                        arc.controlXProperty()
-                            .divide(((arc.startXProperty().add(arc.endXProperty())).divide(2)))
-                            .multiply(30))
-                    .subtract(10));*/
+        ChangeListener<Number> arcPropertiesListener =
+            new ChangeListener<Number>() {
+              @Override
+              public void changed(
+                  ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                double s =
+                    (((arc.startXProperty().get() + arc.endXProperty().get()) / 2)
+                            - arc.controlXProperty().get())
+                        / 2;
+                weightLbl.layoutXProperty().bind(arc.controlXProperty().add(s));
+              }
+            };
+
+        // Bind the listener to the startYProperty, endYProperty, and controlYProperty of the arc
+        arc.startYProperty().addListener(arcPropertiesListener);
+        arc.endYProperty().addListener(arcPropertiesListener);
+        arc.controlYProperty().addListener(arcPropertiesListener);
       }
 
     } else {
