@@ -316,7 +316,6 @@ public class Node extends StackPane {
                   .add(startStackPane.heightProperty().divide(2))
                   .subtract(num));
     }
-    System.out.println(AppState.previousNode.getAngle());
 
     return arc;
   }
@@ -690,13 +689,21 @@ public class Node extends StackPane {
       // weightLbl.layoutXProperty().bind(arc.startXProperty().add(arc.endXProperty()).divide(2));
       // weightLbl.layoutYProperty().bind(arc.startYProperty().add(arc.endYProperty()).divide(2));
 
-      // weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(70));
-      // weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(70));
+      weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(70));
+      weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(70));
       weightTextField.layoutXProperty().bind(arc.controlXProperty());
       weightTextField.layoutYProperty().bind(arc.controlYProperty());
 
       if (arc.controlYProperty().get()
           > ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
+
+        double s =
+            (arc.controlYProperty().get()
+                    - ((arc.startYProperty().get() + arc.endYProperty().get()) / 2))
+                / 2;
+        System.out.println("rdds " + s);
+        weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(s));
+        /*
         weightLbl
             .layoutYProperty()
             .bind(
@@ -706,11 +713,20 @@ public class Node extends StackPane {
                     .add(
                         arc.controlYProperty()
                             .divide(((arc.startYProperty().add(arc.endYProperty())).divide(2)))
-                            .multiply(1.5))
-                    .add(10));
+                            .multiply(30))
+                    .add(10));*/
       }
+
       if (arc.controlYProperty().get()
           < ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
+        double s =
+            (((arc.startYProperty().get() + arc.endYProperty().get()) / 2)
+                    - arc.controlYProperty().get())
+                / 2;
+        System.out.println("rd qw " + s);
+        weightLbl.layoutYProperty().bind(arc.controlYProperty().add(s));
+
+        /*
         weightLbl
             .layoutYProperty()
             .bind(
@@ -720,11 +736,13 @@ public class Node extends StackPane {
                     .subtract(
                         arc.controlYProperty()
                             .divide(((arc.startYProperty().add(arc.endYProperty())).divide(2)))
-                            .multiply(1.5))
-                    .subtract(10));
+                            .multiply(30))
+                    .subtract(10));*/
       }
+
       if (arc.controlXProperty().get()
           > ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
+        weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(70)); /*
         weightLbl
             .layoutXProperty()
             .bind(
@@ -734,11 +752,12 @@ public class Node extends StackPane {
                     .add(
                         arc.controlXProperty()
                             .divide(((arc.startXProperty().add(arc.endXProperty())).divide(2)))
-                            .multiply(1.5))
-                    .add(10));
+                            .multiply(30))
+                    .add(10));*/
       }
       if (arc.controlXProperty().get()
           < ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
+        weightLbl.layoutXProperty().bind(arc.controlXProperty().add(70)); /*
         weightLbl
             .layoutXProperty()
             .bind(
@@ -748,8 +767,8 @@ public class Node extends StackPane {
                     .subtract(
                         arc.controlXProperty()
                             .divide(((arc.startXProperty().add(arc.endXProperty())).divide(2)))
-                            .multiply(1.5))
-                    .subtract(10));
+                            .multiply(30))
+                    .subtract(10));*/
       }
 
     } else {
