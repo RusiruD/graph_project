@@ -742,7 +742,13 @@ public class Node extends StackPane {
 
       if (arc.controlXProperty().get()
           > ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
-        weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(70)); /*
+        double s =
+            (arc.controlXProperty().get()
+                    - ((arc.startXProperty().get() + arc.endXProperty().get()) / 2))
+                / 2;
+        System.out.println("rd " + s);
+        weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(s));
+        /*
         weightLbl
             .layoutXProperty()
             .bind(
@@ -757,7 +763,13 @@ public class Node extends StackPane {
       }
       if (arc.controlXProperty().get()
           < ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
-        weightLbl.layoutXProperty().bind(arc.controlXProperty().add(70)); /*
+        double s =
+            (((arc.startXProperty().get() + arc.endXProperty().get()) / 2)
+                    - arc.controlXProperty().get())
+                / 2;
+        System.out.println("red " + s);
+        weightLbl.layoutXProperty().bind(arc.controlXProperty().add(s));
+        /*
         weightLbl
             .layoutXProperty()
             .bind(
