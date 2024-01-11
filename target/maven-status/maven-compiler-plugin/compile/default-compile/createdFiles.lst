@@ -1,5 +1,6 @@
 rusiru\project\controllers\PrimaryController.class
 rusiru\project\Edge.class
+rusiru\project\Node$1.class
 rusiru\project\AppState.class
 rusiru\project\App.class
 rusiru\project\Node.class

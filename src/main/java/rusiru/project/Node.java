@@ -6,6 +6,8 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
+import javafx.scene.text.Font;
 import rusiru.project.controllers.SecondaryController;
 
 public class Node extends StackPane {
@@ -28,6 +31,7 @@ public class Node extends StackPane {
   double sceneX, sceneY, layoutX, layoutY;
   private double xOffset, yOffset;
   private Circle dot;
+  private double angle;
 
   public Node(int Nodenum, Pane root) {
     num = Nodenum;
@@ -264,7 +268,6 @@ public class Node extends StackPane {
     list.add(180);
     int num;
     int x = edgeCountBetween(startStackPane, endStackPane);
-    System.out.println(list.size());
     Random random = new Random();
     if (x - 2 > 9) {
       if (random.nextBoolean()) {
@@ -292,15 +295,28 @@ public class Node extends StackPane {
                 .layoutXProperty()
                 .add(startStackPane.translateXProperty())
                 .add(startStackPane.widthProperty().divide(2))
-                .subtract(num));
-    arc.controlYProperty()
-        .bind(
-            startStackPane
-                .layoutYProperty()
-                .add(startStackPane.translateYProperty())
-                .add(startStackPane.heightProperty().divide(2))
-                .subtract(num));
-    System.out.println(num);
+                .add(num));
+
+    if ((AppState.previousNode.getAngle() > 95 && AppState.previousNode.getAngle() < 150)
+        || AppState.previousNode.getAngle() > -74 && AppState.previousNode.getAngle() < -17) {
+      arc.controlYProperty()
+          .bind(
+              startStackPane
+                  .layoutYProperty()
+                  .add(startStackPane.translateYProperty())
+                  .add(startStackPane.heightProperty().divide(2))
+                  .add(num));
+    } else {
+
+      arc.controlYProperty()
+          .bind(
+              startStackPane
+                  .layoutYProperty()
+                  .add(startStackPane.translateYProperty())
+                  .add(startStackPane.heightProperty().divide(2))
+                  .subtract(num));
+    }
+
     return arc;
   }
 
@@ -368,6 +384,7 @@ public class Node extends StackPane {
                 .layoutXProperty()
                 .add(startStackPane.translateXProperty())
                 .add(startStackPane.widthProperty().divide(2)));
+
     arc.startYProperty()
         .bind(
             startStackPane
@@ -508,7 +525,29 @@ public class Node extends StackPane {
     if (!AppState.undirected) {
       createEdgeArrow(line, root);
     }
+    double x = line.startXProperty().get() - line.endXProperty().get();
+    double y = line.startYProperty().get() - line.endYProperty().get();
+    angle = Math.toDegrees(Math.atan2(y, x));
+    AppState.previousNode.setAngle(angle);
 
+    ChangeListener<Number> angleListener =
+        new ChangeListener<Number>() {
+          @Override
+          public void changed(
+              ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            double x = line.startXProperty().get() - line.endXProperty().get();
+            double y = line.startYProperty().get() - line.endYProperty().get();
+            angle = Math.toDegrees(Math.atan2(y, x));
+
+            AppState.previousNode.setAngle(angle);
+          }
+        };
+
+    // Add the listener to the endpoint coordinates
+    line.startXProperty().addListener(angleListener);
+    line.startYProperty().addListener(angleListener);
+    line.endXProperty().addListener(angleListener);
+    line.endYProperty().addListener(angleListener);
     root.getChildren().add(line);
     line.toBack();
   }
@@ -600,16 +639,17 @@ public class Node extends StackPane {
 
     Label weightLbl = new Label("0");
     weightLbl.setId("weightLabel");
+    weightLbl.setFont(new Font("Arial", 16));
+
     TextField weightTextField = new TextField();
     weightTextField.setId("weightTextField");
     weightTextField.setVisible(false);
 
     weightLbl.setOnMouseClicked(
         event -> {
-          System.out.println(arc.controlXProperty().get());
-          System.out.println(arc.controlYProperty().get());
           weightLbl.setVisible(false);
           weightTextField.setText(weightLbl.getText());
+
           weightTextField.setPrefWidth(40);
 
           weightTextField.setVisible(true);
@@ -646,8 +686,11 @@ public class Node extends StackPane {
 
     } else if (isMultiEdge) {
 
-      weightLbl.layoutXProperty().bind(arc.startXProperty().add(arc.endXProperty()).divide(2));
-      weightLbl.layoutYProperty().bind(arc.startYProperty().add(arc.endYProperty()).divide(2));
+      // weightLbl.layoutXProperty().bind(arc.startXProperty().add(arc.endXProperty()).divide(2));
+      // weightLbl.layoutYProperty().bind(arc.startYProperty().add(arc.endYProperty()).divide(2));
+
+      // weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(70));
+      // weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(70));
       weightTextField.layoutXProperty().bind(arc.controlXProperty());
       weightTextField.layoutYProperty().bind(arc.controlYProperty());
 
@@ -659,7 +702,7 @@ public class Node extends StackPane {
                 arc.startYProperty()
                     .add(arc.endYProperty())
                     .divide(2)
-                    .add(arc.controlYProperty().divide(10)));
+                    .add(arc.controlYProperty().divide(6)));
       }
       if (arc.controlYProperty().get()
           < ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
@@ -669,7 +712,7 @@ public class Node extends StackPane {
                 arc.startYProperty()
                     .add(arc.endYProperty())
                     .divide(2)
-                    .subtract(arc.controlYProperty().divide(10)));
+                    .subtract(arc.controlYProperty().divide(6)));
       }
       if (arc.controlXProperty().get()
           > ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
@@ -679,7 +722,7 @@ public class Node extends StackPane {
                 arc.startXProperty()
                     .add(arc.endXProperty())
                     .divide(2)
-                    .add(arc.controlXProperty().divide(10)));
+                    .add(arc.controlXProperty().divide(6)));
       }
       if (arc.controlXProperty().get()
           < ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
@@ -689,7 +732,7 @@ public class Node extends StackPane {
                 arc.startXProperty()
                     .add(arc.endXProperty())
                     .divide(2)
-                    .subtract(arc.controlXProperty().divide(10)));
+                    .subtract(arc.controlXProperty().divide(6)));
       }
 
     } else {
@@ -729,7 +772,6 @@ public class Node extends StackPane {
         i++;
       }
     }
-    System.out.println(i);
     return i;
   }
 
@@ -759,6 +801,14 @@ public class Node extends StackPane {
 
   public void setOutDegree(int newOutDegree) {
     this.outDegree = newOutDegree;
+  }
+
+  public double getAngle() {
+    return angle;
+  }
+
+  public void setAngle(double angle) {
+    this.angle = angle;
   }
 
   public void removeNodeAndChildren(Pane root) {
