@@ -686,12 +686,6 @@ public class Node extends StackPane {
 
     } else if (isMultiEdge) {
 
-      // weightLbl.layoutXProperty().bind(arc.startXProperty().add(arc.endXProperty()).divide(2));
-      // weightLbl.layoutYProperty().bind(arc.startYProperty().add(arc.endYProperty()).divide(2));
-
-      weightTextField.layoutXProperty().bind(arc.controlXProperty());
-      weightTextField.layoutYProperty().bind(arc.controlYProperty());
-
       if (arc.controlYProperty().get()
           > ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
         double s =
@@ -699,6 +693,7 @@ public class Node extends StackPane {
                     - ((arc.startYProperty().get() + arc.endYProperty().get()) / 2))
                 / 2;
         weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(s));
+        weightTextField.layoutYProperty().bind(arc.controlYProperty().subtract(s));
 
         ChangeListener<Number> arcPropertiesListener =
             new ChangeListener<Number>() {
@@ -710,6 +705,7 @@ public class Node extends StackPane {
                             - ((arc.startYProperty().get() + arc.endYProperty().get()) / 2))
                         / 2;
                 weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(s));
+                weightTextField.layoutYProperty().bind(arc.controlYProperty().subtract(s));
               }
             };
         arc.startYProperty().addListener(arcPropertiesListener);
@@ -724,6 +720,7 @@ public class Node extends StackPane {
                     - arc.controlYProperty().get())
                 / 2;
         weightLbl.layoutYProperty().bind(arc.controlYProperty().add(s));
+        weightTextField.layoutYProperty().bind(arc.controlYProperty().add(s));
         ChangeListener<Number> arcPropertiesListener =
             new ChangeListener<Number>() {
               @Override
@@ -734,6 +731,7 @@ public class Node extends StackPane {
                             - arc.controlYProperty().get())
                         / 2;
                 weightLbl.layoutYProperty().bind(arc.controlYProperty().add(s));
+                weightTextField.layoutYProperty().bind(arc.controlYProperty().add(s));
               }
             };
 
@@ -750,6 +748,7 @@ public class Node extends StackPane {
                     - ((arc.startXProperty().get() + arc.endXProperty().get()) / 2))
                 / 2;
         weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(s));
+        weightTextField.layoutXProperty().bind(arc.controlXProperty().subtract(s));
         ChangeListener<Number> arcPropertiesListener =
             new ChangeListener<Number>() {
               @Override
@@ -760,6 +759,7 @@ public class Node extends StackPane {
                             - ((arc.startXProperty().get() + arc.endXProperty().get()) / 2))
                         / 2;
                 weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(s));
+                weightTextField.layoutXProperty().bind(arc.controlXProperty().subtract(s));
               }
             };
 
@@ -775,6 +775,7 @@ public class Node extends StackPane {
                     - arc.controlXProperty().get())
                 / 2;
         weightLbl.layoutXProperty().bind(arc.controlXProperty().add(s));
+        weightTextField.layoutXProperty().bind(arc.controlXProperty().add(s));
         ChangeListener<Number> arcPropertiesListener =
             new ChangeListener<Number>() {
               @Override
@@ -785,6 +786,7 @@ public class Node extends StackPane {
                             - arc.controlXProperty().get())
                         / 2;
                 weightLbl.layoutXProperty().bind(arc.controlXProperty().add(s));
+                weightTextField.layoutXProperty().bind(arc.controlXProperty().add(s));
               }
             };
 
