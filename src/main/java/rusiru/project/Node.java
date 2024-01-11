@@ -249,7 +249,7 @@ public class Node extends StackPane {
 
   private static QuadCurve setControlPoint(
       QuadCurve arc, StackPane startStackPane, StackPane endStackPane) {
-    ArrayList<Integer> list = new ArrayList<Integer>(21);
+    ArrayList<Integer> list = new ArrayList<Integer>();
 
     list.add(40);
     list.add(-40);
@@ -258,14 +258,33 @@ public class Node extends StackPane {
     list.add(120);
 
     list.add(-120);
-    list.add(120);
-    list.add(-120);
-    list.add(-150);
-    list.add(150);
-
+    list.add(140);
+    list.add(-140);
+    list.add(-180);
+    list.add(180);
+    int num;
     int x = edgeCountBetween(startStackPane, endStackPane);
-    System.out.println("x minus 1 " + (x - 1));
-    int num = list.get(x - 2);
+    System.out.println(list.size());
+    Random random = new Random();
+    if (x - 2 > 9) {
+      if (random.nextBoolean()) {
+
+        // Generate a random number greater than 190
+        int minValue = 191; // Minimum value (exclusive)
+        int maxValue = 300; // Maximum value
+
+        int randomNumber = random.nextInt(maxValue - minValue) + minValue;
+        num = randomNumber;
+      } else {
+        int minValue = -300; // Minimum value
+        int maxValue = -191; // Maximum value (exclusive)
+
+        int randomNumber = random.nextInt(maxValue - minValue) + minValue;
+        num = randomNumber;
+      }
+    } else {
+      num = list.get(x - 2);
+    }
 
     arc.controlXProperty()
         .bind(
