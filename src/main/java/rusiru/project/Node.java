@@ -297,7 +297,7 @@ public class Node extends StackPane {
                 .add(startStackPane.widthProperty().divide(2))
                 .add(num));
 
-    if ((AppState.previousNode.getAngle() > 95 && AppState.previousNode.getAngle() < 150)
+    if ((AppState.previousNode.getAngle() > 95 && AppState.previousNode.getAngle() < 166)
         || AppState.previousNode.getAngle() > -74 && AppState.previousNode.getAngle() < -17) {
       arc.controlYProperty()
           .bind(
@@ -316,6 +316,7 @@ public class Node extends StackPane {
                   .add(startStackPane.heightProperty().divide(2))
                   .subtract(num));
     }
+    System.out.println(AppState.previousNode.getAngle());
 
     return arc;
   }
@@ -702,7 +703,11 @@ public class Node extends StackPane {
                 arc.startYProperty()
                     .add(arc.endYProperty())
                     .divide(2)
-                    .add(arc.controlYProperty().divide(6)));
+                    .add(
+                        arc.controlYProperty()
+                            .divide(((arc.startYProperty().add(arc.endYProperty())).divide(2)))
+                            .multiply(1.5))
+                    .add(10));
       }
       if (arc.controlYProperty().get()
           < ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
@@ -712,7 +717,11 @@ public class Node extends StackPane {
                 arc.startYProperty()
                     .add(arc.endYProperty())
                     .divide(2)
-                    .subtract(arc.controlYProperty().divide(6)));
+                    .subtract(
+                        arc.controlYProperty()
+                            .divide(((arc.startYProperty().add(arc.endYProperty())).divide(2)))
+                            .multiply(1.5))
+                    .subtract(10));
       }
       if (arc.controlXProperty().get()
           > ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
@@ -722,7 +731,11 @@ public class Node extends StackPane {
                 arc.startXProperty()
                     .add(arc.endXProperty())
                     .divide(2)
-                    .add(arc.controlXProperty().divide(6)));
+                    .add(
+                        arc.controlXProperty()
+                            .divide(((arc.startXProperty().add(arc.endXProperty())).divide(2)))
+                            .multiply(1.5))
+                    .add(10));
       }
       if (arc.controlXProperty().get()
           < ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
@@ -732,7 +745,11 @@ public class Node extends StackPane {
                 arc.startXProperty()
                     .add(arc.endXProperty())
                     .divide(2)
-                    .subtract(arc.controlXProperty().divide(6)));
+                    .subtract(
+                        arc.controlXProperty()
+                            .divide(((arc.startXProperty().add(arc.endXProperty())).divide(2)))
+                            .multiply(1.5))
+                    .subtract(10));
       }
 
     } else {
