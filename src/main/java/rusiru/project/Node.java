@@ -643,6 +643,7 @@ public class Node extends StackPane {
 
     TextField weightTextField = new TextField();
     weightTextField.setId("weightTextField");
+
     weightTextField.setVisible(false);
 
     weightLbl.setOnMouseClicked(
@@ -688,24 +689,26 @@ public class Node extends StackPane {
 
       if (arc.controlYProperty().get()
           > ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
-        double s =
+        double halfDifference =
             (arc.controlYProperty().get()
                     - ((arc.startYProperty().get() + arc.endYProperty().get()) / 2))
                 / 2;
-        weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(s));
-        weightTextField.layoutYProperty().bind(arc.controlYProperty().subtract(s));
+        weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(halfDifference));
+        weightTextField.layoutYProperty().bind(arc.controlYProperty().subtract(halfDifference));
 
         ChangeListener<Number> arcPropertiesListener =
             new ChangeListener<Number>() {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                double s =
+                double halfDifference =
                     (arc.controlYProperty().get()
                             - ((arc.startYProperty().get() + arc.endYProperty().get()) / 2))
                         / 2;
-                weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(s));
-                weightTextField.layoutYProperty().bind(arc.controlYProperty().subtract(s));
+                weightLbl.layoutYProperty().bind(arc.controlYProperty().subtract(halfDifference));
+                weightTextField
+                    .layoutYProperty()
+                    .bind(arc.controlYProperty().subtract(halfDifference));
               }
             };
         arc.startYProperty().addListener(arcPropertiesListener);
@@ -715,23 +718,23 @@ public class Node extends StackPane {
 
       if (arc.controlYProperty().get()
           < ((arc.startYProperty().get() + arc.endYProperty().get()) / 2)) {
-        double s =
+        double halfDifference =
             (((arc.startYProperty().get() + arc.endYProperty().get()) / 2)
                     - arc.controlYProperty().get())
                 / 2;
-        weightLbl.layoutYProperty().bind(arc.controlYProperty().add(s));
-        weightTextField.layoutYProperty().bind(arc.controlYProperty().add(s));
+        weightLbl.layoutYProperty().bind(arc.controlYProperty().add(halfDifference));
+        weightTextField.layoutYProperty().bind(arc.controlYProperty().add(halfDifference));
         ChangeListener<Number> arcPropertiesListener =
             new ChangeListener<Number>() {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                double s =
+                double halfDifference =
                     (((arc.startYProperty().get() + arc.endYProperty().get()) / 2)
                             - arc.controlYProperty().get())
                         / 2;
-                weightLbl.layoutYProperty().bind(arc.controlYProperty().add(s));
-                weightTextField.layoutYProperty().bind(arc.controlYProperty().add(s));
+                weightLbl.layoutYProperty().bind(arc.controlYProperty().add(halfDifference));
+                weightTextField.layoutYProperty().bind(arc.controlYProperty().add(halfDifference));
               }
             };
 
@@ -743,23 +746,25 @@ public class Node extends StackPane {
 
       if (arc.controlXProperty().get()
           > ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
-        double s =
+        double halfDifference =
             (arc.controlXProperty().get()
                     - ((arc.startXProperty().get() + arc.endXProperty().get()) / 2))
                 / 2;
-        weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(s));
-        weightTextField.layoutXProperty().bind(arc.controlXProperty().subtract(s));
+        weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(halfDifference));
+        weightTextField.layoutXProperty().bind(arc.controlXProperty().subtract(halfDifference));
         ChangeListener<Number> arcPropertiesListener =
             new ChangeListener<Number>() {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                double s =
+                double halfDifference =
                     (arc.controlXProperty().get()
                             - ((arc.startXProperty().get() + arc.endXProperty().get()) / 2))
                         / 2;
-                weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(s));
-                weightTextField.layoutXProperty().bind(arc.controlXProperty().subtract(s));
+                weightLbl.layoutXProperty().bind(arc.controlXProperty().subtract(halfDifference));
+                weightTextField
+                    .layoutXProperty()
+                    .bind(arc.controlXProperty().subtract(halfDifference));
               }
             };
 
@@ -770,23 +775,26 @@ public class Node extends StackPane {
       }
       if (arc.controlXProperty().get()
           < ((arc.startXProperty().get() + arc.endXProperty().get()) / 2)) {
-        double s =
+        System.out.println("rge2d32");
+        double halfDifference =
             (((arc.startXProperty().get() + arc.endXProperty().get()) / 2)
                     - arc.controlXProperty().get())
                 / 2;
-        weightLbl.layoutXProperty().bind(arc.controlXProperty().add(s));
-        weightTextField.layoutXProperty().bind(arc.controlXProperty().add(s));
+
+        weightLbl.layoutXProperty().bind(arc.controlXProperty().add(halfDifference));
+        weightTextField.layoutXProperty().bind(arc.controlXProperty().add(halfDifference));
+
         ChangeListener<Number> arcPropertiesListener =
             new ChangeListener<Number>() {
               @Override
               public void changed(
                   ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                double s =
+                double halfDifference =
                     (((arc.startXProperty().get() + arc.endXProperty().get()) / 2)
                             - arc.controlXProperty().get())
                         / 2;
-                weightLbl.layoutXProperty().bind(arc.controlXProperty().add(s));
-                weightTextField.layoutXProperty().bind(arc.controlXProperty().add(s));
+                weightLbl.layoutXProperty().bind(arc.controlXProperty().add(halfDifference));
+                weightTextField.layoutXProperty().bind(arc.controlXProperty().add(halfDifference));
               }
             };
 
