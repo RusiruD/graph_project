@@ -55,43 +55,43 @@
       </Pane>
       <Pane fx:id="checkPropertiesPane" layoutX="970.0" layoutY="50.0" prefHeight="550.0" prefWidth="260.0" stylesheets="@stylesheet.css">
          <children>
-            <Label fx:id="completeDigraphLbl" layoutX="110.0" layoutY="160.0" prefHeight="40.0" prefWidth="123.0" text="Complete Digraph">
+            <Label fx:id="completeDigraphLbl" layoutX="110.0" layoutY="160.0" prefHeight="40.0" prefWidth="130.0" text="Complete Digraph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="symmetricLbl" layoutX="5.0" layoutY="80.0" prefHeight="40.0" prefWidth="70.0" stylesheets="@stylesheet.css" text="Symmetric">
+            <Label fx:id="symmetricLbl" layoutX="5.0" layoutY="80.0" prefHeight="40.0" prefWidth="90.0" stylesheets="@stylesheet.css" text="Symmetric">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="reflexiveLbl" layoutX="5.0" layoutY="40.0" prefHeight="40.0" prefWidth="70.0" stylesheets="@stylesheet.css" text="Reflexive">
+            <Label fx:id="reflexiveLbl" layoutX="5.0" layoutY="40.0" prefHeight="40.0" prefWidth="100.0" stylesheets="@stylesheet.css" text="Reflexive">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="partialOrderLbl" layoutX="5.0" layoutY="240.0" prefHeight="40.0" prefWidth="80.0" text="Partial Order">
+            <Label fx:id="partialOrderLbl" layoutX="5.0" layoutY="240.0" prefHeight="40.0" prefWidth="110.0" text="Partial Order">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="multiGraphLbl" layoutX="5.0" layoutY="360.0" prefHeight="40.0" prefWidth="70.0" text="Multigraph">
+            <Label fx:id="multiGraphLbl" layoutX="5.0" layoutY="360.0" prefHeight="40.0" prefWidth="100.0" text="Multigraph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="simpleGraphLbl" layoutX="5.0" layoutY="320.0" prefHeight="40.0" prefWidth="90.0" text="Simple Graph">
+            <Label fx:id="simpleGraphLbl" layoutX="5.0" layoutY="320.0" prefHeight="40.0" prefWidth="110.0" text="Simple Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="equivalenceLbl" layoutX="5.0" layoutY="200.0" prefHeight="40.0" prefWidth="80.0" text="Equivalence">
+            <Label fx:id="equivalenceLbl" layoutX="5.0" layoutY="200.0" prefHeight="40.0" prefWidth="110.0" text="Equivalence">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="antiSymmetricLbl" layoutX="5.0" layoutY="120.0" prefHeight="40.0" prefWidth="90.0" text="Antisymmetric">
+            <Label fx:id="antiSymmetricLbl" layoutX="5.0" layoutY="120.0" prefHeight="40.0" prefWidth="110.0" text="Antisymmetric">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="transitiveLbl" layoutX="5.0" layoutY="160.0" prefHeight="40.0" prefWidth="60.0" text="Transitive">
+            <Label fx:id="transitiveLbl" layoutX="5.0" layoutY="160.0" prefHeight="40.0" prefWidth="100.0" text="Transitive">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="pseudoGraphLbl" layoutX="5.0" layoutY="400.0" prefHeight="40.0" prefWidth="90.0" text="Pseudograph">
+            <Label fx:id="pseudoGraphLbl" layoutX="5.0" layoutY="400.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -99,11 +99,11 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Label fx:id="eulerCircuitLbl" layoutX="110.0" layoutY="280.0" prefHeight="40.0" prefWidth="100.0" text="Euler Circuit">
+            <Label fx:id="eulerCircuitLbl" layoutX="110.0" layoutY="280.0" prefHeight="40.0" prefWidth="110.0" text="Euler Circuit">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="bipartiteLbl" layoutX="5.0" layoutY="280.0" prefHeight="40.0" prefWidth="60.0" text="Bipartite">
+            <Label fx:id="bipartiteLbl" layoutX="5.0" layoutY="280.0" prefHeight="40.0" prefWidth="70.0" text="Bipartite">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -116,27 +116,27 @@
                   <Image url="@information-41225_1280%20(1).png" />
                </image>
             </ImageView>
-            <Label fx:id="directedSimpleGraphLbl" layoutX="110.0" layoutY="40.0" prefHeight="40.0" prefWidth="140.0" text="Directed Simple Graph">
+            <Label fx:id="directedSimpleGraphLbl" layoutX="110.0" layoutY="40.0" prefHeight="40.0" prefWidth="150.0" text="Directed Simple Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="directedPseudoGraphLbl" layoutX="110.0" layoutY="120.0" prefHeight="40.0" prefWidth="140.0" text="Directed Pseudograph">
+            <Label fx:id="directedPseudoGraphLbl" layoutX="110.0" layoutY="120.0" prefHeight="40.0" prefWidth="160.0" text="Directed Pseudograph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="directedMultiGraphLbl" layoutX="110.0" layoutY="80.0" prefHeight="40.0" prefWidth="135.0" text="Directed Multigraph">
+            <Label fx:id="directedMultiGraphLbl" layoutX="110.0" layoutY="80.0" prefHeight="40.0" prefWidth="150.0" text="Directed Multigraph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="completeGraphLbl" layoutX="110.0" layoutY="320.0" prefHeight="40.0" prefWidth="112.0" text="Complete Graph">
+            <Label fx:id="completeGraphLbl" layoutX="110.0" layoutY="320.0" prefHeight="40.0" prefWidth="125.0" text="Complete Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="connectedLbl" layoutX="110.0" layoutY="360.0" prefHeight="40.0" prefWidth="100.0" text="Connected">
+            <Label fx:id="connectedLbl" layoutX="110.0" layoutY="360.0" prefHeight="40.0" prefWidth="140.0" text="Connected">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

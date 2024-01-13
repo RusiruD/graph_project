@@ -31,6 +31,7 @@ public class SecondaryController {
   public static ArrayList<Edge> edges = new ArrayList<Edge>();
   public static ArrayList<Node> nodes = new ArrayList<Node>();
   public static List<List<Integer>> adjacencyList = new ArrayList<List<Integer>>();
+  public static ArrayList<Label> graphPropertyLabels = new ArrayList<Label>();
 
   @FXML Pane root;
   @FXML Label reflexiveLbl;
@@ -68,6 +69,7 @@ public class SecondaryController {
 
   @FXML
   private void initialize() {
+
     // root.setPadding(new Insets(20));
     checkPropertiesPane.layoutXProperty().bind(root.widthProperty().subtract(260));
     // Generate a random integer between 100 and 300 (inclusive)
@@ -119,6 +121,17 @@ public class SecondaryController {
   private void onResetClicked(MouseEvent event) {
     System.out.println("Reset clicked");
 
+    for (javafx.scene.Node child : checkPropertiesPane.getChildren()) {
+
+      if (child instanceof Label) {
+        Label label = (Label) child;
+        if (label.getText().contains("\u2713")) {
+          label.setText(label.getText().substring(0, label.getText().length() - 2));
+        } else if (label.getText().contains("\u2717")) {
+          label.setText(label.getText().substring(0, label.getText().length() - 2));
+        }
+      }
+    }
     root.getChildren().removeIf(node -> node instanceof StackPane);
     root.getChildren().removeIf(node -> node instanceof Line);
     root.getChildren().removeIf(node -> node instanceof QuadCurve);
@@ -219,6 +232,30 @@ public class SecondaryController {
   }
 
   @FXML
+  private void setCorrectLabel(Label label) {
+    if (label.getText().contains("\u2717")) {
+      label.setText(label.getText().substring(0, label.getText().length() - 2));
+    } else if (label.getText().contains("\u2713")) {
+      return;
+    }
+    label.setTextFill(Color.GREEN);
+    label.setText(label.getText() + " \u2713");
+  }
+
+  @FXML
+  private void setIncorrectLabel(Label label) {
+    if (label.getText().contains("\u2713")) {
+      label.setText(label.getText().substring(0, label.getText().length() - 2));
+
+    } else if (label.getText().contains("\u2717")) {
+      return;
+    }
+
+    label.setTextFill(Color.RED);
+    label.setText(label.getText() + " \u2717");
+  }
+
+  @FXML
   public boolean isReflexive() {
 
     int reflexiveEdgeCounter = 0;
@@ -231,13 +268,14 @@ public class SecondaryController {
     }
 
     if (reflexiveEdgeCounter == AppState.numNodes) {
-      reflexiveLbl.setTextFill(Color.GREEN);
-      reflexiveLbl.setText(reflexiveLbl.getText() + " " + "\u2713");
+
       AppState.isReflexive = true;
+      setCorrectLabel(reflexiveLbl);
       return true;
     }
 
-    reflexiveLbl.setTextFill(Color.RED);
+    setIncorrectLabel(reflexiveLbl);
+
     AppState.isReflexive = false;
     return false;
   }
@@ -246,7 +284,7 @@ public class SecondaryController {
   public boolean isSymmetric() {
 
     if (AppState.undirected) {
-      symmetricLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(symmetricLbl);
       AppState.isSymmetric = true;
       return true;
     }
@@ -262,11 +300,11 @@ public class SecondaryController {
       }
     }
     if (symmetricEdgeCounter == edges.size()) {
-      symmetricLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(symmetricLbl);
       AppState.isSymmetric = true;
       return true;
     } else {
-      symmetricLbl.setTextFill(Color.RED);
+      setIncorrectLabel(symmetricLbl);
       AppState.isSymmetric = false;
       return false;
     }
@@ -307,11 +345,11 @@ public class SecondaryController {
     }
     // if the counter is equal to the number of edges, then the graph is transitive
     if (possibleTransitiveEdgeCounter == transitiveEdgeCounter) {
-      transitiveLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(transitiveLbl);
       AppState.isTransitive = true;
       return true;
     } else {
-      transitiveLbl.setTextFill(Color.RED);
+      setIncorrectLabel(transitiveLbl);
       AppState.isTransitive = false;
       return false;
     }
@@ -319,7 +357,7 @@ public class SecondaryController {
 
   public boolean isAntiSymmetric() {
     if (AppState.undirected) {
-      antiSymmetricLbl.setTextFill(Color.RED);
+      setIncorrectLabel(antiSymmetricLbl);
       AppState.isAntiSymmetric = false;
       return false;
     }
@@ -344,11 +382,11 @@ public class SecondaryController {
     }
     // if the counter is equal to the number of edges, then the graph is anti-symmetric
     if (possibleAntiSymmetricEdgeCounter == antisymmetricEdgeCounter) {
-      antiSymmetricLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(antiSymmetricLbl);
       AppState.isAntiSymmetric = true;
       return true;
     } else {
-      antiSymmetricLbl.setTextFill(Color.RED);
+      setIncorrectLabel(antiSymmetricLbl);
       AppState.isAntiSymmetric = false;
 
       return false;
@@ -358,20 +396,20 @@ public class SecondaryController {
   @FXML
   public boolean isEquivalence() {
     if (AppState.isReflexive && AppState.isSymmetric && AppState.isTransitive) {
-      equivalenceLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(equivalenceLbl);
       return true;
     }
-    equivalenceLbl.setTextFill(Color.RED);
+    setIncorrectLabel(equivalenceLbl);
     return false;
   }
 
   @FXML
   public boolean isPartialOrder() {
     if (AppState.isReflexive && AppState.isAntiSymmetric && AppState.isTransitive) {
-      partialOrderLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(partialOrderLbl);
       return true;
     }
-    partialOrderLbl.setTextFill(Color.RED);
+    setIncorrectLabel(partialOrderLbl);
     return false;
   }
 
@@ -381,21 +419,22 @@ public class SecondaryController {
       if (AppState.undirected) {
         AppState.isSimpleGraph = true;
         AppState.isDirectedSimpleGraph = false;
-        directedSimpleGraphLbl.setTextFill(Color.RED);
-        simpleGraphLbl.setTextFill(Color.GREEN);
+        setIncorrectLabel(directedSimpleGraphLbl);
+        setCorrectLabel(simpleGraphLbl);
 
       } else {
         AppState.isSimpleGraph = false;
         AppState.isDirectedSimpleGraph = true;
-        simpleGraphLbl.setTextFill(Color.RED);
-        directedSimpleGraphLbl.setTextFill(Color.GREEN);
+        setCorrectLabel(directedSimpleGraphLbl);
+        setIncorrectLabel(simpleGraphLbl);
       }
       return true;
     } else {
       AppState.isSimpleGraph = false;
       AppState.isDirectedSimpleGraph = false;
-      simpleGraphLbl.setTextFill(Color.RED);
-      directedSimpleGraphLbl.setTextFill(Color.RED);
+      setIncorrectLabel(simpleGraphLbl);
+      setIncorrectLabel(directedSimpleGraphLbl);
+
       return false;
     }
   }
@@ -405,18 +444,20 @@ public class SecondaryController {
 
     if (containsMultiEdges() && !containsSelfLoop()) {
       if (AppState.undirected) {
-        directedMultiGraphLbl.setTextFill(Color.RED);
-        multiGraphLbl.setTextFill(Color.GREEN);
+        setCorrectLabel(multiGraphLbl);
+        setIncorrectLabel(directedMultiGraphLbl);
+
       } else {
-        multiGraphLbl.setTextFill(Color.GREEN);
-        directedMultiGraphLbl.setTextFill(Color.GREEN);
+        setCorrectLabel(directedMultiGraphLbl);
+        setCorrectLabel(multiGraphLbl);
       }
 
       return true;
 
     } else {
-      multiGraphLbl.setTextFill(Color.RED);
-      directedMultiGraphLbl.setTextFill(Color.RED);
+      setIncorrectLabel(multiGraphLbl);
+      setIncorrectLabel(directedMultiGraphLbl);
+      // why both
       return false;
     }
   }
@@ -428,21 +469,22 @@ public class SecondaryController {
       if (AppState.undirected) {
         AppState.isPseudoGraph = true;
         AppState.isDirectedPseudoGraph = false;
-        directedPseudoGraphLbl.setTextFill(Color.RED);
-        pseudoGraphLbl.setTextFill(Color.GREEN);
+        setIncorrectLabel(directedPseudoGraphLbl);
+        setCorrectLabel(pseudoGraphLbl);
 
       } else {
         AppState.isPseudoGraph = false;
         AppState.isDirectedPseudoGraph = true;
-        pseudoGraphLbl.setTextFill(Color.RED);
-        directedPseudoGraphLbl.setTextFill(Color.GREEN);
+        setCorrectLabel(directedPseudoGraphLbl);
+        setIncorrectLabel(pseudoGraphLbl);
       }
       return true;
     } else {
       AppState.isPseudoGraph = false;
       AppState.isDirectedPseudoGraph = false;
-      pseudoGraphLbl.setTextFill(Color.RED);
-      directedPseudoGraphLbl.setTextFill(Color.RED);
+      setIncorrectLabel(pseudoGraphLbl);
+      setIncorrectLabel(directedPseudoGraphLbl);
+
       return false;
     }
   }
@@ -453,26 +495,29 @@ public class SecondaryController {
     completeGraphLbl.setTextFill(Color.RED);
     double numEdges = 0.5 * AppState.numNodes * (AppState.numNodes - 1);
     if (AppState.undirected & (!AppState.isSimpleGraph || edges.size() != 2 * (int) numEdges)) {
-      completeGraphLbl.setTextFill(Color.RED);
+      setIncorrectLabel(completeGraphLbl);
+
       return false;
     } else if (!AppState.undirected & edges.size() != 2 * numEdges) {
-      completeDigraphLbl.setTextFill(Color.RED);
+      setIncorrectLabel(completeDigraphLbl);
+
       return false;
     }
 
     for (Node node : nodes) {
       if ((node.getInDegree()) != AppState.numNodes - 1) {
-        completeGraphLbl.setTextFill(Color.RED);
-        completeDigraphLbl.setTextFill(Color.RED);
+        setIncorrectLabel(completeDigraphLbl);
+        setIncorrectLabel(completeGraphLbl);
+
         return false;
       }
     }
 
     if (AppState.undirected) {
-      completeGraphLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(completeGraphLbl);
       return true;
     } else {
-      completeDigraphLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(completeDigraphLbl);
       return true;
     }
   }
@@ -489,11 +534,11 @@ public class SecondaryController {
 
     // Check if all vertices are visited
     if (visited.size() == AppState.numNodes) {
-      connectedLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(connectedLbl);
       AppState.isConnected = true;
       return true;
     }
-    connectedLbl.setTextFill(Color.RED);
+    setIncorrectLabel(connectedLbl);
     AppState.isConnected = false;
     return false;
   }
@@ -506,22 +551,22 @@ public class SecondaryController {
         if (AppState.undirected) {
           if ((node.getInDegree() + node.getOutDegree()) % 2 != 0) {
 
-            eulerCircuitLbl.setTextFill(Color.RED);
+            setIncorrectLabel(eulerCircuitLbl);
             return false;
           }
         } else {
           if ((node.getInDegree() != node.getOutDegree())) {
 
-            eulerCircuitLbl.setTextFill(Color.RED);
+            setIncorrectLabel(eulerCircuitLbl);
             return false;
           }
         }
       }
 
-      eulerCircuitLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(eulerCircuitLbl);
       return true;
     }
-    eulerCircuitLbl.setTextFill(Color.RED);
+    setIncorrectLabel(eulerCircuitLbl);
 
     return false;
   }
@@ -537,19 +582,18 @@ public class SecondaryController {
       if (colors[node.getNodeNum()] == -1) {
         if (isDirected) {
           if (!isBipartiteDFS(node.getNodeNum(), colors)) {
-            bipartiteLbl.setTextFill(Color.RED);
+            setIncorrectLabel(bipartiteLbl);
             return false;
           }
         } else {
           if (!bipartiteBfs(node.getNodeNum(), edges, colors)) {
-            bipartiteLbl.setTextFill(Color.RED);
+            setIncorrectLabel(bipartiteLbl);
             return false;
           }
         }
       }
     }
-
-    bipartiteLbl.setTextFill(Color.GREEN);
+    setCorrectLabel(bipartiteLbl);
     return true;
   }
 
@@ -625,11 +669,11 @@ public class SecondaryController {
       int nodeNum = node.getNodeNum();
       if (!visited.contains(nodeNum)
           && isCyclicDFS(nodeNum, -1, visited, currentlyVisiting, 3, AppState.undirected)) {
-        acyclicLbl.setTextFill(Color.RED);
+        setIncorrectLabel(acyclicLbl);
         return true;
       }
     }
-    acyclicLbl.setTextFill(Color.GREEN);
+    setCorrectLabel(acyclicLbl);
     return false;
   }
 
@@ -682,10 +726,10 @@ public class SecondaryController {
 
   public boolean isTree() {
     if (isConnected() && !isCyclic() && AppState.undirected) {
-      treeLbl.setTextFill(Color.GREEN);
+      setCorrectLabel(treeLbl);
       return true;
     }
-    treeLbl.setTextFill(Color.RED);
+    setIncorrectLabel(treeLbl);
     return false;
   }
 
