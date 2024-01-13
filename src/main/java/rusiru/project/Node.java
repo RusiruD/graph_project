@@ -157,29 +157,25 @@ public class Node extends StackPane {
   }
 
   private void createSelfLoopArc(StackPane startStackPane, Pane root, Edge edge) {
-    DoubleBinding halfStartNodeWidth = startStackPane.widthProperty().divide(2);
-    DoubleBinding halfStartNodeHeight = startStackPane.heightProperty().divide(2);
 
     QuadCurve arc = new QuadCurve();
 
-    arc.startXProperty().bind(startStackPane.layoutXProperty().add(halfStartNodeWidth));
-    arc.startYProperty()
-        .bind(startStackPane.layoutYProperty().add(halfStartNodeHeight).subtract(25));
+    arc.startXProperty().bind(startStackPane.layoutXProperty().add(radius));
+    arc.startYProperty().bind(startStackPane.layoutYProperty().add(radius).subtract(25));
 
-    arc.controlXProperty().bind(startStackPane.layoutXProperty().add(halfStartNodeWidth).add(25));
+    arc.controlXProperty().bind(startStackPane.layoutXProperty().add(radius).add(25));
 
-    arc.controlYProperty()
-        .bind(startStackPane.layoutYProperty().add(halfStartNodeHeight).subtract(100));
+    arc.controlYProperty().bind(startStackPane.layoutYProperty().add(radius).subtract(100));
 
-    arc.endXProperty().bind(startStackPane.layoutXProperty().add(halfStartNodeWidth).add(15));
-    arc.endYProperty().bind(startStackPane.layoutYProperty().add(halfStartNodeHeight).subtract(20));
+    arc.endXProperty().bind(startStackPane.layoutXProperty().add(radius).add(15));
+    arc.endYProperty().bind(startStackPane.layoutYProperty().add(radius).subtract(20));
 
     arc.setStroke(Color.BLUE);
     arc.setStrokeWidth(2);
     arc.setFill(Color.TRANSPARENT);
 
     if (AppState.weighted) {
-      makeArcWeighted(root, null, arc, true, false, edge);
+      makeEdgeWeighted(root, null, arc, true, false, edge);
     }
     if (!AppState.undirected) {
       makeArcDirected(arc, root);
@@ -218,11 +214,9 @@ public class Node extends StackPane {
 
     QuadCurve arc = new QuadCurve();
     // set the start point of the arc of the edge to the center of the start node
-    arc.startXProperty()
-        .bind(startStackPane.layoutXProperty().add(startStackPane.widthProperty().divide(2)));
+    arc.startXProperty().bind(startStackPane.layoutXProperty().add(radius));
 
-    arc.startYProperty()
-        .bind(startStackPane.layoutYProperty().add(startStackPane.heightProperty().divide(2)));
+    arc.startYProperty().bind(startStackPane.layoutYProperty().add(radius));
     setControlPointMultiEdge(arc, startStackPane, endStackPane);
     // if the edge is directed set the end point to the perimeter of the end node
     if (!AppState.undirected) {
@@ -256,11 +250,9 @@ public class Node extends StackPane {
 
     // if the edge is undirected set the end point to the center of the end node
     else {
-      arc.endXProperty()
-          .bind(endStackPane.layoutXProperty().add(endStackPane.widthProperty().divide(2)));
+      arc.endXProperty().bind(endStackPane.layoutXProperty().add(radius));
 
-      arc.endYProperty()
-          .bind(endStackPane.layoutYProperty().add(endStackPane.heightProperty().divide(2)));
+      arc.endYProperty().bind(endStackPane.layoutYProperty().add(radius));
     }
 
     // set the control point of the arc
@@ -271,7 +263,7 @@ public class Node extends StackPane {
     arc.setFill(Color.TRANSPARENT);
     // if its weighted create the label
     if (AppState.weighted) {
-      makeArcWeighted(root, null, arc, false, true, edge);
+      makeEdgeWeighted(root, null, arc, false, true, edge);
     }
     // if its directed create the arrow
 
@@ -284,18 +276,14 @@ public class Node extends StackPane {
     line.setStroke(Color.BLUE);
     line.setStrokeWidth(2);
 
-    line.startXProperty()
-        .bind(startStackPane.layoutXProperty().add(startStackPane.widthProperty().divide(2)));
-    line.startYProperty()
-        .bind(startStackPane.layoutYProperty().add(startStackPane.heightProperty().divide(2)));
-    line.endXProperty()
-        .bind(endStackPane.layoutXProperty().add(endStackPane.widthProperty().divide(2)));
-    line.endYProperty()
-        .bind(endStackPane.layoutYProperty().add(endStackPane.heightProperty().divide(2)));
+    line.startXProperty().bind(startStackPane.layoutXProperty().add(radius));
+    line.startYProperty().bind(startStackPane.layoutYProperty().add(radius));
+    line.endXProperty().bind(endStackPane.layoutXProperty().add(radius));
+    line.endYProperty().bind(endStackPane.layoutYProperty().add(radius));
 
     calculateNodeAngle(line);
     if (AppState.weighted) {
-      makeArcWeighted(root, line, null, false, false, edge);
+      makeEdgeWeighted(root, line, null, false, false, edge);
     }
     if (!AppState.undirected) {
       makeLineDirected(line, root);
@@ -480,7 +468,7 @@ public class Node extends StackPane {
     root.getChildren().add(arrow);
   }
 
-  public void makeArcWeighted(
+  public void makeEdgeWeighted(
       Pane root, Line line, QuadCurve arc, boolean isSelfLoop, boolean isMultiEdge, Edge edge) {
 
     Label weightLbl = new Label("0");
