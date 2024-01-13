@@ -72,7 +72,6 @@ public class SecondaryController {
     root.setPadding(new Insets(20));
     checkPropertiesPane.layoutXProperty().bind(root.widthProperty().subtract(240));
     // Generate a random integer between 100 and 300 (inclusive)
-    // titlePane.layoutXProperty().bind();
     titlePane
         .layoutXProperty()
         .bind(root.widthProperty().subtract(titlePane.widthProperty()).divide(2));

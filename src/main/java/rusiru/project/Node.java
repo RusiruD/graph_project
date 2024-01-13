@@ -215,8 +215,6 @@ public class Node extends StackPane {
 
     // create the visual representaiton of an edge as an edge between nodes that already has a edge
     // between them
-    int randomNum1 = generateRandomNumber();
-    int randomNum2 = generateRandomNumber();
 
     QuadCurve arc = new QuadCurve();
     // set the start point of the arc of the edge to the center of the start node
@@ -225,32 +223,28 @@ public class Node extends StackPane {
 
     arc.startYProperty()
         .bind(startStackPane.layoutYProperty().add(startStackPane.heightProperty().divide(2)));
-
+    setControlPointMultiEdge(arc, startStackPane, endStackPane);
     // if the edge is directed set the end point to the perimeter of the end node
     if (!AppState.undirected) {
       // Bind endXProperty using calculatePointAtDistanceFromEnd
       DoubleBinding endXBinding =
           Bindings.createDoubleBinding(
               () -> {
-                ArrayList<Double> coordinates =
-                    calculatePointAtDistanceFromEnd(
-                        31, startStackPane, endStackPane, randomNum1, randomNum2);
+                ArrayList<Double> coordinates = calculatePointAtDistanceFromEnd(endStackPane, arc);
                 return coordinates.get(0);
               },
-              startStackPane.layoutXProperty(),
-              endStackPane.layoutXProperty());
+              endStackPane.layoutXProperty(),
+              endStackPane.widthProperty());
 
       // Bind endYProperty using calculatePointAtDistanceFromEnd
       DoubleBinding endYBinding =
           Bindings.createDoubleBinding(
               () -> {
-                ArrayList<Double> coordinates =
-                    calculatePointAtDistanceFromEnd(
-                        31, startStackPane, endStackPane, randomNum1, randomNum2);
+                ArrayList<Double> coordinates = calculatePointAtDistanceFromEnd(endStackPane, arc);
                 return coordinates.get(1);
               },
-              startStackPane.layoutYProperty(),
-              endStackPane.layoutYProperty());
+              endStackPane.layoutYProperty(),
+              endStackPane.heightProperty());
 
       // Add listeners to update the properties when the bindings change
 
@@ -270,19 +264,19 @@ public class Node extends StackPane {
     }
 
     // set the control point of the arc
-    QuadCurve arc1 = setControlPointMultiEdge(arc, startStackPane, endStackPane);
+
     // set the style of the arc
-    arc1.setStroke(Color.BLUE);
-    arc1.setStrokeWidth(2);
-    arc1.setFill(Color.TRANSPARENT);
+    arc.setStroke(Color.BLUE);
+    arc.setStrokeWidth(2);
+    arc.setFill(Color.TRANSPARENT);
     // if its weighted create the label
     if (AppState.weighted) {
-      makeArcWeighted(root, null, arc1, false, true, edge);
+      makeArcWeighted(root, null, arc, false, true, edge);
     }
     // if its directed create the arrow
 
-    root.getChildren().add(arc1);
-    arc1.toBack();
+    root.getChildren().add(arc);
+    arc.toBack();
   }
 
   private void createLine(StackPane startStackPane, StackPane endStackPane, Pane root, Edge edge) {
@@ -311,20 +305,7 @@ public class Node extends StackPane {
     line.toBack();
   }
 
-  private static int generateRandomNumber() {
-    ArrayList<Integer> list = new ArrayList<Integer>(21);
-    for (int i = -100; i <= 100; i += 10) {
-      list.add(i);
-    }
-
-    Random random = new Random();
-    int range = (90 - (-90)) / 5 + 1; // Total number of possible values
-    int randomIndex = random.nextInt(range);
-    int randomValue = randomIndex * 5 - 90;
-    return randomValue;
-  }
-
-  private static QuadCurve setControlPointMultiEdge(
+  private static void setControlPointMultiEdge(
       QuadCurve arc, StackPane startStackPane, StackPane endStackPane) {
     // create a list of possible values for the control point
     ArrayList<Integer> list = new ArrayList<Integer>();
@@ -332,6 +313,7 @@ public class Node extends StackPane {
     int num;
     int numEdges = edgeCountBetween(startStackPane, endStackPane);
     Random random = new Random();
+
     // if there are more edges between the 2 nodes than values in the list randomly generate a value
     if (numEdges - 2 > 9) {
 
@@ -356,49 +338,29 @@ public class Node extends StackPane {
     else {
       num = list.get(numEdges - 2);
     }
-    arc.controlXProperty()
-        .bind(
-            startStackPane
-                .layoutXProperty()
-                .add(startStackPane.widthProperty().divide(2))
-                .add(num));
+    arc.controlXProperty().bind(startStackPane.layoutXProperty().add(radius).add(num));
 
     // depending on the angle the nodes are at relatively adjust the control point to ensure the
     // edges are clearly seperable
     double nodeAngle = AppState.previousNode.getAngle();
     if ((nodeAngle > 95 && nodeAngle < 166) || nodeAngle > -74 && nodeAngle < -17) {
-      arc.controlYProperty()
-          .bind(
-              startStackPane
-                  .layoutYProperty()
-                  .add(startStackPane.heightProperty().divide(2))
-                  .add(num));
+      arc.controlYProperty().bind(startStackPane.layoutYProperty().add(radius).add(num));
     } else {
 
-      arc.controlYProperty()
-          .bind(
-              startStackPane
-                  .layoutYProperty()
-                  .add(startStackPane.heightProperty().divide(2))
-                  .subtract(num));
+      arc.controlYProperty().bind(startStackPane.layoutYProperty().add(radius).subtract(num));
     }
-
-    return arc;
   }
 
   private static ArrayList<Double> calculatePointAtDistanceFromEnd(
-      double distance,
-      StackPane startStackPane,
-      StackPane endStackPane,
-      int randomNumber,
-      int randomNumber2) {
+      StackPane endStackPane, QuadCurve arc) {
+    double distance = 31;
 
     // calculate the coordinates of the start point, end point
-    double x2 = startStackPane.layoutXProperty().add(radius / 2).subtract(randomNumber).get();
-    double y2 = startStackPane.layoutYProperty().add(radius / 2).subtract(randomNumber2).get();
-    double x3 = endStackPane.layoutXProperty().add(radius / 2).get();
+    double x2 = arc.controlXProperty().get();
+    double y2 = arc.controlYProperty().get();
+    double x3 = endStackPane.layoutXProperty().add(radius).get();
 
-    double y3 = endStackPane.layoutYProperty().add(radius / 2).get();
+    double y3 = endStackPane.layoutYProperty().add(radius).get();
 
     // Calculate the angle of the line formed by the end point and the control point
     double angle = Math.atan2(y3 - y2, x3 - x2);
