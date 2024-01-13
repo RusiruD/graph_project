@@ -311,35 +311,20 @@ public class Node extends StackPane {
   }
 
   private void createLine(StackPane startStackPane, StackPane endStackPane, Pane root, Edge edge) {
-
+    System.out.println("update");
     Line line = new Line();
     line.setStroke(Color.BLUE);
     line.setStrokeWidth(2);
 
     line.startXProperty()
-        .bind(
-            startStackPane
-                .layoutXProperty()
-                .add(startStackPane.translateXProperty())
-                .add(startStackPane.widthProperty().divide(2)));
+        .bind(startStackPane.layoutXProperty().add(startStackPane.widthProperty().divide(2)));
     line.startYProperty()
-        .bind(
-            startStackPane
-                .layoutYProperty()
-                .add(startStackPane.translateYProperty())
-                .add(startStackPane.heightProperty().divide(2)));
+        .bind(startStackPane.layoutYProperty().add(startStackPane.heightProperty().divide(2)));
     line.endXProperty()
-        .bind(
-            endStackPane
-                .layoutXProperty()
-                .add(endStackPane.translateXProperty())
-                .add(endStackPane.widthProperty().divide(2)));
+        .bind(endStackPane.layoutXProperty().add(endStackPane.widthProperty().divide(2)));
     line.endYProperty()
-        .bind(
-            endStackPane
-                .layoutYProperty()
-                .add(endStackPane.translateYProperty())
-                .add(endStackPane.heightProperty().divide(2)));
+        .bind(endStackPane.layoutYProperty().add(endStackPane.heightProperty().divide(2)));
+
     calculateNodeAngle(line);
     if (AppState.weighted) {
       makeArcWeighted(root, line, null, false, false, edge);
