@@ -156,51 +156,22 @@ public class Node extends StackPane {
   }
 
   private void createSelfLoopArc(StackPane startStackPane, Pane root, Edge edge) {
+    DoubleBinding halfStartNodeWidth = startStackPane.widthProperty().divide(2);
+    DoubleBinding halfStartNodeHeight = startStackPane.heightProperty().divide(2);
 
     QuadCurve arc = new QuadCurve();
-    arc.startXProperty()
-        .bind(
-            startStackPane
-                .layoutXProperty()
-                .add(startStackPane.translateXProperty())
-                .add(startStackPane.widthProperty().divide(2)));
+
+    arc.startXProperty().bind(startStackPane.layoutXProperty().add(halfStartNodeWidth));
     arc.startYProperty()
-        .bind(
-            startStackPane
-                .layoutYProperty()
-                .add(startStackPane.translateYProperty())
-                .add(startStackPane.heightProperty().divide(2))
-                .subtract(25));
+        .bind(startStackPane.layoutYProperty().add(halfStartNodeHeight).subtract(25));
 
-    arc.controlXProperty()
-        .bind(
-            startStackPane
-                .layoutXProperty()
-                .add(startStackPane.translateXProperty())
-                .add(startStackPane.widthProperty().divide(2))
-                .add(25));
+    arc.controlXProperty().bind(startStackPane.layoutXProperty().add(halfStartNodeWidth).add(25));
+
     arc.controlYProperty()
-        .bind(
-            startStackPane
-                .layoutYProperty()
-                .add(startStackPane.translateYProperty())
-                .add(startStackPane.heightProperty().divide(2))
-                .subtract(100));
+        .bind(startStackPane.layoutYProperty().add(halfStartNodeHeight).subtract(100));
 
-    arc.endXProperty()
-        .bind(
-            startStackPane
-                .layoutXProperty()
-                .add(startStackPane.translateXProperty())
-                .add(startStackPane.widthProperty().divide(2))
-                .add(15));
-    arc.endYProperty()
-        .bind(
-            startStackPane
-                .layoutYProperty()
-                .add(startStackPane.translateYProperty())
-                .add(startStackPane.heightProperty().divide(2))
-                .subtract(20));
+    arc.endXProperty().bind(startStackPane.layoutXProperty().add(halfStartNodeWidth).add(15));
+    arc.endYProperty().bind(startStackPane.layoutYProperty().add(halfStartNodeHeight).subtract(20));
 
     arc.setStroke(Color.BLUE);
     arc.setStrokeWidth(2);
