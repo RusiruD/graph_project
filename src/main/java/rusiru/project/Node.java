@@ -38,9 +38,7 @@ public class Node extends StackPane {
 
   public Node(int Nodenum, Pane root) {
     num = Nodenum;
-
     nodePane = new StackPane();
-
     dot = new Circle(radius);
 
     // Create a value binded to the left edge of the properties pane
@@ -48,14 +46,13 @@ public class Node extends StackPane {
     widthProperty.bind(root.widthProperty().subtract(300));
 
     // randomise the position of the node between bounds
-    nodePane.setLayoutX((random.nextInt((int) (root.getWidth() - 520)) + 255));
+    nodePane.setLayoutX((random.nextInt((int) (root.getWidth() - 540)) + 255));
     nodePane.setLayoutY(random.nextInt((int) (root.getHeight() - 110)) + 45);
 
     Label txt = new Label(Integer.toString(Nodenum));
     txt.setTextFill(Color.WHITE);
 
     nodePane.getChildren().addAll(dot, txt);
-
     root.getChildren().add(nodePane);
 
     makeNodeDraggable(nodePane, root, widthProperty);
@@ -84,7 +81,7 @@ public class Node extends StackPane {
     nodePane.setOnMouseDragged(
         event -> {
           if (event.getSceneX() - xOffset > widthProperty.get()
-              || event.getSceneX() - xOffset < 240
+              || event.getSceneX() - xOffset < 270
               || event.getSceneY() - yOffset < 50
               || event.getSceneY() - yOffset > root.getHeight() - 30) {
 
@@ -119,11 +116,9 @@ public class Node extends StackPane {
         Edge edge = createEdge(AppState.previousNode, this);
 
         if (isMultiEdge(edge)) {
-
           createMultiEdgeArc(AppState.previousStackPane, currentStackPane, root, edge);
 
         } else {
-
           createLine(AppState.previousStackPane, currentStackPane, root, edge);
         }
       }

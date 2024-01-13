@@ -10,7 +10,6 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -69,8 +68,8 @@ public class SecondaryController {
 
   @FXML
   private void initialize() {
-    root.setPadding(new Insets(20));
-    checkPropertiesPane.layoutXProperty().bind(root.widthProperty().subtract(240));
+    // root.setPadding(new Insets(20));
+    checkPropertiesPane.layoutXProperty().bind(root.widthProperty().subtract(260));
     // Generate a random integer between 100 and 300 (inclusive)
     titlePane
         .layoutXProperty()
@@ -233,6 +232,7 @@ public class SecondaryController {
 
     if (reflexiveEdgeCounter == AppState.numNodes) {
       reflexiveLbl.setTextFill(Color.GREEN);
+      reflexiveLbl.setText(reflexiveLbl.getText() + " " + "\u2713");
       AppState.isReflexive = true;
       return true;
     }
