@@ -1,6 +1,7 @@
 package rusiru.project;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -217,21 +218,12 @@ public class Node extends StackPane {
     int randomNum2 = generateRandomNumber();
 
     QuadCurve arc = new QuadCurve();
-
     // set the start point of the arc of the edge to the center of the start node
     arc.startXProperty()
-        .bind(
-            startStackPane
-                .layoutXProperty()
-                .add(startStackPane.translateXProperty())
-                .add(startStackPane.widthProperty().divide(2)));
+        .bind(startStackPane.layoutXProperty().add(startStackPane.widthProperty().divide(2)));
 
     arc.startYProperty()
-        .bind(
-            startStackPane
-                .layoutYProperty()
-                .add(startStackPane.translateYProperty())
-                .add(startStackPane.heightProperty().divide(2)));
+        .bind(startStackPane.layoutYProperty().add(startStackPane.heightProperty().divide(2)));
 
     // if the edge is directed set the end point to the perimeter of the end node
     if (!AppState.undirected) {
@@ -245,10 +237,8 @@ public class Node extends StackPane {
                 return coordinates.get(0);
               },
               startStackPane.layoutXProperty(),
-              startStackPane.translateXProperty(),
               startStackPane.widthProperty(),
               endStackPane.layoutXProperty(),
-              endStackPane.translateXProperty(),
               endStackPane.widthProperty());
 
       // Bind endYProperty using calculatePointAtDistanceFromEnd
@@ -261,10 +251,8 @@ public class Node extends StackPane {
                 return coordinates.get(1);
               },
               startStackPane.layoutYProperty(),
-              startStackPane.translateYProperty(),
               startStackPane.heightProperty(),
               endStackPane.layoutYProperty(),
-              endStackPane.translateYProperty(),
               endStackPane.heightProperty());
 
       // Add listeners to update the properties when the bindings change
@@ -278,27 +266,18 @@ public class Node extends StackPane {
     // if the edge is undirected set the end point to the center of the end node
     else {
       arc.endXProperty()
-          .bind(
-              endStackPane
-                  .layoutXProperty()
-                  .add(endStackPane.translateXProperty())
-                  .add(endStackPane.widthProperty().divide(2)));
+          .bind(endStackPane.layoutXProperty().add(endStackPane.widthProperty().divide(2)));
+
       arc.endYProperty()
-          .bind(
-              endStackPane
-                  .layoutYProperty()
-                  .add(endStackPane.translateYProperty())
-                  .add(endStackPane.heightProperty().divide(2)));
+          .bind(endStackPane.layoutYProperty().add(endStackPane.heightProperty().divide(2)));
     }
 
     // set the control point of the arc
     QuadCurve arc1 = setControlPointMultiEdge(arc, startStackPane, endStackPane);
-
     // set the style of the arc
     arc1.setStroke(Color.BLUE);
     arc1.setStrokeWidth(2);
     arc1.setFill(Color.TRANSPARENT);
-
     // if its weighted create the label
     if (AppState.weighted) {
       makeArcWeighted(root, null, arc1, false, true, edge);
@@ -352,19 +331,7 @@ public class Node extends StackPane {
       QuadCurve arc, StackPane startStackPane, StackPane endStackPane) {
     // create a list of possible values for the control point
     ArrayList<Integer> list = new ArrayList<Integer>();
-
-    list.add(40);
-    list.add(-40);
-    list.add(80);
-    list.add(-80);
-    list.add(120);
-
-    list.add(-120);
-    list.add(140);
-    list.add(-140);
-    list.add(-180);
-    list.add(180);
-
+    Collections.addAll(list, 40, -40, 80, -80, 120, -120, 140, -140, -180, 180);
     int num;
     int numEdges = edgeCountBetween(startStackPane, endStackPane);
     Random random = new Random();
@@ -372,7 +339,6 @@ public class Node extends StackPane {
     if (numEdges - 2 > 9) {
 
       if (random.nextBoolean()) {
-
         // Generate a random number greater than 190
         int minValue = 191; // Minimum value (exclusive)
         int maxValue = 300; // Maximum value
@@ -429,40 +395,32 @@ public class Node extends StackPane {
       StackPane endStackPane,
       int randomNumber,
       int randomNumber2) {
-    // set t to 1 to represent the end of the curve
 
     // calculate the coordinates of the start point, end point
-
     double x2 =
         startStackPane
             .layoutXProperty()
-            .add(startStackPane.translateXProperty())
             .add(startStackPane.widthProperty().divide(2))
             .subtract(randomNumber)
             .get();
     double y2 =
         startStackPane
             .layoutYProperty()
-            .add(startStackPane.translateYProperty())
             .add(startStackPane.heightProperty().divide(2))
             .subtract(randomNumber2)
             .get();
     double x3 =
         endStackPane
             .layoutXProperty()
-            .add(endStackPane.translateXProperty())
             .add(endStackPane.widthProperty().divide(2))
             .subtract(0)
             .get();
     double y3 =
         endStackPane
             .layoutYProperty()
-            .add(endStackPane.translateYProperty())
             .add(endStackPane.heightProperty().divide(2))
             .subtract(0)
             .get();
-
-    // Calculate the coordinates of the end point
 
     // Calculate the angle of the line formed by the end point and the control point
     double angle = Math.atan2(y3 - y2, x3 - x2);
