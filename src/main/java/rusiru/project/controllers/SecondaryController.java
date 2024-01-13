@@ -80,17 +80,15 @@ public class SecondaryController {
 
   @FXML
   private void onSubmitClicked() throws IOException, NumberFormatException {
-    System.out.println(root.layoutXProperty().getValue());
-    System.out.println(root.getWidth());
+
     AppState.undirected = undirected.isSelected();
     AppState.weighted = weighted.isSelected();
     System.out.println("Submit clicked");
-    System.out.println("Number of nodes: " + numNodesTextField.getText());
 
     if (numNodesTextField.getText().equals("")) {
 
     } else {
-      System.out.println("Number of nodes: " + numNodesTextField.getText());
+
       numNodesInt = Integer.parseInt(numNodesTextField.getText());
       AppState.numNodes = numNodesInt;
       for (int i = 0; i < AppState.numNodes; i++) {
@@ -127,7 +125,6 @@ public class SecondaryController {
     root.getChildren().removeIf(node -> node instanceof Line);
     root.getChildren().removeIf(node -> node instanceof QuadCurve);
 
-    System.out.println(root.getChildren());
     root.getChildren().removeIf(node -> node.getId() == "weightTextField");
     root.getChildren().removeIf(node -> node.getId() == "weightLabel");
     AppState.resetValues();
