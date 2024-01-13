@@ -33,10 +33,11 @@ public class Node extends StackPane {
   private double xOffset, yOffset;
   private Circle dot;
   private double angle;
+  private static double radius = 25;
 
   public Node(int Nodenum, Pane root) {
     num = Nodenum;
-    double radius = 25;
+
     nodePane = new StackPane();
     Random random = new Random();
 
@@ -237,9 +238,7 @@ public class Node extends StackPane {
                 return coordinates.get(0);
               },
               startStackPane.layoutXProperty(),
-              startStackPane.widthProperty(),
-              endStackPane.layoutXProperty(),
-              endStackPane.widthProperty());
+              endStackPane.layoutXProperty());
 
       // Bind endYProperty using calculatePointAtDistanceFromEnd
       DoubleBinding endYBinding =
@@ -251,9 +250,7 @@ public class Node extends StackPane {
                 return coordinates.get(1);
               },
               startStackPane.layoutYProperty(),
-              startStackPane.heightProperty(),
-              endStackPane.layoutYProperty(),
-              endStackPane.heightProperty());
+              endStackPane.layoutYProperty());
 
       // Add listeners to update the properties when the bindings change
 
@@ -397,30 +394,11 @@ public class Node extends StackPane {
       int randomNumber2) {
 
     // calculate the coordinates of the start point, end point
-    double x2 =
-        startStackPane
-            .layoutXProperty()
-            .add(startStackPane.widthProperty().divide(2))
-            .subtract(randomNumber)
-            .get();
-    double y2 =
-        startStackPane
-            .layoutYProperty()
-            .add(startStackPane.heightProperty().divide(2))
-            .subtract(randomNumber2)
-            .get();
-    double x3 =
-        endStackPane
-            .layoutXProperty()
-            .add(endStackPane.widthProperty().divide(2))
-            .subtract(0)
-            .get();
-    double y3 =
-        endStackPane
-            .layoutYProperty()
-            .add(endStackPane.heightProperty().divide(2))
-            .subtract(0)
-            .get();
+    double x2 = startStackPane.layoutXProperty().add(radius / 2).subtract(randomNumber).get();
+    double y2 = startStackPane.layoutYProperty().add(radius / 2).subtract(randomNumber2).get();
+    double x3 = endStackPane.layoutXProperty().add(radius / 2).get();
+
+    double y3 = endStackPane.layoutYProperty().add(radius / 2).get();
 
     // Calculate the angle of the line formed by the end point and the control point
     double angle = Math.atan2(y3 - y2, x3 - x2);
@@ -494,10 +472,8 @@ public class Node extends StackPane {
     arrow.setStyle(
         "-fx-background-color:#000000 ;-fx-border-width:1px;-fx-border-color:yellow ;-fx-shape:"
             + " \"M0,-4L4,0L0,4Z\""); //
-    arrow.setPrefSize(size, size);
-    arrow.setMaxSize(size, size);
-    arrow.setMinSize(size, size);
 
+    arrow.setPrefSize(size, size);
     arrow
         .rotateProperty()
         .bind(
