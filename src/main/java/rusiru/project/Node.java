@@ -34,7 +34,6 @@ public class Node extends StackPane {
   private double angle;
 
   public Node(int Nodenum, Pane root) {
-    System.out.println("Node created");
     num = Nodenum;
     double radius = 25;
     nodePane = new StackPane();
@@ -65,9 +64,9 @@ public class Node extends StackPane {
   private void makeNodeDraggable(Pane nodePane, Pane root, DoubleProperty widthProperty) {
     // allow node to be dragged
     nodePane.setOnMousePressed(
-        e -> {
-          sceneX = e.getSceneX();
-          sceneY = e.getSceneY();
+        event -> {
+          sceneX = event.getSceneX();
+          sceneY = event.getSceneY();
           layoutX = nodePane.getLayoutX();
           layoutY = nodePane.getLayoutY();
         });
@@ -311,7 +310,6 @@ public class Node extends StackPane {
   }
 
   private void createLine(StackPane startStackPane, StackPane endStackPane, Pane root, Edge edge) {
-    System.out.println("update");
     Line line = new Line();
     line.setStroke(Color.BLUE);
     line.setStrokeWidth(2);
@@ -395,24 +393,21 @@ public class Node extends StackPane {
     else {
       num = list.get(numEdges - 2);
     }
-
     arc.controlXProperty()
         .bind(
             startStackPane
                 .layoutXProperty()
-                .add(startStackPane.translateXProperty())
                 .add(startStackPane.widthProperty().divide(2))
                 .add(num));
 
     // depending on the angle the nodes are at relatively adjust the control point to ensure the
     // edges are clearly seperable
-    if ((AppState.previousNode.getAngle() > 95 && AppState.previousNode.getAngle() < 166)
-        || AppState.previousNode.getAngle() > -74 && AppState.previousNode.getAngle() < -17) {
+    double nodeAngle = AppState.previousNode.getAngle();
+    if ((nodeAngle > 95 && nodeAngle < 166) || nodeAngle > -74 && nodeAngle < -17) {
       arc.controlYProperty()
           .bind(
               startStackPane
                   .layoutYProperty()
-                  .add(startStackPane.translateYProperty())
                   .add(startStackPane.heightProperty().divide(2))
                   .add(num));
     } else {
@@ -421,7 +416,6 @@ public class Node extends StackPane {
           .bind(
               startStackPane
                   .layoutYProperty()
-                  .add(startStackPane.translateYProperty())
                   .add(startStackPane.heightProperty().divide(2))
                   .subtract(num));
     }
