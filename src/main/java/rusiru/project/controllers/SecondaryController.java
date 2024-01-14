@@ -311,7 +311,6 @@ public class SecondaryController {
   }
 
   public boolean isTransitive() {
-
     int possibleTransitiveEdgeCounter = 0;
     int transitiveEdgeCounter = 0;
     // checks if there is an edge with a destination that is the same as the source of another
@@ -327,15 +326,24 @@ public class SecondaryController {
                 && edge2 != edge1
                 && edge1.getDestinationNode() != edge1.getSource()
                 && edge2.getDestinationNode() != edge2.getSource())) {
+
+          System.out.println(edge1.getSource().getNodeNum());
+          System.out.println(edge1.getDestinationNode().getNodeNum());
+          System.out.println(edge2.getSource().getNodeNum());
+          System.out.println(edge2.getDestinationNode().getNodeNum());
           possibleTransitiveEdgeCounter++;
 
           // checks if there is an edge-edge3 that comes from the same source the first edge did
           // and goes to the same destination the second edge did
           for (Edge edge3 : edges) {
+            System.out.println(edge1.getSource().getNodeNum() == (edge3.getSource().getNodeNum()));
+            System.out.println(
+                edge1.getDestinationNode().getNodeNum() == edge3.getDestinationNode().getNodeNum());
+            System.out.println(edge1 != edge3);
+            System.out.println("3sa");
             if (edge1.getSource().getNodeNum() == (edge3.getSource().getNodeNum())
-                && edge1.getDestinationNode().getNodeNum()
+                && edge2.getDestinationNode().getNodeNum()
                     == (edge3.getDestinationNode().getNodeNum())
-                && edge1 != edge3
                 && edge1 != edge3) {
               transitiveEdgeCounter++;
             }
@@ -343,6 +351,7 @@ public class SecondaryController {
         }
       }
     }
+
     // if the counter is equal to the number of edges, then the graph is transitive
     if (possibleTransitiveEdgeCounter == transitiveEdgeCounter) {
       setCorrectLabel(transitiveLbl);
