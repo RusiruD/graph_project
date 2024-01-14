@@ -36,7 +36,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Text layoutX="8.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the type of edges and the number of nodes, then click generate.&#10;&#10;Click on one node then another and an edge will appear between them. Click the same node twice to create a self loop. &#10;&#10;When you are ready, click check to evaluate your graph's properties." wrappingWidth="240.0">
+            <Text layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select the type of edges and the number of nodes, then click generate.&#10;&#10;Click on one node then another and an edge will appear between them. Click the same node twice to create a self loop. &#10;&#10;When you are ready, click check to evaluate your graph's properties." wrappingWidth="260.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -53,9 +53,9 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="checkPropertiesPane" layoutX="970.0" layoutY="50.0" prefHeight="550.0" prefWidth="260.0" stylesheets="@stylesheet.css">
+      <Pane fx:id="checkPropertiesPane" layoutX="970.0" layoutY="50.0" prefHeight="570.0" prefWidth="260.0" stylesheets="@stylesheet.css">
          <children>
-            <Label fx:id="completeDigraphLbl" layoutX="110.0" layoutY="160.0" prefHeight="40.0" prefWidth="130.0" text="Complete Digraph">
+            <Label fx:id="completeDigraphLbl" layoutX="120.0" layoutY="80.0" prefHeight="40.0" prefWidth="150.0" text="Complete Digraph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -71,11 +71,11 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="multiGraphLbl" layoutX="5.0" layoutY="360.0" prefHeight="40.0" prefWidth="100.0" text="Multigraph">
+            <Label fx:id="multiGraphLbl" layoutX="5.0" layoutY="320.0" prefHeight="40.0" prefWidth="100.0" text="Multigraph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="simpleGraphLbl" layoutX="5.0" layoutY="320.0" prefHeight="40.0" prefWidth="110.0" text="Simple Graph">
+            <Label fx:id="simpleGraphLbl" layoutX="5.0" layoutY="280.0" prefHeight="40.0" prefWidth="110.0" text="Simple Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -91,23 +91,23 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="pseudoGraphLbl" layoutX="5.0" layoutY="400.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph">
+            <Label fx:id="pseudoGraphLbl" layoutX="5.0" layoutY="360.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Button fx:id="checkGraph" layoutX="109.0" layoutY="511.0" mnemonicParsing="false" onMouseClicked="#onCheckGraphClicked" text="Check">
+            <Button fx:id="checkGraph" layoutX="80.0" layoutY="525.0" mnemonicParsing="false" onMouseClicked="#onCheckGraphClicked" prefHeight="40.0" prefWidth="100.0" text="Check">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Button>
-            <Label fx:id="eulerCircuitLbl" layoutX="110.0" layoutY="280.0" prefHeight="40.0" prefWidth="110.0" text="Euler Circuit">
+            <Label fx:id="eulerCircuitLbl" layoutX="120.0" layoutY="200.0" prefHeight="40.0" prefWidth="110.0" text="Euler Circuit">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="bipartiteLbl" layoutX="5.0" layoutY="280.0" prefHeight="40.0" prefWidth="70.0" text="Bipartite">
+            <Label fx:id="bipartiteLbl" layoutX="120.0" layoutY="40.0" prefHeight="40.0" prefWidth="70.0" text="Bipartite">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="treeLbl" layoutX="110.0" layoutY="200.0" prefHeight="40.0" prefWidth="100.0" text="Tree">
+            <Label fx:id="treeLbl" layoutX="120.0" layoutY="120.0" prefHeight="40.0" prefWidth="100.0" text="Tree">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -116,32 +116,32 @@
                   <Image url="@information-41225_1280%20(1).png" />
                </image>
             </ImageView>
-            <Label fx:id="directedSimpleGraphLbl" layoutX="110.0" layoutY="40.0" prefHeight="40.0" prefWidth="150.0" text="Directed Simple Graph">
+            <Label fx:id="directedSimpleGraphLbl" layoutX="5.0" layoutY="400.0" prefHeight="40.0" prefWidth="160.0" text="Directed Simple Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="directedPseudoGraphLbl" layoutX="110.0" layoutY="120.0" prefHeight="40.0" prefWidth="160.0" text="Directed Pseudograph">
+            <Label fx:id="directedPseudoGraphLbl" layoutX="5.0" layoutY="480.0" prefHeight="40.0" prefWidth="160.0" text="Directed Pseudograph" textOverrun="CLIP">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="directedMultiGraphLbl" layoutX="110.0" layoutY="80.0" prefHeight="40.0" prefWidth="150.0" text="Directed Multigraph">
+            <Label fx:id="directedMultiGraphLbl" layoutX="5.0" layoutY="440.0" prefHeight="40.0" prefWidth="150.0" text="Directed Multigraph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="completeGraphLbl" layoutX="110.0" layoutY="320.0" prefHeight="40.0" prefWidth="125.0" text="Complete Graph">
+            <Label fx:id="completeGraphLbl" layoutX="120.0" layoutY="240.0" prefHeight="40.0" prefWidth="125.0" text="Complete Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="connectedLbl" layoutX="110.0" layoutY="360.0" prefHeight="40.0" prefWidth="140.0" text="Connected">
+            <Label fx:id="connectedLbl" layoutX="120.0" layoutY="280.0" prefHeight="40.0" prefWidth="140.0" text="Connected">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="acyclicLbl" layoutX="110.0" layoutY="240.0" prefHeight="40.0" prefWidth="100.0" text="Acyclic">
+            <Label fx:id="acyclicLbl" layoutX="120.0" layoutY="160.0" prefHeight="40.0" prefWidth="100.0" text="Acyclic">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -153,7 +153,7 @@
             </Text>
          </children>
       </Pane>
-      <TextArea fx:id="definitionTextArea" layoutX="59.0" layoutY="72.0" prefHeight="407.0" prefWidth="595.0" text="Reflexive-If every node has a self loop&#10;Symmetric-If whenever there is an edge(a,b) then (b,a) is also an edge&#10;Anti Symmetric-If whenever (a,b) is an edge and (b,a) is an edge then (a) must be the same as (b)&#10;Transitive-If (a,b) is an edge and (b,c) is an edge then (a,c) must be an edge&#10;Equivalence-The graph is reflexive, symmetric and transitive&#10;Partial Order-The graph is reflexive, antisymmetric and transitive&#10;Simple Graph-The undirected graph contains at most one edge between any 2 nodes and no self loops.&#10;Multigraph-The undirected graph contains multiple edges between node pairs but no self loops.&#10;Pseudograph-The undirected graph contains self loops and multiple edges between node pairs.&#10;Complete Graph-The graph contains an edge between every pair of distinct nodes&#10;Connected-The graph contains a path between every pair of distinct nodes&#10;Acyclic-The graph contains 0 cycles(cycles must contain at least 3 nodes)&#10;Bipartite-The graph can be divided into 2 disjoint node sets so every edge connects a node from one set to the other&#10;Tree-The graph is connected and acyclic&#10;Euler Circuit-The graph contains a circuit that traverses every edge of a graph exactly once and returns to start&#10;Directed Simple Graph-The directed graph contains at most 1 edge between any 2 nodes and no self loops&#10;Directed Multigraph-The directed graph contains multiple edges between node pairs and no self loops&#10;Directed PseudoGraph-The directed graph contains self loops and multiple edges between any 2 nodes&#10;Complete Digraph-The directed graph contains a directed edge between every vertex to every other vertex&#10;" visible="false" />
+      <TextArea fx:id="definitionTextArea" layoutX="59.0" layoutY="72.0" prefHeight="407.0" prefWidth="595.0" text="Reflexive-If every node has a self loop&#10;Symmetric-If whenever there is an edge(a,b) then (b,a) is also an edge (This is always true for Undirected Graphs)&#10;Anti Symmetric-If whenever (a,b) is an edge and (b,a) is an edge then (a) must be the same as (b)&#10;Transitive-If (a,b) is an edge and (b,c) is an edge then (a,c) must be an edge&#10;Equivalence-The graph is reflexive, symmetric and transitive&#10;Partial Order-The graph is reflexive, antisymmetric and transitive&#10;Simple Graph-The undirected graph contains at most one edge between any 2 nodes and no self loops.&#10;Multigraph-The undirected graph contains multiple edges between node pairs but no self loops.&#10;Pseudograph-The undirected graph contains self loops and multiple edges between node pairs.&#10;Complete Graph-The graph contains an edge between every pair of distinct nodes&#10;Connected-The graph contains a path between every pair of distinct nodes&#10;Acyclic-The graph contains 0 cycles(cycles must contain at least 3 nodes)&#10;Bipartite-The graph can be divided into 2 disjoint node sets so every edge connects a node from one set to the other&#10;Tree-The graph is connected and acyclic&#10;Euler Circuit-The graph contains a circuit that traverses every edge of a graph exactly once and returns to start&#10;Directed Simple Graph-The directed graph contains at most 1 edge between any 2 nodes and no self loops&#10;Directed Multigraph-The directed graph contains multiple edges between node pairs and no self loops&#10;Directed PseudoGraph-The directed graph contains self loops and multiple edges between any 2 nodes&#10;Complete Digraph-The directed graph contains a directed edge between every vertex to every other vertex&#10;" visible="false" />
       <Pane fx:id="titlePane" layoutX="300.0" layoutY="5.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Text fx:id="titleTxt" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graph Generator and Evaluator" textAlignment="CENTER" wrappingWidth="595.0">
