@@ -1,6 +1,5 @@
 package rusiru.project.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -35,6 +34,7 @@ public class SecondaryController {
   public static ArrayList<Label> graphPropertyLabels = new ArrayList<Label>();
 
   @FXML Pane root;
+  @FXML Text warningTxt;
   @FXML Label reflexiveLbl;
   @FXML Label symmetricLbl;
   @FXML Label transitiveLbl;
@@ -77,23 +77,28 @@ public class SecondaryController {
     titlePane
         .layoutXProperty()
         .bind(root.widthProperty().subtract(titlePane.widthProperty()).divide(2));
+    numNodesTextField.setOnKeyTyped(
+        event -> {
+          if (containsSymbolsOrLetters(numNodesTextField.getText())) {
+            warningTxt.setVisible(true);
+          } else {
+            warningTxt.setVisible(false);
+          }
+        });
   }
 
   @FXML
-  private void onSubmitClicked() throws IOException, NumberFormatException {
+  private void onSubmitClicked() {
 
     AppState.undirected = undirected.isSelected();
     AppState.weighted = weighted.isSelected();
     System.out.println("Submit clicked");
-    Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
-    Matcher matcher = pattern.matcher(numNodesTextField.getText());
-    if (numNodesTextField.getText().isEmpty()
-        || numNodesTextField.getText().matches(".*[a-zA-Z]+.*")
-        || matcher.find()) {
 
+    if (containsSymbolsOrLetters(numNodesTextField.getText())) {
+      warningTxt.setVisible(true);
       return;
     } else {
-
+      warningTxt.setVisible(false);
       numNodesInt = Integer.parseInt(numNodesTextField.getText());
       AppState.numNodes = numNodesInt;
       for (int i = 0; i < AppState.numNodes; i++) {
@@ -113,6 +118,17 @@ public class SecondaryController {
     resetBtn.toFront();
     submitBtn.setVisible(false);
     submitBtn.setDisable(true);
+  }
+
+  @FXML
+  private boolean containsSymbolsOrLetters(String text) {
+    Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+    Matcher matcher = pattern.matcher(numNodesTextField.getText());
+
+    if (text.matches(".*[a-zA-Z]+.*") || matcher.find()) {
+      return true;
+    }
+    return false;
   }
 
   @FXML

@@ -62,6 +62,11 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+            <Text fx:id="warningTxt" fill="RED" layoutX="25.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Only numbers may be inputted!" underline="true" visible="false">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
       <Pane fx:id="checkPropertiesPane" layoutX="970.0" layoutY="50.0" prefHeight="570.0" prefWidth="260.0" stylesheets="@stylesheet.css">
