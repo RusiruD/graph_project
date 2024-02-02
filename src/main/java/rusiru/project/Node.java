@@ -156,6 +156,7 @@ public class Node extends StackPane {
   private void createSelfLoopArc(StackPane startStackPane, Pane root, Edge edge) {
 
     QuadCurve arc = new QuadCurve();
+    SecondaryController.arcs.add(arc);
 
     arc.startXProperty().bind(startStackPane.layoutXProperty().add(radius));
     arc.startYProperty().bind(startStackPane.layoutYProperty().add(radius).subtract(25));
@@ -209,6 +210,7 @@ public class Node extends StackPane {
     // between them
 
     QuadCurve arc = new QuadCurve();
+    SecondaryController.arcs.add(arc);
     // set the start point of the arc of the edge to the center of the start node
     arc.startXProperty().bind(startStackPane.layoutXProperty().add(radius));
 
@@ -271,6 +273,7 @@ public class Node extends StackPane {
 
   private void createLine(StackPane startStackPane, StackPane endStackPane, Pane root, Edge edge) {
     Line line = new Line();
+    SecondaryController.lines.add(line);
     line.setStroke(Color.BLUE);
     line.setStrokeWidth(2);
 
@@ -408,8 +411,9 @@ public class Node extends StackPane {
   private StackPane createArrow(double size) {
     // Arrow size
     StackPane arrow = new StackPane();
+    SecondaryController.arrows.add(arrow);
     arrow.setStyle(
-        "-fx-background-color:#000000 ;-fx-border-width:1px;-fx-border-color:yellow ;-fx-shape:"
+        "-fx-background-color:orange ;-fx-border-width:1px;-fx-border-color:orange ;-fx-shape:"
             + " \"M0,-4L4,0L0,4Z\""); //
     arrow.setPrefSize(size, size);
 

@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -30,10 +31,15 @@ import rusiru.project.Node;
 public class SecondaryController {
   public static ArrayList<Edge> edges = new ArrayList<Edge>();
   public static ArrayList<Node> nodes = new ArrayList<Node>();
+  public static ArrayList<Line> lines = new ArrayList<Line>();
+  public static ArrayList<QuadCurve> arcs = new ArrayList<QuadCurve>();
+  public static ArrayList<StackPane> arrows = new ArrayList<StackPane>();
   public static List<List<Integer>> adjacencyList = new ArrayList<List<Integer>>();
   public static ArrayList<Label> graphPropertyLabels = new ArrayList<Label>();
 
   @FXML Pane root;
+  @FXML Pane settingsPane;
+  @FXML Button settingsBtn;
   @FXML Text warningTxt;
   @FXML Label reflexiveLbl;
   @FXML Label symmetricLbl;
@@ -56,6 +62,10 @@ public class SecondaryController {
   @FXML Label directedMultiGraphLbl;
   @FXML Label directedPseudoGraphLbl;
   @FXML Button addNodeBtn;
+  @FXML ColorPicker nodeColPicker;
+  @FXML ColorPicker edgeColPicker;
+  @FXML ColorPicker arrowColPicker;
+  @FXML Button updateSettingsBtn;
   @FXML Pane checkPropertiesPane;
   @FXML TextArea definitionTextArea;
   @FXML Button submitBtn;
@@ -815,6 +825,68 @@ public class SecondaryController {
       definitionTextArea.setVisible(true);
       definitionTextArea.toFront();
       informationBtn.setStyle("  -fx-background-color:rgb(168, 167, 167);");
+    }
+  }
+
+  @FXML
+  private void onSettingsClicked() {
+    if (settingsPane.isVisible()) {
+      settingsPane.toBack();
+      settingsPane.setVisible(false);
+      settingsPane.setDisable(true);
+      settingsBtn.setStyle(null);
+    } else {
+      settingsBtn.setStyle("  -fx-background-color:rgb(168, 167, 167);");
+      settingsPane.toFront();
+      settingsPane.setDisable(false);
+      settingsPane.setVisible(true);
+    }
+  }
+
+  @FXML
+  private void updateSettings() {
+    String colour1 = getColorCode(nodeColPicker.getValue());
+    String colour2 = getColorCode(arrowColPicker.getValue());
+    updateNodeColour(colour1);
+    updateArrowColour(colour2);
+    updateEdgeColour();
+  }
+
+  private String getColorCode(Color color) {
+    return String.format(
+        "#%02X%02X%02X",
+        (int) (color.getRed() * 255),
+        (int) (color.getGreen() * 255),
+        (int) (color.getBlue() * 255));
+  }
+
+  @FXML
+  private void updateNodeColour(String Colour) {
+    for (Node node : nodes) {
+      node.getStackPane().getChildren().get(0).setStyle("-fx-fill:" + Colour + ";");
+    }
+  }
+
+  @FXML
+  private void updateEdgeColour() {
+    for (QuadCurve arc : arcs) {
+      arc.setStroke(edgeColPicker.getValue());
+    }
+    for (Line line : lines) {
+      line.setStroke(edgeColPicker.getValue());
+    }
+  }
+
+  @FXML
+  private void updateArrowColour(String Colour) {
+    for (StackPane arrow : arrows) {
+      arrow.setStyle(
+          "-fx-background-color:"
+              + Colour
+              + ";-fx-border-width:1px;-fx-border-color:"
+              + Colour
+              + " ;-fx-shape:"
+              + " \"M0,-4L4,0L0,4Z\"");
     }
   }
 }
