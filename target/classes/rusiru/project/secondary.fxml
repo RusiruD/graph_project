@@ -17,19 +17,31 @@
             <Button fx:id="submitBtn" layoutX="70.0" layoutY="450.0" mnemonicParsing="false" onMouseClicked="#onSubmitClicked" prefHeight="40.0" prefWidth="100.0" stylesheets="@stylesheet.css" text="Generate">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Button>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <TextField fx:id="numNodesTextField" layoutX="50.0" layoutY="330.0" prefHeight="40.0" prefWidth="140.0" promptText="Number Of Nodes" styleClass="black-border-textfield" stylesheets="@stylesheet.css">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></TextField>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor></TextField>
             <CheckBox fx:id="undirected" layoutX="45.0" layoutY="245.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" stylesheets="@stylesheet.css" text="Undirected Edges">
                <font>
                   <Font size="14.0" />
-               </font></CheckBox>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></CheckBox>
             <CheckBox fx:id="weighted" layoutX="45.0" layoutY="280.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" stylesheets="@stylesheet.css" text="Weighted Edges">
                <font>
                   <Font size="14.0" />
-               </font></CheckBox>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></CheckBox>
             <Button fx:id="resetBtn" disable="true" layoutX="70.0" layoutY="450.0" mnemonicParsing="false" onMouseClicked="#onResetClicked" prefHeight="40.0" prefWidth="100.0" text="Reset" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -97,7 +109,10 @@
             <Button fx:id="checkGraph" layoutX="80.0" layoutY="525.0" mnemonicParsing="false" onMouseClicked="#onCheckGraphClicked" prefHeight="40.0" prefWidth="100.0" text="Check">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Button>
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Label fx:id="eulerCircuitLbl" layoutX="120.0" layoutY="200.0" prefHeight="40.0" prefWidth="110.0" text="Euler Circuit">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -150,7 +165,7 @@
                   <Font name="System Bold" size="25.0" />
                </font>
                <cursor>
-                  <Cursor fx:constant="CLOSED_HAND" />
+                  <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
          </children>
@@ -166,4 +181,7 @@
          </children>
       </Pane>
    </children>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
 </Pane>
