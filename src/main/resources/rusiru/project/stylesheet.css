@@ -53,5 +53,20 @@
     -fx-border-radius:9px;
     -fx-border-width:1.5px;}
 
+    .button-i{
+        -fx-border-radius:50%;
+        -fx-background-radius:50%;
+        -fx-padding: 0 0 0 0;
+        -fx-insets: 0 0 0 0;
+
+    }
+
     .button:hover {-fx-background-color:rgb(168, 167, 167);
     -fx-background-radius: 9px;}
+
+    .button-i:hover {
+        -fx-background-color:rgb(168, 167, 167);
+    -fx-background-radius: 50%;
+    
+    }
+

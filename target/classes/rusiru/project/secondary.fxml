@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -111,11 +109,6 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <ImageView fx:id="informationImg" fitHeight="25.0" fitWidth="24.0" layoutX="210.0" layoutY="2.0" onMouseClicked="#revealDefinitions" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@information-41225_1280%20(1).png" />
-               </image>
-            </ImageView>
             <Label fx:id="directedSimpleGraphLbl" layoutX="5.0" layoutY="400.0" prefHeight="40.0" prefWidth="160.0" text="Directed Simple Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -151,9 +144,14 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Text>
+            <Button fx:id="informationBtn" layoutX="210.0" mnemonicParsing="false" onMouseClicked="#revealDefinitions" prefHeight="40.0" prefWidth="40.0" styleClass="button-i" stylesheets="@stylesheet.css" text="i">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
-      <TextArea fx:id="definitionTextArea" layoutX="59.0" layoutY="72.0" prefHeight="407.0" prefWidth="595.0" text="Reflexive-If every node has a self loop&#10;Symmetric-If whenever there is an edge(a,b) then (b,a) is also an edge (This is always true for Undirected Graphs)&#10;Anti Symmetric-If whenever (a,b) is an edge and (b,a) is an edge then (a) must be the same as (b)&#10;Transitive-If (a,b) is an edge and (b,c) is an edge then (a,c) must be an edge&#10;Equivalence-The graph is reflexive, symmetric and transitive&#10;Partial Order-The graph is reflexive, antisymmetric and transitive&#10;Simple Graph-The undirected graph contains at most one edge between any 2 nodes and no self loops.&#10;Multigraph-The undirected graph contains multiple edges between node pairs but no self loops.&#10;Pseudograph-The undirected graph contains self loops and multiple edges between node pairs.&#10;Complete Graph-The graph contains an edge between every pair of distinct nodes&#10;Connected-The graph contains a path between every pair of distinct nodes&#10;Acyclic-The graph contains 0 cycles(cycles must contain at least 3 nodes)&#10;Bipartite-The graph can be divided into 2 disjoint node sets so every edge connects a node from one set to the other&#10;Tree-The graph is connected and acyclic&#10;Euler Circuit-The graph contains a circuit that traverses every edge of a graph exactly once and returns to start&#10;Directed Simple Graph-The directed graph contains at most 1 edge between any 2 nodes and no self loops&#10;Directed Multigraph-The directed graph contains multiple edges between node pairs and no self loops&#10;Directed PseudoGraph-The directed graph contains self loops and multiple edges between any 2 nodes&#10;Complete Digraph-The directed graph contains a directed edge between every vertex to every other vertex&#10;" visible="false" />
+      <TextArea fx:id="definitionTextArea" layoutX="323.0" layoutY="78.0" prefHeight="407.0" prefWidth="595.0" text="Definitions of Terms&#10;&#10;Reflexive-If every node has a self loop&#10;Symmetric-If whenever there is an edge(a,b) then (b,a) is also an edge (This is always true for Undirected Graphs)&#10;Anti Symmetric-If whenever (a,b) is an edge and (b,a) is an edge then (a) must be the same as (b) i.e there is no reverse edge&#10;Transitive-If (a,b) is an edge and (b,c) is an edge then (a,c) must be an edge&#10;Equivalence-The graph is reflexive, symmetric and transitive&#10;Partial Order-The graph is reflexive, antisymmetric and transitive&#10;Simple Graph-The undirected graph contains at most one edge between any 2 nodes and no self loops.&#10;Multigraph-The undirected graph contains multiple edges between node pairs but no self loops.&#10;Pseudograph-The undirected graph contains self loops and multiple edges between node pairs.&#10;Complete Graph-The graph contains an edge between every pair of distinct nodes&#10;Connected-The graph contains a path between every pair of distinct nodes&#10;Acyclic-The graph contains 0 cycles(cycles must contain at least 3 nodes)&#10;Bipartite-The graph can be divided into 2 disjoint node sets so every edge connects a node from one set to the other&#10;Tree-The graph is connected and acyclic&#10;Euler Circuit-The graph contains a circuit that traverses every edge of a graph exactly once and returns to start&#10;Directed Simple Graph-The directed graph contains at most 1 edge between any 2 nodes and no self loops&#10;Directed Multigraph-The directed graph contains multiple edges between node pairs and no self loops&#10;Directed PseudoGraph-The directed graph contains self loops and multiple edges between any 2 nodes&#10;Complete Digraph-The directed graph contains a directed edge between every vertex to every other vertex&#10;" visible="false" />
       <Pane fx:id="titlePane" layoutX="300.0" layoutY="5.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Text fx:id="titleTxt" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graph Generator and Evaluator" textAlignment="CENTER" wrappingWidth="595.0">

@@ -15,7 +15,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -44,7 +43,7 @@ public class SecondaryController {
   @FXML Label multiGraphLbl;
   @FXML Label pseudoGraphLbl;
   @FXML Label completeGraphLbl;
-  @FXML ImageView informationImg;
+  @FXML Button informationBtn;
   @FXML Label connectedLbl;
   @FXML Label eulerCircuitLbl;
   @FXML Label acyclicLbl;
@@ -327,14 +326,6 @@ public class SecondaryController {
                 && edge2.getDestinationNode() != edge1.getSource()
                 && edge2.getDestinationNode() != edge2.getSource())) {
 
-          System.out.println(
-              edge1.getSource().getNodeNum()
-                  + " "
-                  + edge1.getDestinationNode().getNodeNum()
-                  + " "
-                  + edge2.getSource().getNodeNum()
-                  + " "
-                  + edge2.getDestinationNode().getNodeNum());
           possibleTransitiveEdgeCounter++;
 
           // checks if there is an edge-edge3 that comes from the same source the first edge did
@@ -353,8 +344,7 @@ public class SecondaryController {
         }
       }
     }
-    System.out.println("possibleTransitiveEdgeCounter: " + possibleTransitiveEdgeCounter);
-    System.out.println("transitiveEdgeCounter: " + transitiveEdgeCounter);
+
     // if the counter is equal to the number of edges, then the graph is transitive
     if (possibleTransitiveEdgeCounter == transitiveEdgeCounter) {
       setCorrectLabel(transitiveLbl);
@@ -797,10 +787,13 @@ public class SecondaryController {
   @FXML
   private void revealDefinitions() {
     if (definitionTextArea.isVisible()) {
+      informationBtn.setStyle(null);
       definitionTextArea.setVisible(false);
     } else {
       definitionTextArea.setVisible(true);
       definitionTextArea.toFront();
+      informationBtn.setStyle("  -fx-background-color:rgb(168, 167, 167);");
+      // informationBtn.setStyle(" -fx-background-radius: 50%;");
     }
   }
 }
