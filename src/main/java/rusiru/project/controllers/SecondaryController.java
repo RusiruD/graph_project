@@ -845,6 +845,12 @@ public class SecondaryController {
 
   @FXML
   private void updateSettings() {
+    AppState.nodeColour = nodeColPicker.getValue();
+    AppState.edgeColour = edgeColPicker.getValue();
+    AppState.arrowColour = arrowColPicker.getValue();
+
+    AppState.nodeColourString = getColorCode(AppState.nodeColour);
+
     String colour1 = getColorCode(nodeColPicker.getValue());
     String colour2 = getColorCode(arrowColPicker.getValue());
     updateNodeColour(colour1);

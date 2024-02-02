@@ -214,12 +214,12 @@
             </ColorPicker>
             <ColorPicker fx:id="edgeColPicker" layoutX="100.0" layoutY="85.0" prefHeight="30.0" prefWidth="125.0">
                <value>
-                  <Color red="0.041228070855140686" blue="0.6184210777282715" />
+                  <Color blue="1.0" />
                </value>
             </ColorPicker>
             <ColorPicker fx:id="arrowColPicker" layoutX="100.0" layoutY="125.0" prefHeight="30.0" prefWidth="125.0">
                <value>
-                  <Color red="1.0" green="0.550000011920929" />
+                  <Color green="0.501960813999176" />
                </value>
             </ColorPicker>
             <Text layoutX="66.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" textAlignment="CENTER" wrappingWidth="118.015625">

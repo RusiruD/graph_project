@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -99,7 +100,8 @@ public class Node extends StackPane {
     StackPane currentStackPane = (StackPane) event.getSource();
 
     if (AppState.alreadyClicked) {
-      AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
+      AppState.previousStackPane.setEffect(null);
+      // AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
 
       // if its a self loop
       if (this.equals(AppState.previousNode) && !(this.hasSelfLoop)) {
@@ -127,8 +129,13 @@ public class Node extends StackPane {
 
       AppState.alreadyClicked = false;
     } else {
+      System.out.println("First Node Clicked");
 
-      currentStackPane.getChildren().get(0).setStyle("-fx-fill: red;");
+      DropShadow dropShadow = new DropShadow();
+      dropShadow.setRadius(1.5 * radius);
+
+      dropShadow.setColor(AppState.nodeColour);
+      currentStackPane.setEffect(dropShadow);
       AppState.alreadyClicked = true;
       AppState.previousStackPane = currentStackPane;
       AppState.previousNode = this;
@@ -413,7 +420,7 @@ public class Node extends StackPane {
     StackPane arrow = new StackPane();
     SecondaryController.arrows.add(arrow);
     arrow.setStyle(
-        "-fx-background-color:orange ;-fx-border-width:1px;-fx-border-color:orange ;-fx-shape:"
+        "-fx-background-color:green ;-fx-border-width:1px;-fx-border-color:green ;-fx-shape:"
             + " \"M0,-4L4,0L0,4Z\""); //
     arrow.setPrefSize(size, size);
 

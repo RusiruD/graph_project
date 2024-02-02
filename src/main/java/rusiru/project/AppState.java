@@ -1,6 +1,7 @@
 package rusiru.project;
 
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class AppState {
@@ -24,6 +25,11 @@ public class AppState {
   public static boolean isPseudoGraph;
   public static boolean isSimpleGraph;
   public static boolean isMultiGraph;
+  public static Color nodeColour;
+  public static String nodeColourString;
+  public static String oppositeNodeColour;
+  public static Color edgeColour;
+  public static Color arrowColour;
 
   public static void createAdjacencyMatrix(int numNodes) {
     adjacencyMatrix = new int[numNodes][numNodes];
