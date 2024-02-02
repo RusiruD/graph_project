@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -83,9 +85,13 @@ public class SecondaryController {
     AppState.undirected = undirected.isSelected();
     AppState.weighted = weighted.isSelected();
     System.out.println("Submit clicked");
+    Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+    Matcher matcher = pattern.matcher(numNodesTextField.getText());
+    if (numNodesTextField.getText().isEmpty()
+        || numNodesTextField.getText().matches(".*[a-zA-Z]+.*")
+        || matcher.find()) {
 
-    if (numNodesTextField.getText().equals("")) {
-
+      return;
     } else {
 
       numNodesInt = Integer.parseInt(numNodesTextField.getText());
