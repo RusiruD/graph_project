@@ -50,6 +50,7 @@ public class Node extends StackPane {
     nodePane.setLayoutX((random.nextInt((int) (root.getWidth() - 540)) + 255));
     nodePane.setLayoutY(random.nextInt((int) (root.getHeight() - 110)) + 45);
     nodePane.setCursor(Cursor.MOVE);
+    nodePane.setAccessibleText("Node" + Nodenum);
     Label txt = new Label(Integer.toString(Nodenum));
     txt.setTextFill(Color.WHITE);
 
