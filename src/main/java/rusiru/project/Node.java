@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -48,7 +49,7 @@ public class Node extends StackPane {
     // randomise the position of the node between bounds
     nodePane.setLayoutX((random.nextInt((int) (root.getWidth() - 540)) + 255));
     nodePane.setLayoutY(random.nextInt((int) (root.getHeight() - 110)) + 45);
-
+    nodePane.setCursor(Cursor.MOVE);
     Label txt = new Label(Integer.toString(Nodenum));
     txt.setTextFill(Color.WHITE);
 

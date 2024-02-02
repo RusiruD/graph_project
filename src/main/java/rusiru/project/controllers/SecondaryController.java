@@ -793,7 +793,6 @@ public class SecondaryController {
       definitionTextArea.setVisible(true);
       definitionTextArea.toFront();
       informationBtn.setStyle("  -fx-background-color:rgb(168, 167, 167);");
-      // informationBtn.setStyle(" -fx-background-radius: 50%;");
     }
   }
 }
