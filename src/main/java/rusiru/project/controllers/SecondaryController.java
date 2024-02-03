@@ -68,6 +68,12 @@ public class SecondaryController {
   @FXML ColorPicker arrowBorderColPicker;
   @FXML ColorPicker nodeNumColPicker;
   @FXML TextField edgeThicknessTextField;
+  @FXML TextField nodeSizeTextField;
+  @FXML TextField nodeBorderSizeTextField;
+  @FXML TextField arrowSizeTextField;
+  @FXML TextField arrowBorderSizeTextField;
+  @FXML TextField nodeNumberSizeTextField;
+
   @FXML Button updateSettingsBtn;
   @FXML Pane checkPropertiesPane;
   @FXML TextArea definitionTextArea;
@@ -91,6 +97,23 @@ public class SecondaryController {
         .layoutXProperty()
         .bind(root.widthProperty().subtract(titlePane.widthProperty()).divide(2));
 
+    for (TextField textField :
+        Arrays.asList(
+            edgeThicknessTextField,
+            nodeSizeTextField,
+            nodeBorderSizeTextField,
+            arrowSizeTextField,
+            arrowBorderSizeTextField,
+            nodeNumberSizeTextField)) {
+      textField.setOnKeyTyped(
+          event -> {
+            if (isNonZeroNumber(textField.getText())) {
+              warningTxt2.setVisible(false);
+            } else {
+              warningTxt2.setVisible(true);
+            }
+          });
+    }
     numNodesTextField.setOnKeyTyped(
         event -> {
           if (isNonZeroNumber(numNodesTextField.getText())) {
@@ -873,8 +896,10 @@ public class SecondaryController {
       AppState.nodeColour = nodeColPicker.getValue();
       AppState.edgeColour = edgeColPicker.getValue();
       AppState.arrowColour = arrowColPicker.getValue();
-
-      AppState.nodeColourString = getColorCode(AppState.nodeColour);
+      AppState.nodeBorderColour = nodeBorderColPicker.getValue();
+      AppState.arrowBorderColour = arrowBorderColPicker.getValue();
+      AppState.nodeNumColour = nodeNumColPicker.getValue();
+      AppState.edgeThickness = Double.parseDouble(edgeThicknessTextField.getText());
 
       String nodeCol = getColorCode(nodeColPicker.getValue());
       String nodeBorderCol = getColorCode(nodeBorderColPicker.getValue());
@@ -902,7 +927,8 @@ public class SecondaryController {
       node.getStackPane()
           .getChildren()
           .get(0)
-          .setStyle("-fx-fill:" + fillColour + ";-fx-stroke:" + borderColour + ";");
+          .setStyle(
+              "-fx-fill:" + fillColour + ";-fx-stroke:" + borderColour + ";-fx-stroke-size:1;");
       node.getStackPane().getChildren().get(1).setStyle("-fx-text-fill:" + numColour + ";");
     }
   }

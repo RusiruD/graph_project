@@ -42,6 +42,7 @@ public class Node extends StackPane {
     num = Nodenum;
     nodePane = new StackPane();
     dot = new Circle(radius);
+    dot.setFill(AppState.nodeColour);
 
     // Create a value binded to the left edge of the properties pane
     DoubleProperty widthProperty = new SimpleDoubleProperty();
@@ -53,7 +54,7 @@ public class Node extends StackPane {
     nodePane.setCursor(Cursor.MOVE);
     nodePane.setAccessibleText("Node" + Nodenum);
     Label txt = new Label(Integer.toString(Nodenum));
-    txt.setTextFill(Color.WHITE);
+    txt.setTextFill(AppState.nodeNumColour);
 
     nodePane.getChildren().addAll(dot, txt);
     root.getChildren().add(nodePane);
@@ -173,8 +174,8 @@ public class Node extends StackPane {
     arc.endXProperty().bind(startStackPane.layoutXProperty().add(radius).add(15));
     arc.endYProperty().bind(startStackPane.layoutYProperty().add(radius).subtract(20));
 
-    arc.setStroke(Color.BLUE);
-    arc.setStrokeWidth(2);
+    arc.setStroke(AppState.edgeColour);
+    arc.setStrokeWidth(AppState.edgeThickness);
     arc.setFill(Color.TRANSPARENT);
 
     if (AppState.weighted) {
@@ -264,8 +265,8 @@ public class Node extends StackPane {
     // set the control point of the arc
 
     // set the style of the arc
-    arc.setStroke(Color.BLUE);
-    arc.setStrokeWidth(2);
+    arc.setStroke(AppState.edgeColour);
+    arc.setStrokeWidth(AppState.edgeThickness);
     arc.setFill(Color.TRANSPARENT);
     // if its weighted create the label
     if (AppState.weighted) {
@@ -280,8 +281,8 @@ public class Node extends StackPane {
   private void createLine(StackPane startStackPane, StackPane endStackPane, Pane root, Edge edge) {
     Line line = new Line();
     SecondaryController.lines.add(line);
-    line.setStroke(Color.BLUE);
-    line.setStrokeWidth(2);
+    line.setStroke(AppState.edgeColour);
+    line.setStrokeWidth(AppState.edgeThickness);
 
     line.startXProperty().bind(startStackPane.layoutXProperty().add(radius));
     line.startYProperty().bind(startStackPane.layoutYProperty().add(radius));

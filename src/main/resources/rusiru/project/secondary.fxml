@@ -82,19 +82,19 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="settingsPane" disable="true" layoutX="10.0" layoutY="139.0" prefHeight="407.0" prefWidth="305.0" styleClass="settings-pane" stylesheets="@stylesheet.css" visible="false">
+      <Pane fx:id="settingsPane" layoutX="300.0" layoutY="144.0" prefHeight="407.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css">
          <children>
-            <ColorPicker fx:id="nodeColPicker" layoutX="170.0" layoutY="44.0" prefHeight="30.0" prefWidth="125.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="nodeColPicker" layoutX="105.0" layoutY="69.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color />
                </value>
             </ColorPicker>
-            <ColorPicker fx:id="edgeColPicker" layoutX="170.0" layoutY="124.0" prefHeight="30.0" prefWidth="125.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="edgeColPicker" layoutX="105.0" layoutY="269.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color blue="1.0" />
                </value>
             </ColorPicker>
-            <ColorPicker fx:id="arrowColPicker" layoutX="170.0" layoutY="204.0" prefHeight="30.0" prefWidth="125.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="arrowColPicker" layoutX="105.0" layoutY="189.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color />
                </value>
@@ -109,53 +109,48 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Text layoutX="5.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Node Colour:">
+            <Text layoutX="5.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Node:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="5.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edge Colour:">
+            <Text layoutX="5.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edge:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="5.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrow Colour:">
+            <Text layoutX="5.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrow:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <ColorPicker fx:id="nodeBorderColPicker" layoutX="170.0" layoutY="84.0" prefHeight="30.0" prefWidth="125.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="nodeBorderColPicker" layoutX="105.0" layoutY="109.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color />
                </value>
             </ColorPicker>
-            <Text layoutX="5.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Node Border Colour:">
+            <Text layoutX="5.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Node Border:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <ColorPicker fx:id="arrowBorderColPicker" layoutX="170.0" layoutY="244.0" prefHeight="30.0" prefWidth="125.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="arrowBorderColPicker" layoutX="105.0" layoutY="229.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color red="1.0" green="1.0" />
                </value>
             </ColorPicker>
-            <Text layoutX="5.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrow Border Colour:">
+            <Text layoutX="5.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrow Border:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="5.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number Colour:">
+            <Text layoutX="5.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Node Number:">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="5.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edge Thickness(px)">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Text>
-            <ColorPicker fx:id="nodeNumColPicker" layoutX="170.0" layoutY="284.0" prefHeight="30.0" prefWidth="125.0" styleClass="colorpicker" stylesheets="@stylesheet.css" />
-            <TextField fx:id="edgeThicknessTextField" layoutX="170.0" layoutY="164.0" prefHeight="30.0" prefWidth="125.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="2">
+            <ColorPicker fx:id="nodeNumColPicker" layoutX="105.0" layoutY="149.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css" />
+            <TextField fx:id="edgeThicknessTextField" layoutX="260.0" layoutY="268.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="2">
                <font>
                   <Font size="14.0" />
                </font>
@@ -165,6 +160,21 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
+            <TextField fx:id="nodeSizeTextField" layoutX="260.0" layoutY="68.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="50" />
+            <Text layoutX="89.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="259.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size(px)">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="nodeBorderSizeTextField" layoutX="260.0" layoutY="108.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
+            <TextField fx:id="arrowBorderSizeTextField" layoutX="260.0" layoutY="228.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
+            <TextField fx:id="arrowSizeTextField" layoutX="260.0" layoutY="188.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
+            <TextField fx:id="nodeNumberSizeTextField" layoutX="260.0" layoutY="148.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
          </children>
       </Pane>
       <Pane fx:id="checkPropertiesPane" layoutX="970.0" layoutY="50.0" prefHeight="570.0" prefWidth="260.0" stylesheets="@stylesheet.css">

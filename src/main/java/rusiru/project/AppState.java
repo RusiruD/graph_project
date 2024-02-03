@@ -25,11 +25,14 @@ public class AppState {
   public static boolean isPseudoGraph;
   public static boolean isSimpleGraph;
   public static boolean isMultiGraph;
-  public static Color nodeColour;
-  public static String nodeColourString;
-  public static String oppositeNodeColour;
-  public static Color edgeColour;
-  public static Color arrowColour;
+  public static Color nodeColour = Color.BLACK;
+  public static Color nodeBorderColour = Color.BLACK;
+  public static Color nodeNumColour = Color.WHITE;
+  public static Color edgeColour = Color.BLUE;
+
+  public static Color arrowColour = Color.BLACK;
+  public static Color arrowBorderColour = Color.YELLOW;
+  public static Double edgeThickness = 2.0;
 
   public static void createAdjacencyMatrix(int numNodes) {
     adjacencyMatrix = new int[numNodes][numNodes];
