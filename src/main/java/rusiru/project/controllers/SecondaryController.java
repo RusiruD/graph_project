@@ -42,6 +42,7 @@ public class SecondaryController {
   @FXML Text warningTxt;
   @FXML Text warningTxt2;
   @FXML Label reflexiveLbl;
+  @FXML Button checkGraph;
   @FXML Label symmetricLbl;
   @FXML Label transitiveLbl;
   @FXML Label antiSymmetricLbl;
@@ -137,6 +138,7 @@ public class SecondaryController {
 
   @FXML
   private void onSubmitClicked() {
+    checkGraph.setDisable(false);
 
     AppState.undirected = undirected.isSelected();
     AppState.weighted = weighted.isSelected();
@@ -210,7 +212,7 @@ public class SecondaryController {
     root.getChildren().removeIf(node -> node instanceof StackPane);
     root.getChildren().removeIf(node -> node instanceof Line);
     root.getChildren().removeIf(node -> node instanceof QuadCurve);
-
+    onResetSettingsClicked();
     root.getChildren().removeIf(node -> node.getId() == "weightTextField");
     root.getChildren().removeIf(node -> node.getId() == "weightLabel");
     AppState.resetValues();
