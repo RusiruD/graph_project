@@ -37,10 +37,7 @@
 .check-box:selected{
 
 }
-/*.check-box:hover{
-    -fx-background-color: rgb(168, 167, 167);
-    -fx-background-radius: 9px;
-}*/
+
 .check-box .box :hover{
     -fx-background-color: rgb(168, 167, 167);
     -fx-background-radius: 9px;
@@ -73,6 +70,7 @@
 -fx-border-width:1.5px;
 -fx-font-size: 14px;
 -fx-font-weight: bold;
+-fx-cursor: hand;
  }
     
 
