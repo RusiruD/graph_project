@@ -82,19 +82,19 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="settingsPane" layoutX="10.0" layoutY="140.0" prefHeight="407.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css" visible="false">
+      <Pane fx:id="settingsPane" disable="true" layoutX="10.0" layoutY="140.0" prefHeight="407.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css" visible="false">
          <children>
-            <ColorPicker fx:id="nodeColPicker" layoutX="105.0" layoutY="69.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="nodeColPicker" accessibleText="node colour picker" layoutX="105.0" layoutY="69.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color />
                </value>
             </ColorPicker>
-            <ColorPicker fx:id="edgeColPicker" layoutX="105.0" layoutY="269.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="edgeColPicker" accessibleText="node edge colour picker" layoutX="105.0" layoutY="269.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color blue="1.0" />
                </value>
             </ColorPicker>
-            <ColorPicker fx:id="arrowColPicker" layoutX="105.0" layoutY="189.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="arrowColPicker" accessibleText="node arrow colour picker" layoutX="105.0" layoutY="189.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color />
                </value>
@@ -104,10 +104,13 @@
                   <Font name="System Bold" size="29.0" />
                </font>
             </Text>
-            <Button fx:id="updateSettingsBtn" layoutX="91.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#updateSettings" prefHeight="40.0" text="Update Settings">
+            <Button fx:id="updateSettingsBtn" accessibleText="update settings button" layoutX="91.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#updateSettings" prefHeight="40.0" text="Update Settings">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Text layoutX="5.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Node:">
                <font>
@@ -124,7 +127,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <ColorPicker fx:id="nodeBorderColPicker" layoutX="105.0" layoutY="109.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="nodeBorderColPicker" accessibleText="node border colour picker" layoutX="105.0" layoutY="109.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color />
                </value>
@@ -134,7 +137,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <ColorPicker fx:id="arrowBorderColPicker" layoutX="105.0" layoutY="229.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+            <ColorPicker fx:id="arrowBorderColPicker" accessibleText="node yellow colour picker" layoutX="105.0" layoutY="229.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
                   <Color red="1.0" green="1.0" />
                </value>
@@ -149,8 +152,8 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <ColorPicker fx:id="nodeNumColPicker" layoutX="105.0" layoutY="149.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css" />
-            <TextField fx:id="edgeThicknessTextField" layoutX="260.0" layoutY="268.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="2">
+            <ColorPicker fx:id="nodeNumColPicker" accessibleText="node number colour picker" layoutX="105.0" layoutY="149.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css" />
+            <TextField fx:id="edgeThicknessTextField" accessibleText="text field for edge size" layoutX="260.0" layoutY="268.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="2">
                <font>
                   <Font size="14.0" />
                </font>
@@ -160,7 +163,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <TextField fx:id="nodeSizeTextField" layoutX="260.0" layoutY="68.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="50" />
+            <TextField fx:id="nodeSizeTextField" accessibleText="textf field for node size" layoutX="260.0" layoutY="68.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="50" />
             <Text layoutX="138.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour">
                <font>
                   <Font name="System Bold" size="16.0" />
@@ -171,14 +174,17 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="nodeBorderSizeTextField" layoutX="260.0" layoutY="108.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
-            <TextField fx:id="arrowBorderSizeTextField" layoutX="260.0" layoutY="228.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
-            <TextField fx:id="arrowSizeTextField" layoutX="260.0" layoutY="188.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
-            <TextField fx:id="nodeNumberSizeTextField" layoutX="260.0" layoutY="148.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
-            <Button fx:id="resetSettings" layoutX="270.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#onResetSettingsClicked" prefHeight="30.0" prefWidth="60.0" text="Reset">
+            <TextField fx:id="nodeBorderSizeTextField" accessibleText="text field for node border size" layoutX="260.0" layoutY="108.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
+            <TextField fx:id="arrowBorderSizeTextField" accessibleText="text field of arrow border size" layoutX="260.0" layoutY="228.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
+            <TextField fx:id="arrowSizeTextField" accessibleText="text field for arrow size" layoutX="260.0" layoutY="188.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
+            <TextField fx:id="nodeNumberSizeTextField" accessibleText="text field for node number text size" layoutX="260.0" layoutY="148.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
+            <Button fx:id="resetSettingsBtn" accessibleText="reset settings button" layoutX="270.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#onResetSettingsClicked" prefHeight="30.0" prefWidth="60.0" text="Reset">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </Pane>

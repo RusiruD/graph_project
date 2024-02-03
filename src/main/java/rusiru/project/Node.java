@@ -104,6 +104,8 @@ public class Node extends StackPane {
 
     if (AppState.alreadyClicked) {
       AppState.previousStackPane.setEffect(null);
+      AppState.previousStackPane.getChildren().get(0).setScaleX(1);
+      AppState.previousStackPane.getChildren().get(0).setScaleY(1);
 
       // if its a self loop
       if (this.equals(AppState.previousNode) && !(this.hasSelfLoop)) {
@@ -138,6 +140,8 @@ public class Node extends StackPane {
 
       dropShadow.setColor(AppState.nodeColour);
       currentStackPane.setEffect(dropShadow);
+      currentStackPane.getChildren().get(0).setScaleX(1.2);
+      currentStackPane.getChildren().get(0).setScaleY(1.2);
       AppState.alreadyClicked = true;
       AppState.previousStackPane = currentStackPane;
       AppState.previousNode = this;

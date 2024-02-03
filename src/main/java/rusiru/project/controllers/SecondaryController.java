@@ -274,6 +274,8 @@ public class SecondaryController {
 
       if (AppState.previousStackPane != null) {
         AppState.previousStackPane.setEffect(null);
+        AppState.previousStackPane.getChildren().get(0).setScaleX(1);
+        AppState.previousStackPane.getChildren().get(0).setScaleY(1);
       }
       AppState.previousStackPane = null;
       AppState.alreadyClicked = false;
@@ -889,8 +891,7 @@ public class SecondaryController {
 
   @FXML
   private void updateSettings() {
-    if (!isNonZeroNumber(edgeThicknessTextField.getText())) {
-      edgeThicknessTextField.setText("");
+    if (warningTxt2.isVisible()) {
 
       return;
     } else {
