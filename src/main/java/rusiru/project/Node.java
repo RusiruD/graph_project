@@ -58,6 +58,8 @@ public class Node extends StackPane {
 
     nodePane.getChildren().addAll(dot, txt);
     root.getChildren().add(nodePane);
+    nodePane.prefWidthProperty().bind(dot.radiusProperty().multiply(2));
+    nodePane.prefHeightProperty().bind(dot.radiusProperty().multiply(2));
 
     makeNodeDraggable(nodePane, root, widthProperty);
     SecondaryController.nodes.add(this);

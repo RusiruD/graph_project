@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.QuadCurve;
 import javafx.scene.text.Text;
@@ -900,14 +901,25 @@ public class SecondaryController {
       AppState.arrowBorderColour = arrowBorderColPicker.getValue();
       AppState.nodeNumColour = nodeNumColPicker.getValue();
       AppState.edgeThickness = Double.parseDouble(edgeThicknessTextField.getText());
+      AppState.nodeSize = Double.parseDouble(nodeSizeTextField.getText());
+      AppState.nodeBorderSize = Double.parseDouble(nodeBorderSizeTextField.getText());
+      AppState.arrowSize = Double.parseDouble(arrowSizeTextField.getText());
+      AppState.arrowBorderSize = Double.parseDouble(arrowBorderSizeTextField.getText());
+      AppState.nodeNumSize = Double.parseDouble(nodeNumberSizeTextField.getText());
 
       String nodeCol = getColorCode(nodeColPicker.getValue());
       String nodeBorderCol = getColorCode(nodeBorderColPicker.getValue());
       String nodeNumCol = getColorCode(nodeNumColPicker.getValue());
       String arrowCol = getColorCode(arrowColPicker.getValue());
       String arrowBorderCol = getColorCode(arrowBorderColPicker.getValue());
-      updateNodeColour(nodeCol, nodeBorderCol, nodeNumCol);
-      updateArrowColour(arrowCol, arrowBorderCol);
+      updateNode(
+          nodeCol,
+          nodeBorderCol,
+          nodeNumCol,
+          AppState.nodeSize / 2,
+          AppState.nodeBorderSize,
+          AppState.nodeNumSize);
+      updateArrow(arrowCol, arrowBorderCol, AppState.arrowSize, AppState.arrowBorderSize);
 
       updateEdge(Double.parseDouble(edgeThicknessTextField.getText()));
     }
@@ -922,14 +934,34 @@ public class SecondaryController {
   }
 
   @FXML
-  private void updateNodeColour(String fillColour, String borderColour, String numColour) {
+  private void updateNode(
+      String fillColour,
+      String borderColour,
+      String numColour,
+      Double size,
+      Double borderSize,
+      Double numSize) {
     for (Node node : nodes) {
+
+      Circle circle = (Circle) node.getStackPane().getChildren().get(0);
+      circle.radiusProperty().setValue(size);
       node.getStackPane()
           .getChildren()
           .get(0)
           .setStyle(
-              "-fx-fill:" + fillColour + ";-fx-stroke:" + borderColour + ";-fx-stroke-size:1;");
-      node.getStackPane().getChildren().get(1).setStyle("-fx-text-fill:" + numColour + ";");
+              "-fx-fill:"
+                  + fillColour
+                  + ";-fx-stroke:"
+                  + borderColour
+                  + ";-fx-stroke-width:"
+                  + borderSize
+                  + ";-fx-radius:"
+                  + size
+                  + "px;");
+      node.getStackPane()
+          .getChildren()
+          .get(1)
+          .setStyle("-fx-text-fill:" + numColour + ";-fx-font-size:" + numSize + "px;");
     }
   }
 
@@ -946,12 +978,16 @@ public class SecondaryController {
   }
 
   @FXML
-  private void updateArrowColour(String fillColour, String borderColour) {
+  private void updateArrow(
+      String fillColour, String borderColour, Double arrowSize, Double borderSize) {
     for (StackPane arrow : arrows) {
+      arrow.setPrefSize(arrowSize, arrowSize);
       arrow.setStyle(
           "-fx-background-color:"
               + fillColour
-              + ";-fx-border-width:1px;-fx-border-color:"
+              + ";-fx-border-width:"
+              + borderSize
+              + "px;-fx-border-color:"
               + borderColour
               + " ;-fx-shape:"
               + " \"M0,-4L4,0L0,4Z\"");
