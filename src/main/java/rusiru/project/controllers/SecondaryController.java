@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -41,6 +39,7 @@ public class SecondaryController {
   @FXML Pane settingsPane;
   @FXML Button settingsBtn;
   @FXML Text warningTxt;
+  @FXML Text warningTxt2;
   @FXML Label reflexiveLbl;
   @FXML Label symmetricLbl;
   @FXML Label transitiveLbl;
@@ -65,6 +64,10 @@ public class SecondaryController {
   @FXML ColorPicker nodeColPicker;
   @FXML ColorPicker edgeColPicker;
   @FXML ColorPicker arrowColPicker;
+  @FXML ColorPicker nodeBorderColPicker;
+  @FXML ColorPicker arrowBorderColPicker;
+  @FXML ColorPicker nodeNumColPicker;
+  @FXML TextField edgeThicknessTextField;
   @FXML Button updateSettingsBtn;
   @FXML Pane checkPropertiesPane;
   @FXML TextArea definitionTextArea;
@@ -87,12 +90,23 @@ public class SecondaryController {
     titlePane
         .layoutXProperty()
         .bind(root.widthProperty().subtract(titlePane.widthProperty()).divide(2));
+
     numNodesTextField.setOnKeyTyped(
         event -> {
-          if (containsSymbolsOrLetters(numNodesTextField.getText())) {
-            warningTxt.setVisible(true);
-          } else {
+          if (isNonZeroNumber(numNodesTextField.getText())) {
             warningTxt.setVisible(false);
+
+          } else {
+            System.out.println("Not a number");
+            warningTxt.setVisible(true);
+          }
+        });
+    edgeThicknessTextField.setOnKeyTyped(
+        event -> {
+          if (isNonZeroNumber(edgeThicknessTextField.getText())) {
+            warningTxt2.setVisible(false);
+          } else {
+            warningTxt2.setVisible(true);
           }
         });
   }
@@ -104,7 +118,7 @@ public class SecondaryController {
     AppState.weighted = weighted.isSelected();
     System.out.println("Submit clicked");
 
-    if (containsSymbolsOrLetters(numNodesTextField.getText())) {
+    if (!isNonZeroNumber(numNodesTextField.getText())) {
       warningTxt.setVisible(true);
       return;
     } else {
@@ -131,14 +145,20 @@ public class SecondaryController {
   }
 
   @FXML
-  private boolean containsSymbolsOrLetters(String text) {
-    Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
-    Matcher matcher = pattern.matcher(numNodesTextField.getText());
+  private boolean isNonZeroNumber(String text) {
 
-    if (text.matches(".*[a-zA-Z]+.*") || matcher.find()) {
-      return true;
+    if (text.matches("\\d+")) {
+      try {
+        double number = Double.parseDouble(text);
+        return number != 0;
+      } catch (NumberFormatException e) {
+        // If parsing fails, it's not a valid number
+        return false;
+      }
+    } else {
+      // If the string contains non-digit characters
+      return false;
     }
-    return false;
   }
 
   @FXML
@@ -229,7 +249,7 @@ public class SecondaryController {
     if (clickedOnBackground) {
 
       if (AppState.previousStackPane != null) {
-        AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
+        AppState.previousStackPane.setEffect(null);
       }
       AppState.previousStackPane = null;
       AppState.alreadyClicked = false;
@@ -845,17 +865,27 @@ public class SecondaryController {
 
   @FXML
   private void updateSettings() {
-    AppState.nodeColour = nodeColPicker.getValue();
-    AppState.edgeColour = edgeColPicker.getValue();
-    AppState.arrowColour = arrowColPicker.getValue();
+    if (!isNonZeroNumber(edgeThicknessTextField.getText())) {
+      edgeThicknessTextField.setText("");
 
-    AppState.nodeColourString = getColorCode(AppState.nodeColour);
+      return;
+    } else {
+      AppState.nodeColour = nodeColPicker.getValue();
+      AppState.edgeColour = edgeColPicker.getValue();
+      AppState.arrowColour = arrowColPicker.getValue();
 
-    String colour1 = getColorCode(nodeColPicker.getValue());
-    String colour2 = getColorCode(arrowColPicker.getValue());
-    updateNodeColour(colour1);
-    updateArrowColour(colour2);
-    updateEdgeColour();
+      AppState.nodeColourString = getColorCode(AppState.nodeColour);
+
+      String nodeCol = getColorCode(nodeColPicker.getValue());
+      String nodeBorderCol = getColorCode(nodeBorderColPicker.getValue());
+      String nodeNumCol = getColorCode(nodeNumColPicker.getValue());
+      String arrowCol = getColorCode(arrowColPicker.getValue());
+      String arrowBorderCol = getColorCode(arrowBorderColPicker.getValue());
+      updateNodeColour(nodeCol, nodeBorderCol, nodeNumCol);
+      updateArrowColour(arrowCol, arrowBorderCol);
+
+      updateEdge(Double.parseDouble(edgeThicknessTextField.getText()));
+    }
   }
 
   private String getColorCode(Color color) {
@@ -867,30 +897,36 @@ public class SecondaryController {
   }
 
   @FXML
-  private void updateNodeColour(String Colour) {
+  private void updateNodeColour(String fillColour, String borderColour, String numColour) {
     for (Node node : nodes) {
-      node.getStackPane().getChildren().get(0).setStyle("-fx-fill:" + Colour + ";");
+      node.getStackPane()
+          .getChildren()
+          .get(0)
+          .setStyle("-fx-fill:" + fillColour + ";-fx-stroke:" + borderColour + ";");
+      node.getStackPane().getChildren().get(1).setStyle("-fx-text-fill:" + numColour + ";");
     }
   }
 
   @FXML
-  private void updateEdgeColour() {
+  private void updateEdge(Double edgeThickness) {
     for (QuadCurve arc : arcs) {
       arc.setStroke(edgeColPicker.getValue());
+      arc.setStrokeWidth(edgeThickness);
     }
     for (Line line : lines) {
       line.setStroke(edgeColPicker.getValue());
+      line.setStrokeWidth(edgeThickness);
     }
   }
 
   @FXML
-  private void updateArrowColour(String Colour) {
+  private void updateArrowColour(String fillColour, String borderColour) {
     for (StackPane arrow : arrows) {
       arrow.setStyle(
           "-fx-background-color:"
-              + Colour
+              + fillColour
               + ";-fx-border-width:1px;-fx-border-color:"
-              + Colour
+              + borderColour
               + " ;-fx-shape:"
               + " \"M0,-4L4,0L0,4Z\"");
     }

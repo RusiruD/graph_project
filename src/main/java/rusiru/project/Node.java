@@ -101,7 +101,6 @@ public class Node extends StackPane {
 
     if (AppState.alreadyClicked) {
       AppState.previousStackPane.setEffect(null);
-      // AppState.previousStackPane.getChildren().get(0).setStyle("-fx-fill: Black;");
 
       // if its a self loop
       if (this.equals(AppState.previousNode) && !(this.hasSelfLoop)) {
@@ -420,7 +419,7 @@ public class Node extends StackPane {
     StackPane arrow = new StackPane();
     SecondaryController.arrows.add(arrow);
     arrow.setStyle(
-        "-fx-background-color:green ;-fx-border-width:1px;-fx-border-color:green ;-fx-shape:"
+        "-fx-background-color:black ;-fx-border-width:1px;-fx-border-color:yellow ;-fx-shape:"
             + " \"M0,-4L4,0L0,4Z\""); //
     arrow.setPrefSize(size, size);
 

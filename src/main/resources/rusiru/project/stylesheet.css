@@ -3,6 +3,13 @@
     -fx-background-color: white;
 }
 
+.settings-pane{
+    -fx-background-color: white;
+    -fx-border-color:black;
+    -fx-border-radius:9px; 
+    -fx-border-width:1.5px;
+    -fx-background-radius: 2px;
+}
 .red-end-line {
     -fx-shape: "M 1 0 L 0 0 L 0 1"; /* Arrow shape for the end part */
     -fx-scale-shape: false;
@@ -46,6 +53,8 @@
 -fx-border-radius:9px; 
 -fx-border-width:1.5px;
 -fx-text-fill: black;
+-fx-font-size: 14px;
+-fx-font-weight: bold;
 -fx-text-style: bold;
 -fx-background-radius: 2px;
 }
@@ -53,11 +62,18 @@
 .label{
     
     -fx-font-size: 14px;
-   -fx-font-weight: regular;
+   -fx-font-weight: bold;
 
 }
 
- 
+ .colorpicker{
+    -fx-background-color: white;
+-fx-border-color:black;
+-fx-border-radius:9px;
+-fx-border-width:1.5px;
+-fx-font-size: 14px;
+-fx-font-weight: bold;
+ }
     
 
 .button {
