@@ -82,7 +82,7 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="settingsPane" layoutX="300.0" layoutY="144.0" prefHeight="407.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css">
+      <Pane fx:id="settingsPane" layoutX="10.0" layoutY="140.0" prefHeight="407.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css" visible="false">
          <children>
             <ColorPicker fx:id="nodeColPicker" layoutX="105.0" layoutY="69.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
@@ -161,20 +161,25 @@
                </font>
             </Text>
             <TextField fx:id="nodeSizeTextField" layoutX="260.0" layoutY="68.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="50" />
-            <Text layoutX="89.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour">
+            <Text layoutX="138.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <Text layoutX="259.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size(px)">
+            <Text layoutX="259.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size(px)">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Text>
             <TextField fx:id="nodeBorderSizeTextField" layoutX="260.0" layoutY="108.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
             <TextField fx:id="arrowBorderSizeTextField" layoutX="260.0" layoutY="228.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
             <TextField fx:id="arrowSizeTextField" layoutX="260.0" layoutY="188.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
             <TextField fx:id="nodeNumberSizeTextField" layoutX="260.0" layoutY="148.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
+            <Button fx:id="resetSettings" layoutX="270.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#onResetSettingsClicked" prefHeight="30.0" prefWidth="60.0" text="Reset">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
       <Pane fx:id="checkPropertiesPane" layoutX="970.0" layoutY="50.0" prefHeight="570.0" prefWidth="260.0" stylesheets="@stylesheet.css">

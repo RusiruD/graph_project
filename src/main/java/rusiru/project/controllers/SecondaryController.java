@@ -74,7 +74,7 @@ public class SecondaryController {
   @FXML TextField arrowSizeTextField;
   @FXML TextField arrowBorderSizeTextField;
   @FXML TextField nodeNumberSizeTextField;
-
+  @FXML Button resetSettingsBtn;
   @FXML Button updateSettingsBtn;
   @FXML Pane checkPropertiesPane;
   @FXML TextArea definitionTextArea;
@@ -923,6 +923,24 @@ public class SecondaryController {
 
       updateEdge(Double.parseDouble(edgeThicknessTextField.getText()));
     }
+  }
+
+  @FXML
+  private void onResetSettingsClicked() {
+    nodeColPicker.setValue(Color.BLACK);
+    edgeColPicker.setValue(Color.BLUE);
+    arrowColPicker.setValue(Color.BLACK);
+    nodeBorderColPicker.setValue(Color.BLACK);
+    arrowBorderColPicker.setValue(Color.YELLOW);
+    nodeNumColPicker.setValue(Color.WHITE);
+    edgeThicknessTextField.setText("2");
+    nodeSizeTextField.setText("50");
+    nodeBorderSizeTextField.setText("1");
+    arrowSizeTextField.setText("12");
+    arrowBorderSizeTextField.setText("1");
+    nodeNumberSizeTextField.setText("12");
+
+    updateSettings();
   }
 
   private String getColorCode(Color color) {
