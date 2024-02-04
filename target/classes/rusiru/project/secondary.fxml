@@ -164,7 +164,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Text fx:id="warningTxt2" fill="RED" layoutX="37.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Values must be a non-zero number!" underline="true" visible="false">
+            <Text fx:id="warningTxt2" fill="RED" layoutX="37.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Values must be non-zero numbers!" underline="true" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
