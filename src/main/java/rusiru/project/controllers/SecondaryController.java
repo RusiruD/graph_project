@@ -35,6 +35,7 @@ public class SecondaryController {
   public static ArrayList<StackPane> arrows = new ArrayList<StackPane>();
   public static List<List<Integer>> adjacencyList = new ArrayList<List<Integer>>();
   public static ArrayList<Label> graphPropertyLabels = new ArrayList<Label>();
+  public static ArrayList<Label> weightLabels = new ArrayList<Label>();
 
   @FXML Pane root;
   @FXML Pane settingsPane;
@@ -69,12 +70,14 @@ public class SecondaryController {
   @FXML ColorPicker nodeBorderColPicker;
   @FXML ColorPicker arrowBorderColPicker;
   @FXML ColorPicker nodeNumColPicker;
+  @FXML ColorPicker weightValueColPicker;
   @FXML TextField edgeThicknessTextField;
   @FXML TextField nodeSizeTextField;
   @FXML TextField nodeBorderSizeTextField;
   @FXML TextField arrowSizeTextField;
   @FXML TextField arrowBorderSizeTextField;
   @FXML TextField nodeNumberSizeTextField;
+  @FXML TextField weightValueSizeTextField;
   @FXML Button resetSettingsBtn;
   @FXML Button updateSettingsBtn;
   @FXML Pane checkPropertiesPane;
@@ -106,6 +109,7 @@ public class SecondaryController {
             nodeBorderSizeTextField,
             arrowSizeTextField,
             arrowBorderSizeTextField,
+            weightValueSizeTextField,
             nodeNumberSizeTextField)) {
       textField.setOnKeyTyped(
           event -> {
@@ -196,6 +200,7 @@ public class SecondaryController {
 
   @FXML
   private void onResetClicked(MouseEvent event) {
+    checkGraph.setDisable(true);
     System.out.println("Reset clicked");
 
     for (javafx.scene.Node child : checkPropertiesPane.getChildren()) {
@@ -294,14 +299,11 @@ public class SecondaryController {
     isSymmetric();
     isTransitive();
     isAntiSymmetric();
-
     isEquivalence();
     isPartialOrder();
-
     isSimple();
     isMulti();
     isPseudo();
-
     isComplete();
     isConnected();
     isEulerCircuit();
@@ -909,6 +911,8 @@ public class SecondaryController {
       AppState.arrowSize = Double.parseDouble(arrowSizeTextField.getText());
       AppState.arrowBorderSize = Double.parseDouble(arrowBorderSizeTextField.getText());
       AppState.nodeNumSize = Double.parseDouble(nodeNumberSizeTextField.getText());
+      AppState.weightValueColour = weightValueColPicker.getValue();
+      AppState.weightValueSize = Double.parseDouble(weightValueSizeTextField.getText());
 
       String nodeCol = getColorCode(nodeColPicker.getValue());
       String nodeBorderCol = getColorCode(nodeBorderColPicker.getValue());
@@ -922,9 +926,9 @@ public class SecondaryController {
           AppState.nodeSize / 2,
           AppState.nodeBorderSize,
           AppState.nodeNumSize);
-      updateArrow(arrowCol, arrowBorderCol, AppState.arrowSize, AppState.arrowBorderSize);
-
-      updateEdge(Double.parseDouble(edgeThicknessTextField.getText()));
+      updateArrows(arrowCol, arrowBorderCol, AppState.arrowSize, AppState.arrowBorderSize);
+      updateWeightLabels();
+      updateEdges(Double.parseDouble(edgeThicknessTextField.getText()));
     }
   }
 
@@ -942,6 +946,8 @@ public class SecondaryController {
     arrowSizeTextField.setText("12");
     arrowBorderSizeTextField.setText("1");
     nodeNumberSizeTextField.setText("12");
+    weightValueColPicker.setValue(Color.BLACK);
+    weightValueSizeTextField.setText("12");
 
     updateSettings();
   }
@@ -987,7 +993,7 @@ public class SecondaryController {
   }
 
   @FXML
-  private void updateEdge(Double edgeThickness) {
+  private void updateEdges(Double edgeThickness) {
     for (QuadCurve arc : arcs) {
       arc.setStroke(edgeColPicker.getValue());
       arc.setStrokeWidth(edgeThickness);
@@ -999,7 +1005,7 @@ public class SecondaryController {
   }
 
   @FXML
-  private void updateArrow(
+  private void updateArrows(
       String fillColour, String borderColour, Double arrowSize, Double borderSize) {
     for (StackPane arrow : arrows) {
       arrow.setPrefSize(arrowSize, arrowSize);
@@ -1012,6 +1018,14 @@ public class SecondaryController {
               + borderColour
               + " ;-fx-shape:"
               + " \"M0,-4L4,0L0,4Z\"");
+    }
+  }
+
+  @FXML
+  private void updateWeightLabels() {
+    for (Label label : weightLabels) {
+      label.setTextFill(weightValueColPicker.getValue());
+      label.setStyle("-fx-font-size:" + weightValueSizeTextField.getText() + "px;");
     }
   }
 }

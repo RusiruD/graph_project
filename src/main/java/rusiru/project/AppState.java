@@ -32,12 +32,14 @@ public class AppState {
 
   public static Color arrowColour = Color.BLACK;
   public static Color arrowBorderColour = Color.YELLOW;
+  public static Color weightValueColour = Color.BLACK;
   public static Double edgeThickness = 2.0;
   public static Double arrowSize = 12.0;
   public static Double arrowBorderSize = 1.0;
   public static Double nodeBorderSize = 1.0;
   public static Double nodeNumSize = 12.0;
   public static Double nodeSize = 50.0;
+  public static Double weightValueSize = 12.0;
 
   public static void createAdjacencyMatrix(int numNodes) {
     adjacencyMatrix = new int[numNodes][numNodes];

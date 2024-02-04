@@ -88,7 +88,7 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="settingsPane" disable="true" layoutX="10.0" layoutY="140.0" prefHeight="407.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css" visible="false">
+      <Pane fx:id="settingsPane" layoutX="10.0" layoutY="140.0" prefHeight="407.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css">
          <children>
             <ColorPicker fx:id="nodeColPicker" accessibleText="node colour picker" layoutX="105.0" layoutY="69.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
@@ -192,6 +192,21 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Text layoutX="5.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight Value:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <ColorPicker fx:id="weightValueColPicker" accessibleText="node edge colour picker" layoutX="105.0" layoutY="309.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
+               <value>
+                  <Color />
+               </value>
+            </ColorPicker>
+            <TextField fx:id="weightValueSizeTextField" accessibleText="text field for edge size" layoutX="260.0" layoutY="308.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
          </children>
       </Pane>
       <Pane fx:id="checkPropertiesPane" layoutX="970.0" layoutY="50.0" prefHeight="570.0" prefWidth="260.0" stylesheets="@stylesheet.css">

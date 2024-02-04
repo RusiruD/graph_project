@@ -485,7 +485,7 @@ public class Node extends StackPane {
     Label weightLbl = new Label("0");
     weightLbl.setId("weightLabel");
     weightLbl.setFont(new Font("Arial", 16));
-
+    SecondaryController.weightLabels.add(weightLbl);
     TextField weightTextField = new TextField();
     weightTextField.setId("weightTextField");
 
