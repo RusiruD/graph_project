@@ -55,6 +55,7 @@ public class Node extends StackPane {
     nodePane.setAccessibleText("Node" + Nodenum);
     Label txt = new Label(Integer.toString(Nodenum));
     txt.setTextFill(AppState.nodeNumColour);
+    txt.setFont(new Font("Arial", 14));
 
     nodePane.getChildren().addAll(dot, txt);
     root.getChildren().add(nodePane);
@@ -484,7 +485,7 @@ public class Node extends StackPane {
 
     Label weightLbl = new Label("0");
     weightLbl.setId("weightLabel");
-    weightLbl.setFont(new Font("Arial", 16));
+    weightLbl.setFont(new Font("Arial", 14));
     SecondaryController.weightLabels.add(weightLbl);
     TextField weightTextField = new TextField();
     weightTextField.setId("weightTextField");

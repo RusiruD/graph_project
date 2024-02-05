@@ -934,6 +934,7 @@ public class SecondaryController {
 
   @FXML
   private void onResetSettingsClicked() {
+    warningTxt2.setVisible(false);
     nodeColPicker.setValue(Color.BLACK);
     edgeColPicker.setValue(Color.BLUE);
     arrowColPicker.setValue(Color.BLACK);
@@ -942,12 +943,12 @@ public class SecondaryController {
     nodeNumColPicker.setValue(Color.WHITE);
     edgeThicknessTextField.setText("2");
     nodeSizeTextField.setText("50");
-    nodeBorderSizeTextField.setText("1");
+    nodeBorderSizeTextField.setText("0");
     arrowSizeTextField.setText("12");
     arrowBorderSizeTextField.setText("1");
-    nodeNumberSizeTextField.setText("12");
+    nodeNumberSizeTextField.setText("14");
     weightValueColPicker.setValue(Color.BLACK);
-    weightValueSizeTextField.setText("12");
+    weightValueSizeTextField.setText("14");
 
     updateSettings();
   }

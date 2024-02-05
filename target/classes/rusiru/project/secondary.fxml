@@ -88,7 +88,7 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="settingsPane" disable="true" layoutX="10.0" layoutY="125.0" prefHeight="420.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css">
+      <Pane fx:id="settingsPane" disable="true" layoutX="10.0" layoutY="125.0" prefHeight="420.0" prefWidth="334.0" styleClass="settings-pane" stylesheets="@stylesheet.css" visible="false">
          <children>
             <ColorPicker fx:id="nodeColPicker" accessibleText="node colour picker" layoutX="105.0" layoutY="69.0" prefHeight="30.0" prefWidth="110.0" styleClass="colorpicker" stylesheets="@stylesheet.css">
                <value>
@@ -180,10 +180,10 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="nodeBorderSizeTextField" accessibleText="text field for node border size" layoutX="260.0" layoutY="108.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
+            <TextField fx:id="nodeBorderSizeTextField" accessibleText="text field for node border size" layoutX="260.0" layoutY="108.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="0" />
             <TextField fx:id="arrowBorderSizeTextField" accessibleText="text field of arrow border size" layoutX="260.0" layoutY="228.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="1" />
             <TextField fx:id="arrowSizeTextField" accessibleText="text field for arrow size" layoutX="260.0" layoutY="188.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
-            <TextField fx:id="nodeNumberSizeTextField" accessibleText="text field for node number text size" layoutX="260.0" layoutY="148.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12" />
+            <TextField fx:id="nodeNumberSizeTextField" accessibleText="text field for node number text size" layoutX="260.0" layoutY="148.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="14" />
             <Button fx:id="resetSettingsBtn" accessibleText="reset settings button" layoutX="270.0" layoutY="4.0" mnemonicParsing="false" onMouseClicked="#onResetSettingsClicked" prefHeight="30.0" prefWidth="60.0" text="Reset">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -202,7 +202,7 @@
                   <Color />
                </value>
             </ColorPicker>
-            <TextField fx:id="weightValueSizeTextField" accessibleText="text field for edge size" layoutX="260.0" layoutY="308.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="12">
+            <TextField fx:id="weightValueSizeTextField" accessibleText="text field for edge size" layoutX="260.0" layoutY="308.0" prefHeight="30.0" prefWidth="50.0" styleClass="black-border-textfield" stylesheets="@stylesheet.css" text="14">
                <font>
                   <Font size="14.0" />
                </font>
