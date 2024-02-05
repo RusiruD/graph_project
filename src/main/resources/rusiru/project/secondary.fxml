@@ -239,7 +239,7 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="antiSymmetricLbl" layoutX="5.0" layoutY="120.0" prefHeight="40.0" prefWidth="110.0" text="Antisymmetric">
+            <Label fx:id="antiSymmetricLbl" layoutX="5.0" layoutY="120.0" prefHeight="40.0" prefWidth="115.0" text="Antisymmetric">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -247,7 +247,7 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="pseudoGraphLbl" layoutX="5.0" layoutY="360.0" prefHeight="40.0" prefWidth="100.0" text="Pseudograph">
+            <Label fx:id="pseudoGraphLbl" layoutX="5.0" layoutY="360.0" prefHeight="40.0" prefWidth="110.0" text="Pseudograph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -262,7 +262,7 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="bipartiteLbl" layoutX="120.0" layoutY="40.0" prefHeight="40.0" prefWidth="70.0" text="Bipartite">
+            <Label fx:id="bipartiteLbl" layoutX="120.0" layoutY="40.0" prefHeight="40.0" prefWidth="80.0" text="Bipartite">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -270,22 +270,22 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Label fx:id="directedSimpleGraphLbl" layoutX="5.0" layoutY="400.0" prefHeight="40.0" prefWidth="160.0" text="Directed Simple Graph">
+            <Label fx:id="directedSimpleGraphLbl" layoutX="5.0" layoutY="400.0" prefHeight="40.0" prefWidth="170.0" text="Directed Simple Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="directedPseudoGraphLbl" layoutX="5.0" layoutY="480.0" prefHeight="40.0" prefWidth="160.0" text="Directed Pseudograph" textOverrun="CLIP">
+            <Label fx:id="directedPseudoGraphLbl" layoutX="5.0" layoutY="480.0" prefHeight="40.0" prefWidth="180.0" text="Directed Pseudograph" textOverrun="CLIP">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="directedMultiGraphLbl" layoutX="5.0" layoutY="440.0" prefHeight="40.0" prefWidth="150.0" text="Directed Multigraph">
+            <Label fx:id="directedMultiGraphLbl" layoutX="5.0" layoutY="440.0" prefHeight="40.0" prefWidth="160.0" text="Directed Multigraph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="completeGraphLbl" layoutX="120.0" layoutY="240.0" prefHeight="40.0" prefWidth="125.0" text="Complete Graph">
+            <Label fx:id="completeGraphLbl" layoutX="120.0" layoutY="240.0" prefHeight="40.0" prefWidth="130.0" text="Complete Graph">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -315,7 +315,7 @@
             </Button>
          </children>
       </Pane>
-      <TextArea fx:id="definitionTextArea" editable="false" layoutX="323.0" layoutY="78.0" prefHeight="407.0" prefWidth="595.0" text="Definitions of Terms&#10;&#10;Reflexive-If every node has a self loop&#10;Symmetric-If whenever there is an edge(a,b) then (b,a) is also an edge (This is always true for Undirected Graphs)&#10;Anti Symmetric-If whenever (a,b) is an edge and (b,a) is an edge then (a) must be the same as (b) i.e there is no reverse edge&#10;Transitive-If (a,b) is an edge and (b,c) is an edge then (a,c) must be an edge&#10;Equivalence-The graph is reflexive, symmetric and transitive&#10;Partial Order-The graph is reflexive, antisymmetric and transitive&#10;Simple Graph-The undirected graph contains at most one edge between any 2 nodes and no self loops.&#10;Multigraph-The undirected graph contains multiple edges between node pairs but no self loops.&#10;Pseudograph-The undirected graph contains self loops and multiple edges between node pairs.&#10;Complete Graph-The graph contains an edge between every pair of distinct nodes&#10;Connected-The graph contains a path between every pair of distinct nodes&#10;Acyclic-The graph contains 0 cycles(cycles must contain at least 3 nodes)&#10;Bipartite-The graph can be divided into 2 disjoint node sets so every edge connects a node from one set to the other&#10;Tree-The graph is connected and acyclic&#10;Euler Circuit-The graph contains a circuit that traverses every edge of a graph exactly once and returns to start&#10;Directed Simple Graph-The directed graph contains at most 1 edge between any 2 nodes and no self loops&#10;Directed Multigraph-The directed graph contains multiple edges between node pairs and no self loops&#10;Directed PseudoGraph-The directed graph contains self loops and multiple edges between any 2 nodes&#10;Complete Digraph-The directed graph contains a directed edge between every vertex to every other vertex&#10;" visible="false" />
+      <TextArea fx:id="definitionTextArea" disable="true" editable="false" layoutX="323.0" layoutY="78.0" prefHeight="407.0" prefWidth="595.0" text="Definitions of Terms&#10;&#10;Reflexive-If every node has a self loop&#10;Symmetric-If whenever there is an edge(a,b) then (b,a) is also an edge (This is always true for Undirected Graphs)&#10;Anti Symmetric-If whenever (a,b) is an edge and (b,a) is an edge then (a) must be the same as (b) i.e there is no reverse edge&#10;Transitive-If (a,b) is an edge and (b,c) is an edge then (a,c) must be an edge&#10;Equivalence-The graph is reflexive, symmetric and transitive&#10;Partial Order-The graph is reflexive, antisymmetric and transitive&#10;Simple Graph-The undirected graph contains at most one edge between any 2 nodes and no self loops.&#10;Multigraph-The undirected graph contains multiple edges between node pairs but no self loops.&#10;Pseudograph-The undirected graph contains self loops and multiple edges between node pairs.&#10;Complete Graph-The graph contains an edge between every pair of distinct nodes&#10;Connected-The graph contains a path between every pair of distinct nodes&#10;Acyclic-The graph contains 0 cycles(cycles must contain at least 3 nodes)&#10;Bipartite-The graph can be divided into 2 disjoint node sets so every edge connects a node from one set to the other&#10;Tree-The graph is connected and acyclic&#10;Euler Circuit-The graph contains a circuit that traverses every edge of a graph exactly once and returns to start&#10;Directed Simple Graph-The directed graph contains at most 1 edge between any 2 nodes and no self loops&#10;Directed Multigraph-The directed graph contains multiple edges between node pairs and no self loops&#10;Directed PseudoGraph-The directed graph contains self loops and multiple edges between any 2 nodes&#10;Complete Digraph-The directed graph contains a directed edge between every vertex to every other vertex&#10;" visible="false" />
       <Pane fx:id="titlePane" layoutX="300.0" layoutY="5.0" prefHeight="50.0" prefWidth="600.0">
          <children>
             <Text fx:id="titleTxt" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graph Generator and Evaluator" textAlignment="CENTER" wrappingWidth="595.0">

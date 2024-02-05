@@ -584,7 +584,7 @@ public class SecondaryController {
       return false;
     } else if (!AppState.undirected & edges.size() != 2 * numEdges) {
       setIncorrectLabel(completeDigraphLbl);
-
+      setIncorrectLabel(completeGraphLbl);
       return false;
     }
 
@@ -592,7 +592,7 @@ public class SecondaryController {
       if ((node.getInDegree()) != AppState.numNodes - 1) {
         setIncorrectLabel(completeDigraphLbl);
         setIncorrectLabel(completeGraphLbl);
-
+        System.out.println("rd");
         return false;
       }
     }
@@ -856,6 +856,17 @@ public class SecondaryController {
         }
       }
     }
+    if (!AppState.undirected) {
+      for (Edge edge1 : edges) {
+        for (Edge edge2 : edges) {
+          if (edge1.getSource().getNodeNum() == edge2.getDestinationNode().getNodeNum()
+              && edge1.getDestinationNode().getNodeNum() == edge2.getSource().getNodeNum()
+              && edge1 != edge2) {
+            return true;
+          }
+        }
+      }
+    }
     return false;
   }
 
@@ -874,6 +885,7 @@ public class SecondaryController {
     } else {
       definitionTextArea.setVisible(true);
       definitionTextArea.toFront();
+      definitionTextArea.setDisable(false);
       informationBtn.setStyle("  -fx-background-color:rgb(168, 167, 167);");
     }
   }
